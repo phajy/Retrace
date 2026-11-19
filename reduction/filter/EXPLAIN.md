@@ -1,8 +1,8 @@
 # Stage 2 — filter (event selection, regions, flare GTIs) — reduction v0
 
 Script: `filter.py` · parameters: `params.yaml` → `exposures`, `filter` · numbers: `summary.json`
-· outputs: `output/` (DVC-tracked): one `<ObsID>_<expo>_filtered.fits` per exposure,
-`diag_*.png`, `content_hashes.json`.
+· outputs: `output/` (DVC-tracked): one `<ObsID>_<expo>_filtered.fits` per exposure and
+`diag_*.png` · column hashes: `content_hashes.json` (in git).
 
 ## What was done and why
 1. **Source position.** Iterative centroid (20″ radius) of 0.3–10 keV, PATTERN ≤ 4, FLAG == 0
@@ -53,8 +53,10 @@ background subtraction (A-09).
   point source. The background circle lies off the out-of-time streak and clear of the chip gap.
   The source-region light curve is 1–2 orders of magnitude above the scaled background, except in the
   strongest flares (end of orbit 0301, up to ~1 c/s in 0.3–10 keV).
-* Content hashes (sha256 of each data column, canonical big-endian) are written to
-  `output/content_hashes.json` so a verifier can compare FITS products by content, not file bytes.
+* Content hashes (sha256 of each data column, canonical big-endian; `tools/fits_hashes.py`) of every
+  binary table in the written files go to `content_hashes.json`, which is git-tracked so a verifier on a
+  fresh clone has a reference to compare FITS products by content, not file bytes. (Until 2026-11-19 this
+  file sat inside the DVC-tracked `output/` folder, where a fresh clone could not see it; see `docs/LOG.md`.)
 
 ## Known limitations
 * Not reprocessed with SAS; no check of the PPS calibration against SAS 8 (M-01).

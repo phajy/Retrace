@@ -24,6 +24,7 @@ F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383). SI = its Suppleme
 | 2026-11-19 | Venv-generated `.gitignore` (`*`) would have excluded the whole project from git | explainer (Claude) | inspected before `git init` | session 1 |
 | 2026-11-19 | Red-noise self-test was too strict (the method has a real ~8% leakage bias) | explainer (Claude) | stage failed; diagnosed with white vs red noise | session 1 (see [`LOG.md`](../docs/LOG.md)) |
 | 2026-11-19 | Analytic lag errors invalid at the coherence noise floor | explainer (Claude) | inspection of first results | session 1 (A-13, post hoc) |
+| 2026-11-19 | Reference FITS column hashes were inside a DVC-only folder, so a verifier on a fresh clone had nothing to compare against; light-curve FITS had no hashes | explainer (Claude) | noticed while writing the verifier's instructions | session 1 (`tools/fits_hashes.py`; hashes now in git) |
 
 ## Planted-mistake tests
 Deliberate errors introduced to test whether verifiers catch them (see

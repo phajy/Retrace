@@ -12,7 +12,8 @@ numpy/astropy only (no SAS). For each exposure listed in params.yaml it:
      flare GTIs from a count-rate threshold;
   5. writes one FITS file per exposure with source/background events and all the GTI
      tables (CCD standard GTIs, flare GTIs, their intersection, and the PPS optimised GTIs),
-     plus diagnostic plots, a summary (summary.json) and content hashes of every data column.
+     plus diagnostic plots, a summary (summary.json) and content hashes of every data column
+     of the written files (content_hashes.json, git-tracked; see tools/fits_hashes.py).
 
 Events are NOT cut by the flare GTIs here. The light-curve stage applies the chosen GTI,
 so that sensitivity tests (different flare handling) do not need this stage to be re-run.
@@ -21,8 +22,8 @@ Usage:  python reduction/filter/filter.py        (normally run via `dvc repro fi
 """
 from __future__ import annotations
 
-import hashlib
 import json
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -36,8 +37,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from tools.fits_hashes import file_hashes  # noqa: E402
+
 RAW = ROOT / "reduction" / "raw"
 OUT = ROOT / "reduction" / "filter" / "output"
+HASHES = ROOT / "reduction" / "filter" / "content_hashes.json"   # git-tracked reference for verifiers
 
 EV_COLS = ["TIME", "RAWX", "RAWY", "X", "Y", "PI", "FLAG", "PATTERN", "CCDNR"]
 
@@ -79,16 +84,6 @@ def runs_to_gti(good: np.ndarray, edges: np.ndarray) -> np.ndarray:
     if start is not None:
         out.append((start, edges[len(good)]))
     return np.array(out, dtype=float).reshape(-1, 2)
-
-
-def column_hashes(table: Table) -> dict:
-    """sha256 of each column's values in a canonical big-endian layout (content, not file bytes)."""
-    h = {}
-    for name in table.colnames:
-        arr = np.asarray(table[name])
-        arr = np.ascontiguousarray(arr.astype(arr.dtype.newbyteorder(">")))
-        h[name] = hashlib.sha256(arr.tobytes()).hexdigest()
-    return h
 
 
 def sky_wcs(hdr) -> WCS:
@@ -248,9 +243,7 @@ def process(obsid: str, expo: str, P: dict) -> dict:
     outfile = OUT / f"{obsid}_{expo}_filtered.fits"
     fits.HDUList(hdus).writeto(outfile, overwrite=True)
 
-    hashes = {name: column_hashes(tab) for name, tab in
-              [("SRC_EVENTS", src_tab), ("BKG_EVENTS", bkg_tab), ("STDGTI", gti_tab(std)),
-               ("FLAREGTI", gti_tab(flaregti)), ("GTI", gti_tab(gti)), ("PPSGTI", gti_tab(ppsgti))]}
+    hashes = file_hashes(outfile)   # hashed as written, so anyone can recompute them from the file
 
     # diagnostics: image with regions, flare curve, source and scaled background curves
     fig, ax = plt.subplots(1, 3, figsize=(18, 5.5), gridspec_kw={"width_ratios": [1, 1.6, 1.6]})
@@ -339,7 +332,7 @@ def main():
         "paper_net_pn_exposure_ks_for_comparison_only": 330,
     }
     json.dump({"totals": totals, "exposures": summary}, open(ROOT / "reduction/filter/summary.json", "w"), indent=2)
-    json.dump(hashes, open(OUT / "content_hashes.json", "w"), indent=2)
+    json.dump(hashes, open(HASHES, "w"), indent=2)
     print(json.dumps(totals, indent=2))
 
 

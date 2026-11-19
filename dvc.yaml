@@ -6,6 +6,7 @@ stages:
     cmd: python reduction/filter/filter.py
     deps:
       - reduction/filter/filter.py
+      - tools/fits_hashes.py
       - reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ
       - reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ
       - reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ
@@ -21,6 +22,8 @@ stages:
       - filter
     outs:
       - reduction/filter/output
+      - reduction/filter/content_hashes.json:
+          cache: false
     metrics:
       - reduction/filter/summary.json:
           cache: false
@@ -29,12 +32,15 @@ stages:
     cmd: python analysis/lightcurves/lightcurves.py
     deps:
       - analysis/lightcurves/lightcurves.py
+      - tools/fits_hashes.py
       - reduction/filter/output
     params:
       - exposures
       - lightcurves
     outs:
       - analysis/lightcurves/output
+      - analysis/lightcurves/content_hashes.json:
+          cache: false
     metrics:
       - analysis/lightcurves/summary.json:
           cache: false

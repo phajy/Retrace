@@ -37,7 +37,8 @@ analysis was done is not published information. Use it only as an explicit assum
   with `dvc import-url` so the URL and checksum are recorded.
 - Each stage writes `EXPLAIN.md` next to its outputs: what was done, why, assumptions, checks run.
 - Compare FITS products by the content of their data columns, not file bytes (headers carry
-  timestamps; some reduction tasks randomise within instrument bins).
+  timestamps; some reduction tasks randomise within instrument bins). Stages that write FITS files
+  record column hashes with `tools/fits_hashes.py` in a git-tracked `content_hashes.json`.
 - Separate facts (measured lags, fluxes) from interpretation (e.g. coronal height under a lamppost model).
 - Git: Andy pushes to GitHub himself unless he says otherwise (public repo: github.com/phajy/Retrace).
   DVC remote: local folder only for the pilot; verifiers re-download raw data from HEASARC. Cloudflare R2

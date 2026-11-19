@@ -71,3 +71,15 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * GitHub did not recognise `LICENSE-docs` as CC BY 4.0 because of the scope header at its top (the sidebar said
   "MIT, License"). `LICENSE-docs` is now exactly the official legal code. The copyright line and the licence URL
   moved to the README's Licence section, which already said which licence covers which files.
+
+**Later in session 1 (column-hash gap, found while planning the first verification)**
+* The README told verifiers to compare FITS products by column content using
+  `reduction/filter/output/content_hashes.json`. That file was inside a DVC-tracked folder, so a fresh clone
+  (no DVC remote) had no reference to compare against. The light-curve FITS files had no column hashes at all.
+* Fix: new `tools/fits_hashes.py` hashes every column of every binary table *as read back from the written
+  file*. The filter and lightcurves stages now write git-tracked `content_hashes.json` files with it.
+  Before switching, the read-back hashes were checked against the old in-memory ones: all 130 identical.
+  They now also cover the `FLARELC` tables (150 hashes in total).
+* `dvc repro` re-ran filter, lightcurves and figures. Every FITS file, plot, summary and lag output is
+  byte-identical to before. The lags stage was skipped because its input did not change. The only difference
+  in `reduction/filter/output` is that `content_hashes.json` moved out of it.

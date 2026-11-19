@@ -12,8 +12,10 @@ The check types (re-run, re-derived, compared) are defined in
   You do not see the explainer's conversation.
 * For a **re-derivation**, write your own code from the written method *before* reading the explainer's
   code for that step. Say in the report what you read and when.
-* Compare outputs by checksum (`dvc.lock`) or, for FITS files, by data-column content
-  (`reduction/filter/output/content_hashes.json`), not by file bytes.
+* Compare outputs by checksum (`dvc.lock`) or, for FITS files, by data-column content, not by file bytes.
+  The committed reference hashes are in `reduction/filter/content_hashes.json` and
+  `analysis/lightcurves/content_hashes.json`. `dvc repro` regenerates both, so `git diff` shows any
+  difference, and `tools/fits_hashes.py` recomputes them for any FITS file.
 * Report what happened plainly, including steps that failed or instructions that were unclear.
   A report that says "the README instructions did not work" is a useful result.
 

@@ -13,11 +13,15 @@ For each bin we record:
 Background is NOT subtracted here (the scaling factor BACKRAT is copied into the
 header), and no gap filling is done: those are analysis choices for the lags stage.
 
+Content hashes of every column of the written files go to content_hashes.json (git-tracked;
+see tools/fits_hashes.py), so verifiers can compare data rather than file bytes.
+
 Usage:  python analysis/lightcurves/lightcurves.py   (normally via `dvc repro lightcurves`)
 """
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -30,8 +34,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from tools.fits_hashes import file_hashes  # noqa: E402
+
 FILT = ROOT / "reduction" / "filter" / "output"
 OUT = ROOT / "analysis" / "lightcurves" / "output"
+HASHES = ROOT / "analysis" / "lightcurves" / "content_hashes.json"   # git-tracked reference for verifiers
 
 
 def overlap(edges: np.ndarray, gti: np.ndarray) -> np.ndarray:
@@ -48,7 +56,7 @@ def main():
     L = P["lightcurves"]
     dt = float(L["dt_s"])
     OUT.mkdir(parents=True, exist_ok=True)
-    summary = []
+    summary, hashes = [], {}
     for e in P["exposures"]:
         if not e["include"]:
             continue
@@ -84,6 +92,7 @@ def main():
             hdu.header[f"E_{band.upper()[:4]}"] = f"{lo}-{hi} keV (PI in [lo, hi) eV)"
         hdu.header["COMMENT"] = "Retrace analysis/lightcurves/lightcurves.py; counts NOT background-subtracted"
         fits.HDUList([fits.PrimaryHDU(), hdu]).writeto(OUT / f"{name}_lc.fits", overwrite=True)
+        hashes[f"{name}_lc.fits"] = file_hashes(OUT / f"{name}_lc.fits")
 
         # diagnostic plot: 200 s rebinned rates, background scaled to the source area
         k = 20
@@ -118,6 +127,7 @@ def main():
         print(name, json.dumps(summary[-1]["mean_src_rate_cps"]), json.dumps(summary[-1]["mean_bkg_rate_scaled_cps"]))
     json.dump({"pattern_max": L["pattern_max"], "bands_kev": L["bands_kev"], "exposures": summary},
               open(ROOT / "analysis/lightcurves/summary.json", "w"), indent=2)
+    json.dump(hashes, open(HASHES, "w"), indent=2)
 
 
 if __name__ == "__main__":

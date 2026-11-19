@@ -29,7 +29,7 @@ Each analysis step is a node with everything needed to re-run and judge it:
 | Code | Git commit. |
 | Parameters | [`params.yaml`](../params.yaml). Every key is tagged with an assumption ID from [`assumptions.md`](assumptions.md). |
 | Environment | [`requirements.lock`](../requirements.lock) (exact package versions) and the versions listed in the README. |
-| Outputs | Checksums in [`dvc.lock`](../dvc.lock). FITS products are also hashed column by column (`content_hashes.json`), because their headers carry timestamps. |
+| Outputs | Checksums in [`dvc.lock`](../dvc.lock). FITS products are also hashed column by column, because headers can carry timestamps: the reference hashes are in git-tracked `content_hashes.json` files, and [`tools/fits_hashes.py`](../tools/fits_hashes.py) recomputes them from any file. |
 | Explanation | An `EXPLAIN.md` next to the outputs: what was done, why, assumptions, checks run, known problems. |
 
 ```mermaid

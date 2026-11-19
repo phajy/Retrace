@@ -1,7 +1,8 @@
 # Stage 3 — lightcurves
 
 Script: `lightcurves.py` · parameters: `exposures`, `lightcurves` · numbers: `summary.json`
-· outputs: `output/<exposure>_lc.fits` and `output/lc_<exposure>.png` (DVC-tracked).
+· outputs: `output/<exposure>_lc.fits` and `output/lc_<exposure>.png` (DVC-tracked)
+· column hashes: `content_hashes.json` (in git).
 
 ## What was done and why
 For each included exposure, the source- and background-region events from the filter stage are binned
@@ -26,4 +27,6 @@ Averaged over each exposure (flares included), the background is ~1% of the sour
 
 ## Checks run
 * Count totals per band are recorded in `summary.json` (e.g. 0101: 309,154 soft and 65,652 hard source counts).
+* Content hashes of every column of each light-curve FITS file (`tools/fits_hashes.py`) are written to
+  the git-tracked `content_hashes.json`, as a reference for verifiers.
 * The plots `output/lc_*.png` were generated (200 s bins, source vs scaled background per band) for visual inspection.
