@@ -1,0 +1,62 @@
+# Retrace pilot pipeline. Stage 1 (fetch) is the set of `dvc import-url` records in
+# reduction/raw/*/*.dvc (see reduction/fetch_imports.sh). Each stage below writes
+# outputs plus a summary; the explanation lives in EXPLAIN.md next to them.
+stages:
+  filter:
+    cmd: python reduction/filter/filter.py
+    deps:
+      - reduction/filter/filter.py
+      - reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ
+      - reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ
+      - reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ
+      - reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ
+      - reduction/raw/0511580201/P0511580201PNU027FBKTSR0000.FTZ
+      - reduction/raw/0511580201/P0511580201PNU027PIEVLI0000.FTZ
+      - reduction/raw/0511580301/P0511580301PNU002FBKTSR0000.FTZ
+      - reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ
+      - reduction/raw/0511580401/P0511580401PNU002FBKTSR0000.FTZ
+      - reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ
+    params:
+      - exposures
+      - filter
+    outs:
+      - reduction/filter/output
+    metrics:
+      - reduction/filter/summary.json:
+          cache: false
+
+  lightcurves:
+    cmd: python analysis/lightcurves/lightcurves.py
+    deps:
+      - analysis/lightcurves/lightcurves.py
+      - reduction/filter/output
+    params:
+      - exposures
+      - lightcurves
+    outs:
+      - analysis/lightcurves/output
+    metrics:
+      - analysis/lightcurves/summary.json:
+          cache: false
+
+  lags:
+    cmd: python analysis/lags/lags.py
+    deps:
+      - analysis/lags/lags.py
+      - analysis/lightcurves/output
+    params:
+      - exposures
+      - lightcurves
+      - lags
+    outs:
+      - analysis/lags/output
+    metrics:
+      - analysis/lags/summary.json:
+          cache: false
+    plots:
+      - analysis/lags/lag_frequency.csv:
+          cache: false
+          x: f_mean_hz
+          y: lag_s
+      - analysis/lags/lag_frequency.png:
+          cache: false

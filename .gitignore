@@ -1,0 +1,16 @@
+# Python virtual environment. Andy created the venv in the repo root itself
+# (activate with `source bin/activate`), so ignore its pieces explicitly.
+# (Replaces the venv-generated `*`, which would have hidden every project file from git.)
+/bin/
+/include/
+/lib/
+/share/
+/pyvenv.cfg
+.venv/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# OS / editor clutter
+.DS_Store

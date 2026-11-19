@@ -1,0 +1,43 @@
+# Retrace pilot: 1H 0707-495 lag-frequency spectrum (Fabian et al. 2009, Fig. 3).
+# Every value that the paper does not specify carries an assumption ID (A-nn) that is
+# explained, with its source, in docs/assumptions.md. Change values here and run
+# `dvc repro` (or `dvc exp run -S key=value` for a sensitivity test).
+
+# EPIC-pn exposures. `include: false` keeps an exposure out of the analysis but
+# still documents it (see docs/assumptions.md, A-01).
+exposures:
+  - {obsid: "0511580101", expo: PNS001, include: true}
+  - {obsid: "0511580201", expo: PNS001, include: true}
+  - {obsid: "0511580201", expo: PNU027, include: false}   # A-01
+  - {obsid: "0511580301", expo: PNU002, include: true}
+  - {obsid: "0511580401", expo: PNU002, include: true}
+
+filter:
+  flag: 0                    # A-02: keep FLAG == 0 events only
+  pattern_keep_max: 12       # keep PATTERN <= 12 in the cleaned lists; the timing cut is lightcurves.pattern_max
+  pi_min: 200                # eV; broad range kept so other bands can be made later
+  pi_max: 12000              # eV
+  centroid_radius_arcsec: 20 # A-03: iterative centroid radius for the source position
+  src_radius_arcsec: 35      # paper (Fabian et al. 2009, SI)
+  bkg_radius_arcsec: 35      # A-04: same size as the source region
+  bkg_drawx: -25             # A-04: background centre offset in RAWX from the source, same RAWY, same CCD
+  flare:                     # A-05: classic SAS-thread flare light curve
+    pi_min: 10000            # eV
+    pi_max: 12000            # eV
+    pattern: 0               # single-pixel events only
+    bin_s: 100               # light-curve bin size for the flare screen
+    threshold_cps: 0.4       # A-05: counts/s over the full field; SAS-thread value for pn
+
+lightcurves:
+  dt_s: 10                   # A-06: Kara et al. 2013 used 10 s bins
+  pattern_max: 4             # paper states PATTERN <= 4; A-07: Zoghbi et al. 2010 relaxed it for timing (test 12)
+  bands_kev:                 # paper (Fabian et al. 2009, Fig. 3)
+    soft: [0.3, 1.0]
+    hard: [1.0, 4.0]
+
+lags:
+  background_subtract: true  # A-08: Zoghbi et al. 2010 used background-subtracted light curves
+  timing_gti: orbit          # A-09: one long segment per orbit (Zoghbi et al. 2010: 4 x ~100 ks); alt: flare_gti
+  segment_s: 100000          # A-09: segment length (s)
+  max_gap_fill_s: 200        # A-10: interpolate gaps up to this length inside a segment
+  freq_bin_factor: 1.4       # A-11: geometric bins, f_hi = 1.4 f_lo (Zoghbi et al. 2010 "1.4 times")

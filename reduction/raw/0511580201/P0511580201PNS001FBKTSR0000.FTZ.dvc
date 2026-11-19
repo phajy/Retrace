@@ -1,0 +1,13 @@
+md5: 0c6ed353715c632a6ace761837639f0f
+frozen: true
+deps:
+- checksum: '"d06a75e98f717564ac414e785e6641f4"'
+  size: 161167
+  hash: md5
+  path: 
+    https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580201/PPS/P0511580201PNS001FBKTSR0000.FTZ
+outs:
+- md5: d06a75e98f717564ac414e785e6641f4
+  size: 161167
+  hash: md5
+  path: P0511580201PNS001FBKTSR0000.FTZ

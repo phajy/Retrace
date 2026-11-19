@@ -1,0 +1,206 @@
+schema: '2.0'
+stages:
+  filter:
+    cmd: python reduction/filter/filter.py
+    deps:
+    - path: reduction/filter/filter.py
+      hash: md5
+      md5: 82fedc845a5e2e2ef298057184a6bf45
+      size: 15991
+    - path: reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ
+      hash: md5
+      md5: afba19dc1054c2076b903fb32bd2308d
+      size: 190431
+    - path: reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ
+      hash: md5
+      md5: 65597e2ee80d914677537b31e588959e
+      size: 212214929
+    - path: reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ
+      hash: md5
+      md5: d06a75e98f717564ac414e785e6641f4
+      size: 161167
+    - path: reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ
+      hash: md5
+      md5: 314a1be84a9c016955898e763aba7cf7
+      size: 206032824
+    - path: reduction/raw/0511580201/P0511580201PNU027FBKTSR0000.FTZ
+      hash: md5
+      md5: 1d4bc554566d520248fdaf221f4757ac
+      size: 16327
+    - path: reduction/raw/0511580201/P0511580201PNU027PIEVLI0000.FTZ
+      hash: md5
+      md5: 9a72a4a05bcb2ff610752a50658f76c1
+      size: 26542231
+    - path: reduction/raw/0511580301/P0511580301PNU002FBKTSR0000.FTZ
+      hash: md5
+      md5: 579789af17b2cc420e80cda6c053718d
+      size: 163930
+    - path: reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ
+      hash: md5
+      md5: 827b8d66d0a45e50e8a1916ca7c149fb
+      size: 226362026
+    - path: reduction/raw/0511580401/P0511580401PNU002FBKTSR0000.FTZ
+      hash: md5
+      md5: 2390b5a6a7e3c688cf9d5c31a62d7e33
+      size: 160099
+    - path: reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ
+      hash: md5
+      md5: ffab219f0c4937dd3eb2d908e1515621
+      size: 244785334
+    params:
+      params.yaml:
+        exposures:
+        - obsid: '0511580101'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNU027
+          include: false
+        - obsid: '0511580301'
+          expo: PNU002
+          include: true
+        - obsid: '0511580401'
+          expo: PNU002
+          include: true
+        filter:
+          flag: 0
+          pattern_keep_max: 12
+          pi_min: 200
+          pi_max: 12000
+          centroid_radius_arcsec: 20
+          src_radius_arcsec: 35
+          bkg_radius_arcsec: 35
+          bkg_drawx: -25
+          flare:
+            pi_min: 10000
+            pi_max: 12000
+            pattern: 0
+            bin_s: 100
+            threshold_cps: 0.4
+    outs:
+    - path: reduction/filter/output
+      hash: md5
+      md5: c6a830f4d604a058884d5530cfa6afd1.dir
+      size: 56538483
+      nfiles: 11
+    - path: reduction/filter/summary.json
+      hash: md5
+      md5: adca30f2fee3d11f7fcda22e40afec35
+      size: 7656
+  lightcurves:
+    cmd: python analysis/lightcurves/lightcurves.py
+    deps:
+    - path: analysis/lightcurves/lightcurves.py
+      hash: md5
+      md5: e6aecc0c46e687fd960be5ceecc07753
+      size: 6126
+    - path: reduction/filter/output
+      hash: md5
+      md5: c6a830f4d604a058884d5530cfa6afd1.dir
+      size: 56538483
+      nfiles: 11
+    params:
+      params.yaml:
+        exposures:
+        - obsid: '0511580101'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNU027
+          include: false
+        - obsid: '0511580301'
+          expo: PNU002
+          include: true
+        - obsid: '0511580401'
+          expo: PNU002
+          include: true
+        lightcurves:
+          dt_s: 10
+          pattern_max: 4
+          bands_kev:
+            soft:
+            - 0.3
+            - 1.0
+            hard:
+            - 1.0
+            - 4.0
+    outs:
+    - path: analysis/lightcurves/output
+      hash: md5
+      md5: e4ff83a3d9cba241eefe714faea9f063.dir
+      size: 2003947
+      nfiles: 8
+    - path: analysis/lightcurves/summary.json
+      hash: md5
+      md5: 03a7ec085601ce129e8aedb4ed549f03
+      size: 2602
+  lags:
+    cmd: python analysis/lags/lags.py
+    deps:
+    - path: analysis/lags/lags.py
+      hash: md5
+      md5: 4b4b1149fb2323893254aea94f1711c2
+      size: 18994
+    - path: analysis/lightcurves/output
+      hash: md5
+      md5: e4ff83a3d9cba241eefe714faea9f063.dir
+      size: 2003947
+      nfiles: 8
+    params:
+      params.yaml:
+        exposures:
+        - obsid: '0511580101'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNU027
+          include: false
+        - obsid: '0511580301'
+          expo: PNU002
+          include: true
+        - obsid: '0511580401'
+          expo: PNU002
+          include: true
+        lags:
+          background_subtract: true
+          timing_gti: orbit
+          segment_s: 100000
+          max_gap_fill_s: 200
+          freq_bin_factor: 1.4
+        lightcurves:
+          dt_s: 10
+          pattern_max: 4
+          bands_kev:
+            soft:
+            - 0.3
+            - 1.0
+            hard:
+            - 1.0
+            - 4.0
+    outs:
+    - path: analysis/lags/lag_frequency.csv
+      hash: md5
+      md5: 65575e5cfa9b79ea56fae770108f018e
+      size: 4023
+    - path: analysis/lags/lag_frequency.png
+      hash: md5
+      md5: ce554ff2853d0383b6b7a006666e956e
+      size: 48118
+    - path: analysis/lags/output
+      hash: md5
+      md5: 7aed2a2cd1811a1305cd734f41daa98d.dir
+      size: 201268
+      nfiles: 1
+    - path: analysis/lags/summary.json
+      hash: md5
+      md5: 269f66aa7da601e95a1c8546fd095f98
+      size: 3215

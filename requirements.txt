@@ -1,0 +1,9 @@
+# Retrace pilot — Python dependencies (exact versions recorded in requirements.lock).
+# DVC itself is installed globally via Homebrew (`brew install dvc`, includes https and s3
+# remote support), so it is deliberately NOT listed here.
+numpy
+scipy
+astropy
+stingray
+matplotlib
+pyyaml

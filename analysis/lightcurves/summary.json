@@ -1,0 +1,111 @@
+{
+  "pattern_max": 4,
+  "bands_kev": {
+    "soft": [
+      0.3,
+      1.0
+    ],
+    "hard": [
+      1.0,
+      4.0
+    ]
+  },
+  "exposures": [
+    {
+      "exposure": "0511580101_PNS001",
+      "n_bins": 12159,
+      "dt_s": 10.0,
+      "span_s": 121590.0,
+      "exposure_s": 121516.78827440739,
+      "bins_full_exposure": 12148,
+      "bins_partial_or_empty": 11,
+      "backratio": 1.0,
+      "counts": {
+        "SRC_soft": 309154,
+        "BKG_soft": 2639,
+        "SRC_hard": 65652,
+        "BKG_hard": 1730
+      },
+      "mean_src_rate_cps": {
+        "soft": 2.544125831419055,
+        "hard": 0.5402710270102402
+      },
+      "mean_bkg_rate_scaled_cps": {
+        "soft": 0.021717163837811856,
+        "hard": 0.014236715967947901
+      }
+    },
+    {
+      "exposure": "0511580201_PNS001",
+      "n_bins": 10211,
+      "dt_s": 10.0,
+      "span_s": 102110.0,
+      "exposure_s": 102087.7886158824,
+      "bins_full_exposure": 10205,
+      "bins_partial_or_empty": 6,
+      "backratio": 1.0,
+      "counts": {
+        "SRC_soft": 391316,
+        "BKG_soft": 3231,
+        "SRC_hard": 89296,
+        "BKG_hard": 2210
+      },
+      "mean_src_rate_cps": {
+        "soft": 3.833132300204617,
+        "hard": 0.8746981515682248
+      },
+      "mean_bkg_rate_scaled_cps": {
+        "soft": 0.03164923095902319,
+        "hard": 0.021648034794008432
+      }
+    },
+    {
+      "exposure": "0511580301_PNU002",
+      "n_bins": 10410,
+      "dt_s": 10.0,
+      "span_s": 104100.0,
+      "exposure_s": 103977.88505768776,
+      "bins_full_exposure": 10395,
+      "bins_partial_or_empty": 15,
+      "backratio": 1.0,
+      "counts": {
+        "SRC_soft": 361744,
+        "BKG_soft": 3087,
+        "SRC_hard": 72696,
+        "BKG_hard": 2609
+      },
+      "mean_src_rate_cps": {
+        "soft": 3.479047489755168,
+        "hard": 0.6991486695432175
+      },
+      "mean_bkg_rate_scaled_cps": {
+        "soft": 0.02968900548695819,
+        "hard": 0.025091874089884652
+      }
+    },
+    {
+      "exposure": "0511580401_PNU002",
+      "n_bins": 10180,
+      "dt_s": 10.0,
+      "span_s": 101800.0,
+      "exposure_s": 101790.03826314211,
+      "bins_full_exposure": 10177,
+      "bins_partial_or_empty": 3,
+      "backratio": 1.0,
+      "counts": {
+        "SRC_soft": 292528,
+        "BKG_soft": 3272,
+        "SRC_hard": 53552,
+        "BKG_hard": 4007
+      },
+      "mean_src_rate_cps": {
+        "soft": 2.8738372142446043,
+        "hard": 0.5261025628221129
+      },
+      "mean_bkg_rate_scaled_cps": {
+        "soft": 0.03214459937171261,
+        "hard": 0.03936534525747323
+      }
+    }
+  ]
+}

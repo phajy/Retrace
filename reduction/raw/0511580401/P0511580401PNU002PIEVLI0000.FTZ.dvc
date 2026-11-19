@@ -1,0 +1,13 @@
+md5: 79a333a4ab074c800a3ef223162dd0cb
+frozen: true
+deps:
+- checksum: '"39b1891f01fbfb982d1077fc48e9d313-30"'
+  size: 244785334
+  hash: md5
+  path: 
+    https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580401/PPS/P0511580401PNU002PIEVLI0000.FTZ
+outs:
+- md5: ffab219f0c4937dd3eb2d908e1515621
+  size: 244785334
+  hash: md5
+  path: P0511580401PNU002PIEVLI0000.FTZ

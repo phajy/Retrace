@@ -1,0 +1,40 @@
+# Assumptions register — pilot: 1H 0707–495 lags (Fabian et al. 2009, Fig. 3)
+
+Every analysis choice that Fabian et al. 2009 (F09) does not specify is listed here with
+its source and how it could be tested. Parameter values live in `params.yaml`, and each
+key there carries its assumption ID.
+
+Sources:
+* **F09**: Fabian et al. 2009, Nature 459, 540 (arXiv:0905.4383), main text, Fig. 3 and SI.
+* **Z10**: Zoghbi et al. 2010, MNRAS (arXiv:0910.0367), §2 and §5. §5.2 says its Fig. 18 is
+  "similar to Fig. 3 in Fabian et al. 2009", so it is the closest description of how Fig. 3 was made.
+* **K13**: Kara et al. 2013 (arXiv:1210.1465), §2–3.
+
+What F09 *does* specify: SAS v8.0.0; PATTERN ≤ 4; 35″ source circle; background from the
+same chip; flare filtering; 330 ks net pn exposure. The bands for Fig. 3 are 0.3–1 and 1–4 keV.
+The sign convention is also given: a negative lag means the soft band follows the hard band.
+
+| ID | Choice (current value) | Source / reasoning | Sensitivity test | Status |
+|---|---|---|---|---|
+| M-01 | **Method difference:** reduction v0 uses the HEASARC PPS event lists (processed with SAS 18.0.0, 2019 calibration), filtered in Python, not SAS 8.0.0. | Spec plan (v0). | Reduction v1: reprocess the ODFs with SAS and compare. | open |
+| A-01 | Exclude the short exposure 0511580201 **PNU027** (3.3 ks, right after PNS001). | It is 3.3 ks long and mostly flaring (the flare screen keeps 1.2 ks; longest clean stretch 0.7 ks). It cannot hold a 100 ks segment (A-09). F09 does not mention it. | Only relevant for short-segment analyses; include it in a `flare_gti` run. | decided |
+| A-02 | Keep events with **FLAG == 0** only. | Standard conservative XMM selection for spectra/timing (SAS threads). F09 silent. | `#XMMEA_EP` instead. | open |
+| A-03 | Source centre = **iterative centroid** (20″ radius, 0.3–10 keV, PATTERN ≤ 4), starting at RA_OBJ/DEC_OBJ. | K13: regions "centered on the maximum source emission". Offsets from RA_OBJ are 0.7–1.9″. | Not needed (35″ ≫ offsets); could fix at the SIMBAD position. | decided |
+| A-04 | **Background:** 35″ circle on the same CCD (4), at the same RAWY as the source, offset −25 RAWX pixels (103″ from the source). | F09: "same chip". K13: same distance from the readout node. Same size as the source region, so both are clipped identically by the chip edge (effective-area ratio = 1.000). Some source PSF-wing light falls in the region. For lags this is a scaled copy of the source signal, so it cannot shift phases, only slightly lower amplitudes. | Other location or larger radius; no subtraction (A-08). | open |
+| A-05 | **Flare screen:** full-field single events (PATTERN == 0), 10–12 keV, FLAG == 0, 100 s bins, threshold 0.4 c/s. | The classic SAS-thread recipe of the SAS 8 era, chosen *before* looking at the result. The thread uses `#XMMEA_EP`, not FLAG == 0. F09 says only "filtered to remove any background flares". | PPS optimised GTIs (stored as `PPSGTI`; they keep all the data for this bright source); other thresholds. | open |
+| A-06 | Light-curve bin **10 s**. | K13 (10 s bins). F09/Z10 silent. Nyquist 0.05 Hz, above the 0.01 Hz upper edge of Fig. 3. | 20 s, 50 s. | open |
+| A-07 | **PATTERN ≤ 4** for the timing light curves. | F09's only stated selection. But Z10 §2: patterns were "relaxed when doing the timing", so the published lags may use PATTERN ≤ 12. | PATTERN ≤ 12 (`lightcurves.pattern_max`). **High priority.** | open |
+| A-08 | **Background-subtracted** light curves (net = src − BACKRAT × bkg). | Z10 §5.1: "background-subtracted light curves were extracted". | No subtraction. | open |
+| A-09 | **One 100 ks segment per orbit** (4 segments), not cut by the flare screen. The window is placed to minimise time outside the flare GTIs (earliest window if tied). | Z10 §5.1: "4 segments of about 100 ks length each". The Fig. 3 frequency axis starts at 1e-5 Hz, which needs ~100 ks segments. The flare-screened GTIs (longest 7.6–35 ks per orbit) could not give this, so the timing evidently did not use the flare-screened GTIs. We infer that the 330 ks in F09 refers to the spectra. Equal lengths are our choice (Z10: "about"); obs 0101 (121.6 ks) loses 21.6 ks. | `timing_gti: flare_gti` with shorter segments; unequal full-length segments. | open |
+| A-10 | Gaps ≤ **200 s** inside a segment are filled by linear interpolation (no added noise). | Standard-GTI breaks inside each exposure are 0–70 s. The papers are silent on gaps. | Fill with the segment mean; add Poisson noise. | open |
+| A-11 | Geometric frequency bins, edges **f_{i+1} = 1.4 f_i**. | Z10: "bin size is equal to 1.4 times the frequency value". This is ambiguous: read literally (Δf = 1.4 f) it means f_{i+1} = 2.4 f_i. | Factor 2.4. Counting the points in F09 Fig. 3 would settle it (counting points is a method check, not tuning). | open |
+| A-12 | Phase/lag error: Nowak et al. 1999 eq. 16, √((1−γ²)/(2γ²K)), with the raw coherence and K = segments × frequencies per bin. | Z10 §5.2 uses Nowak et al. 1999 eq. 16. Stingray's version (with Ingram 2019 bias term) is stored alongside as `phase_err_stingray_rad`. | Timmer & König simulations as in Z10 §5.3. | open |
+| A-13 | **Reliability flag:** a bin is reliable if its intrinsic coherence is defined (Stingray: powers > 3σ above noise) *and* K ≥ 30. Unreliable bins are plotted open and left out of summary numbers. | **Added after the first look at the results (post hoc).** The analytic errors were visibly wrong at the noise floor (e.g. "−12.9 ± 1.6 s" at 39 mHz where γ²_raw ≈ 6e-4). Both criteria are generic, not tuned to F09. | Simulation-based errors would replace this. | decided (post hoc, logged) |
+| A-14 | Summary "high-frequency lag" = inverse-variance weighted mean of reliable binned lags with f in [7e-4, 5e-3) Hz. | 7e-4 Hz from the F09 Fig. 3 caption. The 5e-3 Hz upper limit is where Z10 finds the coherence lost. F09 does not say how "about 30 s" was obtained. Range fixed before the first run. | Report per-bin values (always) and other ranges. | decided |
+| M-02 | **Method note:** red-noise leakage. With a rectangular window and a steep (∝ f⁻²) PSD, our synthetic test recovers 27.7 s for an injected 30 s (ratio 0.92), even with 32 segments. White noise recovers 29.8 s. | Known property of the method (cf. Z10 §5.3 simulations). F09/Z10/K13 used the same method, so comparing with them is like for like. Physical interpretation (e.g. light-travel distances) needs simulations with the measured PSD. | Timmer & König simulations with the fitted PSD. | open |
+
+## How to run a sensitivity test
+After the first git commit, use DVC experiments, for example:
+`dvc exp run -S lightcurves.pattern_max=12` or `dvc exp run -S lags.freq_bin_factor=2.4`,
+then `dvc exp show`. Record each outcome in the relevant stage's EXPLAIN.md, including tests
+that change nothing.
