@@ -138,9 +138,11 @@ macOS 26.7 (arm64), Homebrew Python 3.15.2, DVC 3.67.1 (Homebrew), packages as i
   Kara et al. 2013, *MNRAS* (arXiv:1210.1465).
 
 ## Licence
+Copyright (c) 2026 Andy Young.
 * **Software: MIT** ([`LICENSE`](LICENSE)). Covers the Python and shell scripts, `dvc.yaml`, `params.yaml` and the
   `requirements*` files.
-* **Everything else made in this project: CC BY 4.0** ([`LICENSE-docs`](LICENSE-docs)). Covers the text (every `*.md`,
+* **Everything else made in this project: CC BY 4.0**
+  ([`LICENSE-docs`](LICENSE-docs), <https://creativecommons.org/licenses/by/4.0/>). Covers the text (every `*.md`,
   including the `EXPLAIN.md` files), figures, tables, `summary.json` files and the DVC-tracked data products.
 * **Not covered (not ours):** the XMM-Newton observations (ESA; fetched from HEASARC, not stored here) and the
   published papers and figures we compare against (cited, not copied).

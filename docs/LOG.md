@@ -68,3 +68,6 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * Andy confirmed he is the "Young" among the F09 authors. Disclosed in the README and in `METHODOLOGY.md`
   (conflict of interest). His recollections of the original analysis would be a separate, labelled source
   (`AY` in `assumptions.md`). None has been used.
+* GitHub did not recognise `LICENSE-docs` as CC BY 4.0 because of the scope header at its top (the sidebar said
+  "MIT, License"). `LICENSE-docs` is now exactly the official legal code. The copyright line and the licence URL
+  moved to the README's Licence section, which already said which licence covers which files.
