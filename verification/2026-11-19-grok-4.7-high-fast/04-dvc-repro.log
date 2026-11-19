@@ -1,0 +1,104 @@
+# dvc repro
+# 2026-11-19. Elapsed 24742 ms. Exit code 0.
+# command: source .venv/bin/activate && dvc repro
+
+'reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580201/P0511580201PNU027FBKTSR0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580201/P0511580201PNU027PIEVLI0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580301/P0511580301PNU002FBKTSR0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580401/P0511580401PNU002FBKTSR0000.FTZ.dvc' didn't change, skipping
+'reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ.dvc' didn't change, skipping
+Running stage 'filter':
+> python reduction/filter/filter.py
+0511580101 PNS001: GTI 110.3 ks of 121.5 ks, longest 35.1 ks, backratio 1.000, src offset 0.77"
+0511580201 PNS001: GTI 76.3 ks of 102.1 ks, longest 10.3 ks, backratio 1.000, src offset 0.71"
+0511580201 PNU027: GTI 1.2 ks of 3.3 ks, longest 0.7 ks, backratio 1.000, src offset 0.95"
+0511580301 PNU002: GTI 68.6 ks of 104.0 ks, longest 7.6 ks, backratio 1.000, src offset 1.86"
+0511580401 PNU002: GTI 73.4 ks of 101.8 ks, longest 24.5 ks, backratio 1.000, src offset 1.85"
+{
+  "included_exposures": [
+    "0511580101_PNS001",
+    "0511580201_PNS001",
+    "0511580301_PNU002",
+    "0511580401_PNU002"
+  ],
+  "stdgti_total_ks": 429.3983997284174,
+  "gti_total_ks": 328.5938048570752,
+  "gti_total_livetime_corrected_ks": 303.9281959996232,
+  "ppsgti_total_ks": 429.39839972794056,
+  "paper_net_pn_exposure_ks_for_comparison_only": 330
+}
+
+Running stage 'lightcurves':
+> python analysis/lightcurves/lightcurves.py
+0511580101_PNS001 {"soft": 2.544125831419055, "hard": 0.5402710270102402} {"soft": 0.021717163837811856, "hard": 0.014236715967947901}
+0511580201_PNS001 {"soft": 3.833132300204617, "hard": 0.8746981515682248} {"soft": 0.03164923095902319, "hard": 0.021648034794008432}
+0511580301_PNU002 {"soft": 3.479047489755168, "hard": 0.6991486695432175} {"soft": 0.02968900548695819, "hard": 0.025091874089884652}
+0511580401_PNU002 {"soft": 2.8738372142446043, "hard": 0.5261025628221129} {"soft": 0.03214459937171261, "hard": 0.03936534525747323}
+
+Running stage 'lags':
+> python analysis/lags/lags.py
+/Users/phajy/GitHub/Retrace-check/.venv/lib/python3.15/site-packages/stingray/utils.py:54: UserWarning: The recommended numba package is not installed. Some functionality might be slower.
+  warnings.warn(
+{
+  "n_segments": 4,
+  "high_freq_mean_lag": {
+    "7e-4_to_5e-3_Hz": {
+      "f_range_hz": [
+        0.0007,
+        0.005
+      ],
+      "n_bins": 5,
+      "weighted_mean_lag_s": -16.789131939569263,
+      "error_s": 3.3553378354805523
+    },
+    "7e-4_to_1e-2_Hz": {
+      "f_range_hz": [
+        0.0007,
+        0.01
+      ],
+      "n_bins": 5,
+      "weighted_mean_lag_s": -16.789131939569263,
+      "error_s": 3.3553378354805523
+    }
+  },
+  "low_freq_mean_lag": {
+    "1e-4_to_5e-4_Hz": {
+      "f_range_hz": [
+        0.0001,
+        0.0005
+      ],
+      "n_bins": 3,
+      "weighted_mean_lag_s": 81.48488566416749,
+      "error_s": 15.285618657551048
+    }
+  },
+  "positive_to_negative_crossing_hz": [
+    0.0005946881976190911
+  ],
+  "self_test_sign": {
+    "injected_lag_s": 30.0,
+    "injected_sense": "hard delayed relative to soft (expect lag > 0)",
+    "white_noise_median_lag_s_1e-4_to_3e-3_Hz": 29.809010703855684,
+    "passed": true,
+    "red_noise_leak_diagnostic": {
+      "psd": "~f^-2 above ~2.5e-4 Hz, 32 segments, rectangular window",
+      "median_lag_s_1e-4_to_3e-3_Hz": 27.658463715281318,
+      "ratio_recovered_to_injected": 0.9219487905093773,
+      "note": "red-noise leakage biases |lag| low for steep PSDs; see EXPLAIN.md"
+    }
+  },
+  "stingray_cross_check": {
+    "stingray_n_segments": 4,
+    "same_frequency_grid": true,
+    "max_abs_lag_difference_s": 4.263256414560601e-13,
+    "passed": true
+  }
+}
+
+Stage 'figures' didn't change, skipping
+Use `dvc push` to send your updates to remote storage.

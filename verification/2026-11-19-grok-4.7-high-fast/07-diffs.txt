@@ -1,0 +1,32 @@
+# Diffs after the re-run, before this verification folder was added.
+# All of these were empty. There is no hunk to show.
+
+command: git diff --stat
+(no output)
+recorded 2026-11-19T22:19:55Z
+
+command: git diff
+(no output)
+recorded 2026-11-19T22:19:55Z
+
+command: git diff --stat reduction/raw
+(no output)
+recorded immediately after dvc update, before dvc repro
+
+command: git diff -- reduction/raw
+(no output)
+same time as the previous command
+
+command: dvc metrics diff
+(no output)
+recorded 2026-11-19T22:19:55Z
+
+command: git status --short
+(no output)
+recorded 2026-11-19T22:19:55Z
+
+Later, at 2026-11-19T22:21:50Z, after 06-comparison.txt had been written:
+command: git status --short
+?? verification/2026-11-19-grok-4.7-high-fast/
+
+No pipeline file, summary, CSV, figure, content hash, or dvc.lock line differed from HEAD.

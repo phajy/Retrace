@@ -1,0 +1,29 @@
+# After dvc update. 2026-11-19.
+
+command: git diff --stat reduction/raw
+(no output)
+
+command: git diff -- reduction/raw
+(no output)
+
+command: git status --short reduction/raw
+This first status ran in the sandbox and printed only:
+warning: unable to access '/Users/phajy/.gitignore': Operation not permitted
+warning: unable to access '/Users/phajy/.gitignore': Operation not permitted
+It printed no tracked or untracked paths under reduction/raw.
+
+A later `git status --short` for the whole repo, outside the sandbox
+(2026-11-19T22:19:55Z, after dvc repro), printed no output and no warning.
+
+Downloaded file sizes (ls -l), all ten data files plus git metadata:
+reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ      190431
+reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ  212214929
+reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ      161167
+reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ  206032824
+reduction/raw/0511580201/P0511580201PNU027FBKTSR0000.FTZ       16327
+reduction/raw/0511580201/P0511580201PNU027PIEVLI0000.FTZ   26542231
+reduction/raw/0511580301/P0511580301PNU002FBKTSR0000.FTZ      163930
+reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ  226362026
+reduction/raw/0511580401/P0511580401PNU002FBKTSR0000.FTZ      160099
+reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ  244785334
+Sum of those ten sizes: 916629298 bytes.

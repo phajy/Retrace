@@ -1,0 +1,144 @@
+# Clone and environment
+# Times are UTC, 2026-11-19.
+
+## First clone attempt (sandbox; failed)
+command: git clone https://github.com/phajy/Retrace.git .
+exit code: 1
+output:
+Cloning into '.'...
+/Users/phajy/GitHub/Retrace-check/.git/hooks/: Operation not permitted
+
+Workaround: the same clone command was re-run with the sandbox disabled.
+No pipeline file was changed.
+
+## Second clone attempt (succeeded)
+command: git clone https://github.com/phajy/Retrace.git .
+The destination was `.` (this empty workspace), not a nested Retrace/ directory.
+See REPORT.md for why.
+
+output (tail):
+Cloning into '.'...
+9eea9a19c7becbb960ec700ab0ee97a7bc50d463
+On branch main
+Your branch is up to date with 'origin/main'.
+nothing to commit, working tree clean
+9eea9a1 Put reference FITS column hashes in git for verifiers
+
+command: git rev-parse HEAD
+9eea9a19c7becbb960ec700ab0ee97a7bc50d463
+recorded at 2026-11-19T22:14:17Z
+
+## Host
+command: uname -a
+Darwin Q7GXJ91PH4 25.6.0 Darwin Kernel Version 25.6.0: Mon Oct 12 00:41:16 PDT 2026; root:xnu-12377.161.15.701.48~2/RELEASE_ARM64_T6000 arm64
+
+command: sw_vers
+ProductName:		macOS
+ProductVersion:		26.7.3
+BuildVersion:		25G342
+
+command: python3 --version && which python3
+Python 3.15.2
+/opt/homebrew/bin/python3
+
+## DVC, first attempt (sandbox; failed)
+command: dvc version
+ERROR: unexpected error - [Errno 1] Operation not permitted: '/opt/homebrew/var/cache/dvc/repo/d6e52960625cf6196d867776cc0b205e'
+
+Having any troubles? Hit us up at https://dvc.org/support, we are always happy to help!
+
+Workaround: the same `dvc version` command was re-run with the sandbox disabled.
+
+## DVC, second attempt
+DVC version: 3.67.1 (brew)
+--------------------------
+Platform: Python 3.15.2 on macOS-26.7.3-arm64-arm-64bit-Mach-O
+Subprojects:
+	dvc_data = 3.18.3
+	dvc_objects = 5.2.0
+	dvc_render = 1.0.2
+	dvc_task = 0.40.2
+	scmrepo = 3.6.2
+Supports:
+	azure (adlfs = 2026.8.0, knack = 0.14.0, azure-identity = 1.27.0),
+	gdrive (pydrive2 = 1.21.2),
+	gs (gcsfs = 2026.10.1),
+	hdfs (fsspec = 2026.9.0, pyarrow = 26.0.1),
+	http (aiohttp = 3.14.5, aiohttp-retry = 2.9.1),
+	https (aiohttp = 3.14.5, aiohttp-retry = 2.9.1),
+	oss (ossfs = 2025.5.0),
+	s3 (s3fs = 2026.9.0),
+	ssh (sshfs = 2026.8.0),
+	webdav (webdav4 = 0.11.0),
+	webdavs (webdav4 = 0.11.0),
+	webhdfs (fsspec = 2026.9.0)
+Config:
+	Global: /Users/phajy/Library/Application Support/dvc
+	System: /opt/homebrew/share/dvc
+Cache types: <https://error.dvc.org/no-dvc-cache>
+Caches: local
+Remotes: None
+Workspace directory: apfs on /dev/disk3s1s1
+Repo: dvc, git
+Repo.site_cache_dir: /opt/homebrew/var/cache/dvc/repo/d6e52960625cf6196d867776cc0b205e
+
+command: brew list --versions dvc
+dvc 3.67.1_20
+which dvc: /opt/homebrew/bin/dvc
+
+## Virtualenv and install
+Branch created first:
+command: git checkout -b verification/2026-11-19-grok-4.7-high-fast
+Switched to a new branch 'verification/2026-11-19-grok-4.7-high-fast'
+
+Extra command, not in the README (no preceding failure):
+command: python -m pip install --upgrade pip
+Requirement already satisfied: pip in ./.venv/lib/python3.15/site-packages (26.2.2)
+...
+Successfully installed pip-26.3
+
+Then the README command:
+command: pip install -r requirements.lock
+exit code: 0
+Installed the locked wheels. PyYAML was built from the locked sdist.
+Successfully installed PyYAML-6.0.3 astropy-8.0.3 astropy-iers-data-0.2026.11.16.0.37.44 contourpy-1.4.0 cycler-0.12.1 fonttools-4.68.0 kiwisolver-1.5.1 matplotlib-3.11.2 numpy-2.5.5 packaging-26.3 pillow-13.0.0 pyerfa-2.0.1.5 pyparsing-3.3.3 python-dateutil-4.0.0 scipy-1.18.1 stingray-2.3.2 tzdata-2026.6
+
+## Versions inside the venv
+command: source .venv/bin/activate && python -c "import numpy,scipy,astropy,stingray,matplotlib,yaml; ..." && pip freeze
+started_at: 2026-11-19T22:15:49Z
+ended_at: 2026-11-19T22:16:30Z
+exit code: 0
+
+Import warning (also printed later by the lags stage):
+/Users/phajy/GitHub/Retrace-check/.venv/lib/python3.15/site-packages/stingray/utils.py:54: UserWarning: The recommended numba package is not installed. Some functionality might be slower.
+  warnings.warn(
+
+numpy 2.5.5
+scipy 1.18.1
+astropy 8.0.3
+stingray 2.3.2
+matplotlib 3.11.2
+pyyaml 6.0.3
+
+pip freeze (identical to requirements.lock; diff produced no output):
+astropy==8.0.3
+astropy-iers-data==0.2026.11.16.0.37.44
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.68.0
+kiwisolver==1.5.1
+matplotlib==3.11.2
+numpy==2.5.5
+packaging==26.3
+pillow==13.0.0
+pyerfa==2.0.1.5
+pyparsing==3.3.3
+python-dateutil==4.0.0
+PyYAML==6.0.3
+scipy==1.18.1
+stingray==2.3.2
+tzdata==2026.6
+
+which python: /Users/phajy/GitHub/Retrace-check/.venv/bin/python
+Python 3.15.2
+numba is not in requirements.lock and was not installed.
