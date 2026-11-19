@@ -7,7 +7,7 @@ An entry changes only when a named check has actually been run, and the commit t
 ## Results
 | ID | Result (published value) | Explainer | Re-run | Re-derived | Compared | Challenges |
 |---|---|---|---|---|---|---|
-| [R1](R1-lag-frequency.md) | F09 Fig. 3: lag–frequency spectrum, 0.3–1 vs 1–4 keV (soft lags hard by "about 30 s" above ~0.6 mHz) | baseline computed 2026-11-19 | not yet | not yet | not yet (needs digitised Fig. 3) | none yet |
+| [R1](R1-lag-frequency.md) | F09 Fig. 3: lag–frequency spectrum, 0.3–1 vs 1–4 keV (soft lags hard by "about 30 s" above ~0.6 mHz) | baseline computed 2026-11-19 | not yet | not yet | not yet (needs digitised Fig. 3) | [#1](https://github.com/phajy/Retrace/issues/1) background flares: confirmed ([result](checks/issue-1/RESULT.md)) |
 | R2 | F09 SI: mean lag above 7×10⁻⁴ Hz, 0.5–1 vs 3–7 keV (−6 ± 18 s) | not started | — | — | — | — |
 | R3 | F09: 330 ks net pn exposure after flare filtering | 328.6 ks with a 0.4 c/s screen chosen in advance (F09's definition of "net" is unknown) | not yet | — | comparison only | — |
 

@@ -6,7 +6,7 @@
 | Re-run by a verifier | not yet |
 | Re-derived by a verifier | not yet |
 | Compared with the paper | not yet (needs digitised Fig. 3 points) |
-| Challenges | none yet ([open one](https://github.com/phajy/Retrace/issues/new?template=check-request.yml)) |
+| Challenges | [#1](https://github.com/phajy/Retrace/issues/1) background flares: **confirmed** ([result](checks/issue-1/RESULT.md)) · [open another](https://github.com/phajy/Retrace/issues/new?template=check-request.yml) |
 
 **This is not yet a reproduction claim.**
 
@@ -66,6 +66,9 @@ version of this figure was made. Full details:
    Background subtraction removes this to first order, but a scaling error would leave flare
    variability in the light curves. See also the flare screen for
    [0401](figures/diag_0511580401_PNU002.png) and [0301](figures/diag_0511580301_PNU002.png).
+   **Tested in [check request #1](checks/issue-1/RESULT.md):** with background subtraction switched off, which leaves
+   the flares fully in, no reliable bin moves by more than 0.34σ. Outcome: confirmed. A test with flare-free windows
+   is still possible but no longer a priority.
 2. **PATTERN ≤ 12** for timing (Zoghbi et al. 2010 say patterns were relaxed for timing; we use ≤ 4, A-07).
 3. **Frequency binning** factor 1.4 vs 2.4 (A-11: the source text is ambiguous).
 4. **What "about 30 s" means** (peak or average; which frequency range).

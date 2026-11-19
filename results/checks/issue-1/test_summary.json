@@ -1,0 +1,116 @@
+{
+  "sign_convention": "lag > 0: hard (1-4 keV) lags soft (0.3-1 keV); lag < 0: soft lags hard",
+  "timing_gti": "orbit",
+  "segment_s": 100000,
+  "n_segments": 4,
+  "dt_s": 10.0,
+  "pattern_max": 4,
+  "background_subtract": false,
+  "freq_bin_factor": 1.4,
+  "segments": [
+    {
+      "exposure": "0511580101_PNS001",
+      "tstart": 318024395.52516305,
+      "tstop": 318124395.52516305,
+      "n_bins": 10000,
+      "mean_soft_cps": 2.685595,
+      "mean_hard_cps": 0.568075,
+      "flaring_time_in_window_s": 800.0,
+      "bins_interpolated": 11
+    },
+    {
+      "exposure": "0511580201_PNS001",
+      "tstart": 318192633.88417673,
+      "tstop": 318292633.88417673,
+      "n_bins": 10000,
+      "mean_soft_cps": 3.8466250000000004,
+      "mean_hard_cps": 0.877955,
+      "flaring_time_in_window_s": 23700.0,
+      "bins_interpolated": 6
+    },
+    {
+      "exposure": "0511580301_PNU002",
+      "tstart": 318370819.6369411,
+      "tstop": 318470819.6369411,
+      "n_bins": 10000,
+      "mean_soft_cps": 3.4752549999999998,
+      "mean_hard_cps": 0.69502,
+      "flaring_time_in_window_s": 31400.0,
+      "bins_interpolated": 2
+    },
+    {
+      "exposure": "0511580401_PNU002",
+      "tstart": 318550621.02297854,
+      "tstop": 318650621.02297854,
+      "n_bins": 10000,
+      "mean_soft_cps": 2.8916,
+      "mean_hard_cps": 0.5253099999999999,
+      "flaring_time_in_window_s": 26600.0,
+      "bins_interpolated": 3
+    }
+  ],
+  "high_freq_mean_lag": {
+    "7e-4_to_5e-3_Hz": {
+      "f_range_hz": [
+        0.0007,
+        0.005
+      ],
+      "n_bins": 5,
+      "weighted_mean_lag_s": -15.850379654233103,
+      "error_s": 3.280574583577577
+    },
+    "7e-4_to_1e-2_Hz": {
+      "f_range_hz": [
+        0.0007,
+        0.01
+      ],
+      "n_bins": 5,
+      "weighted_mean_lag_s": -15.850379654233103,
+      "error_s": 3.280574583577577
+    }
+  },
+  "low_freq_mean_lag": {
+    "1e-4_to_5e-4_Hz": {
+      "f_range_hz": [
+        0.0001,
+        0.0005
+      ],
+      "n_bins": 3,
+      "weighted_mean_lag_s": 80.43929289620742,
+      "error_s": 15.155267348147397
+    }
+  },
+  "positive_to_negative_crossing_hz": [
+    0.0005853656029036455
+  ],
+  "reliable_bins_f_range_hz": [
+    0.00024500000000000005,
+    0.003655
+  ],
+  "most_negative_reliable_bin": {
+    "f_mean_hz": 0.0013350000000000002,
+    "lag_s": -32.18371494993978,
+    "lag_err_s": 8.199653574510206
+  },
+  "self_test_sign": {
+    "injected_lag_s": 30.0,
+    "injected_sense": "hard delayed relative to soft (expect lag > 0)",
+    "white_noise_median_lag_s_1e-4_to_3e-3_Hz": 29.809010703855684,
+    "passed": true,
+    "red_noise_leak_diagnostic": {
+      "psd": "~f^-2 above ~2.5e-4 Hz, 32 segments, rectangular window",
+      "median_lag_s_1e-4_to_3e-3_Hz": 27.658463715281318,
+      "ratio_recovered_to_injected": 0.9219487905093773,
+      "note": "red-noise leakage biases |lag| low for steep PSDs; see EXPLAIN.md"
+    }
+  },
+  "stingray_cross_check": {
+    "stingray_n_segments": 4,
+    "same_frequency_grid": true,
+    "max_abs_lag_difference_s": 9.094947017729282e-13,
+    "passed": true
+  },
+  "published_for_comparison_only": {
+    "fabian2009_text": "soft band follows hard by about 30 s above ~0.6 mHz (Fig. 3 caption: 7e-4 Hz)"
+  }
+}

@@ -83,3 +83,16 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * `dvc repro` re-ran filter, lightcurves and figures. Every FITS file, plot, summary and lag output is
   byte-identical to before. The lags stage was skipped because its input did not change. The only difference
   in `reduction/filter/output` is that `content_hashes.json` moved out of it.
+
+**Later in session 1: check request #1 (background flares; opened by Andy as a human challenger)**
+* The request asked to "re-run leaving in the flares", with criterion "not significantly changed". Before running,
+  the explainer wrote down an operational reading in `results/checks/issue-1/PLAN.md`: background subtraction off,
+  with explicit 1σ thresholds. Andy approved it, and it was posted to the issue at 22:13 UTC, before the run.
+* Ran `dvc exp run --temp -n issue-1-no-bkg-subtraction -S lags.background_subtract=false` on `9eea9a1`. Note for
+  future checks: `-S` rewrites the layout of `params.yaml` in the experiment commit. A parsed comparison confirmed
+  only that one value changed.
+* `results/checks/issue-1/compare.py` applied the criteria mechanically. No criterion was triggered: the largest
+  change in a reliable bin was 0.34σ, and the means moved by +0.28σ and −0.07σ. Two unreliable bins moved more,
+  including the 39 mHz noise-floor bin that flips sign. That is consistent with the A-13 flag.
+* Outcome `confirmed`. The baseline is unchanged, as the plan specified. Updated A-08, the R1 page, the lag stage's
+  EXPLAIN, the score sheet and METHODOLOGY (agent posts appear under Andy's GitHub account).

@@ -134,7 +134,8 @@ flowchart TD
 * The score sheet is a Markdown file edited by hand in reviewed commits. A real system would generate
   it from signed verification records.
 * Agents are run by hand in Claude Code sessions and post to GitHub with the `gh` command-line tool.
-  There is no automation yet.
+  There is no automation yet. Agent posts therefore appear under the maintainer's GitHub account, and
+  their text names the agent and tool. A real system would give each agent its own account.
 * The DVC data cache stays on the maintainer's machine. Verifiers download the raw data from HEASARC
   (about 0.9 GB) and re-run the pipeline. The small outputs people want to read (summary numbers,
   tables, figures) are in git.

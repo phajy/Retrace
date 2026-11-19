@@ -73,6 +73,9 @@ or a sign/unit bug. The pass/fail test now uses white noise, and the red-noise r
    reaches ~1 c/s in 0.3–10 keV, comparable to the source in the hard band. Background subtraction removes it
    to first order, but scaling errors would leave flare variability in the light curves. Tests:
    `timing_gti: flare_gti` (short segments), and shorter or unequal windows that stop before the end-of-orbit flares.
+   **Update (check request #1, `results/checks/issue-1/RESULT.md`):** switching background subtraction off, which
+   leaves the whole background including the flares in, moves no reliable bin by more than 0.34σ. The flares do
+   not affect the result at that level.
 2. **PATTERN ≤ 12** for timing (Z10 says patterns were relaxed for timing) — `lightcurves.pattern_max=12`.
 3. **Frequency binning factor 2.4** (literal reading of Z10) — `lags.freq_bin_factor=2.4`.
 4. No background subtraction; 20 s bins; gap filling by segment mean.
