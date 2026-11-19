@@ -38,6 +38,8 @@ Owner: Andy Young (University of Bristol). This file is project memory for any C
 - Separate facts (measured lags, fluxes) from interpretation (e.g. coronal height under a lamppost model).
 - Git: Andy pushes to GitHub himself unless he says otherwise. DVC remote: local folder first,
   Cloudflare R2 (free tier, Standard class) later.
+- Licences: software MIT (`LICENSE`); text, figures, tables and data products CC BY 4.0 (`LICENSE-docs`).
+  Don't copy published figures or paper text into the repo; cite them (digitised values with a reference are fine).
 
 ## Layout (monorepo for the pilot; split later along reuse lines)
 - `docs/`      specs and notes (start with `docs/pilot-1h0707-lags.md`)

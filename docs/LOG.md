@@ -42,3 +42,10 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
   at 1.34e-3 Hz, weighted mean −16.8 ± 3.4 s over 7e-4–5e-3 Hz. Not yet compared bin by bin with Fig. 3.
 * Concern noted after looking at the diagnostics: end-of-orbit flares fall inside the 0301 and 0401 windows.
   The baseline was **not** changed after seeing the lags; this becomes the top sensitivity test.
+
+**Later in session 1 (housekeeping)**
+* First commit `b60e201`, made at Andy's request (not pushed). Just before it, the DVC remote's absolute path in this
+  log was rewritten as `~/dvc-remotes/retrace` (a machine-specific path in a soon-to-be-public repo).
+* Licences added at Andy's request: MIT for software (`LICENSE`), CC BY 4.0 for everything else (`LICENSE-docs`; legal
+  code downloaded from creativecommons.org and included unmodified). Copyright holder written as Andy Young, pending a
+  check of the University of Bristol IP policy.

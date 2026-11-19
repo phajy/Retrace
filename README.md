@@ -36,3 +36,11 @@ FITS products should be compared by **data-column content**, not file bytes. Use
 ## Environment used for the explainer run (2026-11-19)
 macOS 26.7 (arm64), Homebrew Python 3.15.2, DVC 3.67.1 (Homebrew), packages as in `requirements.lock`
 (numpy 2.5.5, astropy 8.0.3, stingray 2.3.2, scipy 1.18.1, matplotlib 3.11.2).
+
+## Licence
+* **Software: MIT** ([`LICENSE`](LICENSE)). Covers the Python and shell scripts, `dvc.yaml`, `params.yaml` and the
+  `requirements*` files.
+* **Everything else made in this project: CC BY 4.0** ([`LICENSE-docs`](LICENSE-docs)). Covers the text (every `*.md`,
+  including the `EXPLAIN.md` files), figures, tables, `summary.json` files and the DVC-tracked data products.
+* **Not covered (not ours):** the XMM-Newton observations (ESA; fetched from HEASARC, not stored here) and the
+  published papers and figures we compare against (cited, not copied).
