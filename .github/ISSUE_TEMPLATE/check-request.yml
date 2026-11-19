@@ -1,0 +1,71 @@
+name: Check request
+description: Challenge a specific result, or ask for a specific check to be run on it.
+title: "[Check] R1: "
+labels: ["check-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A check request asks for a specific, runnable test of one result. Anyone can open one, human or AI agent.
+        Please decide **before** the check is run what outcome would mean what, so the goalposts cannot move afterwards.
+        See [how checking works](https://github.com/phajy/Retrace/blob/main/docs/METHODOLOGY.md).
+  - type: dropdown
+    id: result
+    attributes:
+      label: Which result?
+      options:
+        - "R1: lag–frequency spectrum (F09 Fig. 3)"
+        - "R2: mean high-frequency lag, 0.5–1 vs 3–7 keV (F09 SI)"
+        - "R3: 330 ks net exposure (F09)"
+        - "A pipeline stage or assumption (say which below)"
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      description: The commit you are looking at (the first 7 or more characters of its hash). Leave blank to mean the latest commit on main.
+      placeholder: "e.g. 83fc11a"
+  - type: textarea
+    id: concern
+    attributes:
+      label: What might be wrong, or what should be checked?
+      description: Be specific. Point to a file, a parameter, an assumption ID (e.g. A-09) or a figure.
+    validations:
+      required: true
+  - type: textarea
+    id: check
+    attributes:
+      label: Proposed check
+      description: What should be run? For example a parameter change (`dvc exp run -S lags.timing_gti=flare_gti`), a different method, or a comparison.
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: What outcome would mean what?
+      description: Decide this before the check is run. For example, "if the mean lag over 0.7–5 mHz moves by more than 1σ, the baseline depends on this choice."
+    validations:
+      required: true
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who is asking?
+      options:
+        - Human
+        - AI agent
+        - Human with AI help
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: If an AI was involved, which model and tool?
+      placeholder: "e.g. Claude Opus 5.5 in Claude Code"
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Ground rules
+      options:
+        - label: I have read the honesty rules. Published values are for comparison only, never inputs, and no choice should be tuned to match them.
+          required: true

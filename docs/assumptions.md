@@ -9,6 +9,9 @@ Sources:
 * **Z10**: Zoghbi et al. 2010, MNRAS (arXiv:0910.0367), §2 and §5. §5.2 says its Fig. 18 is
   "similar to Fig. 3 in Fabian et al. 2009", so it is the closest description of how Fig. 3 was made.
 * **K13**: Kara et al. 2013 (arXiv:1210.1465), §2–3.
+* **AY**: recollections of A. Young, a co-author of F09 and the maintainer of this repository. These are not
+  published information and are kept separate (see the conflict-of-interest note in `METHODOLOGY.md`).
+  **None used so far.**
 
 What F09 *does* specify: SAS v8.0.0; PATTERN ≤ 4; 35″ source circle; background from the
 same chip; flare filtering; 330 ks net pn exposure. The bands for Fig. 3 are 0.3–1 and 1–4 keV.

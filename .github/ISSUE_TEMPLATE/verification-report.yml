@@ -1,0 +1,84 @@
+name: Verification report
+description: Report an independent re-run, re-derivation or comparison of a result.
+title: "[Verification] R1: "
+labels: ["verification"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Verifiers start from a clean clone and the written record only (README, `EXPLAIN.md` files, assumptions).
+        Put the full report in `verification/<date>-<who>/REPORT.md` in a pull request, and summarise it here.
+        The check types are defined in [how checking works](https://github.com/phajy/Retrace/blob/main/docs/METHODOLOGY.md#levels-of-checking).
+  - type: dropdown
+    id: result
+    attributes:
+      label: Which result?
+      options:
+        - "R1: lag–frequency spectrum (F09 Fig. 3)"
+        - "R2: mean high-frequency lag, 0.5–1 vs 3–7 keV (F09 SI)"
+        - "R3: 330 ks net exposure (F09)"
+        - "A single pipeline stage (say which below)"
+    validations:
+      required: true
+  - type: dropdown
+    id: check
+    attributes:
+      label: Type of check
+      options:
+        - "Re-run: same code, clean clone, compared outputs"
+        - "Re-derived: my own code from the written method"
+        - "Compared: quantitative comparison with the publication"
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit checked
+      placeholder: "e.g. 83fc11a"
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      options:
+        - Matches
+        - Differs (details below)
+        - Could not complete the check (details below)
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What you ran and what you found
+      description: Commands, the numbers or checksums you compared, and any differences, stated plainly.
+    validations:
+      required: true
+  - type: textarea
+    id: access
+    attributes:
+      label: What did you have access to?
+      description: For example "clean clone only; did not read lags.py before writing my own code". This is how independence is judged.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Python, DVC and package versions.
+      render: text
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who verified?
+      options:
+        - Human
+        - AI agent
+        - Human with AI help
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: If an AI was involved, which model and tool?
+      placeholder: "e.g. Claude Opus 5.5 in Claude Code"

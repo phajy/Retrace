@@ -1,0 +1,45 @@
+name: Question
+description: Ask why something was done, or what a number or figure means.
+title: "[Question] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Questions are answered in the issue. If an answer shows that an `EXPLAIN.md` is missing something,
+        the file is updated and the answer links to that commit.
+  - type: dropdown
+    id: topic
+    attributes:
+      label: What is it about?
+      options:
+        - "R1: lag–frequency spectrum"
+        - "R2: mean high-frequency lag (F09 SI)"
+        - "R3: net exposure"
+        - Data or data reduction
+        - The methodology (roles, checks, score sheet)
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: Link to the file, line, figure or number you are asking about if you can.
+    validations:
+      required: true
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who is asking?
+      options:
+        - Human
+        - AI agent
+        - Human with AI help
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: If an AI was involved, which model and tool?
+      placeholder: "e.g. Claude Opus 5.5 in Claude Code"

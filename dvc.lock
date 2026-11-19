@@ -204,3 +204,63 @@ stages:
       hash: md5
       md5: 269f66aa7da601e95a1c8546fd095f98
       size: 3215
+  figures:
+    cmd:
+    - mkdir -p results/figures
+    - cp reduction/filter/output/diag_0511580101_PNS001.png 
+      reduction/filter/output/diag_0511580201_PNS001.png 
+      reduction/filter/output/diag_0511580201_PNU027.png 
+      reduction/filter/output/diag_0511580301_PNU002.png 
+      reduction/filter/output/diag_0511580401_PNU002.png 
+      analysis/lightcurves/output/lc_0511580101_PNS001.png 
+      analysis/lightcurves/output/lc_0511580201_PNS001.png 
+      analysis/lightcurves/output/lc_0511580301_PNU002.png 
+      analysis/lightcurves/output/lc_0511580401_PNU002.png results/figures/
+    deps:
+    - path: analysis/lightcurves/output
+      hash: md5
+      md5: e4ff83a3d9cba241eefe714faea9f063.dir
+      size: 2003947
+      nfiles: 8
+    - path: reduction/filter/output
+      hash: md5
+      md5: c6a830f4d604a058884d5530cfa6afd1.dir
+      size: 56538483
+      nfiles: 11
+    outs:
+    - path: results/figures/diag_0511580101_PNS001.png
+      hash: md5
+      md5: abf8862be323ad8de2f9a813b46c28c3
+      size: 337140
+    - path: results/figures/diag_0511580201_PNS001.png
+      hash: md5
+      md5: 4b86ecd87a990f29e50c94f3dfbfd2e9
+      size: 360757
+    - path: results/figures/diag_0511580201_PNU027.png
+      hash: md5
+      md5: 2a04ad5765930c8a14a91cbaf09d9577
+      size: 288646
+    - path: results/figures/diag_0511580301_PNU002.png
+      hash: md5
+      md5: a862125099036c7515a32480496b95c5
+      size: 353794
+    - path: results/figures/diag_0511580401_PNU002.png
+      hash: md5
+      md5: 05c4088e2015c0edcc042dab5f395a6e
+      size: 365794
+    - path: results/figures/lc_0511580101_PNS001.png
+      hash: md5
+      md5: bd50742d354eba4dfcd9dba4b00e778f
+      size: 84316
+    - path: results/figures/lc_0511580201_PNS001.png
+      hash: md5
+      md5: eb338c011402300045d0f07cd26ac72e
+      size: 40596
+    - path: results/figures/lc_0511580301_PNU002.png
+      hash: md5
+      md5: 3ede628527087835eff115c1d21c3b16
+      size: 81292
+    - path: results/figures/lc_0511580401_PNU002.png
+      hash: md5
+      md5: 9e536a14dcb39eca62b22c28524a9a3c
+      size: 40943

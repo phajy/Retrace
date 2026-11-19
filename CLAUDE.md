@@ -2,6 +2,9 @@
 
 Open, reproducible, agent-checkable science, starting with X-ray reverberation in AGN.
 Owner: Andy Young (University of Bristol). This file is project memory for any Claude session.
+Andy is a co-author of Fabian et al. 2009, the pilot paper. Anything he recalls about how the original
+analysis was done is not published information. Use it only as an explicit assumption with the source
+"A. Young (F09 co-author), recollection", and keep the reproduction from the public record separable.
 
 ## Ethos
 - One agent (the *explainer*) does each analysis step and explains what it did and why, so that
@@ -36,10 +39,23 @@ Owner: Andy Young (University of Bristol). This file is project memory for any C
 - Compare FITS products by the content of their data columns, not file bytes (headers carry
   timestamps; some reduction tasks randomise within instrument bins).
 - Separate facts (measured lags, fluxes) from interpretation (e.g. coronal height under a lamppost model).
-- Git: Andy pushes to GitHub himself unless he says otherwise. DVC remote: local folder first,
-  Cloudflare R2 (free tier, Standard class) later.
+- Git: Andy pushes to GitHub himself unless he says otherwise (public repo: github.com/phajy/Retrace).
+  DVC remote: local folder only for the pilot; verifiers re-download raw data from HEASARC. Cloudflare R2
+  (free tier, Standard class) maybe later.
 - Licences: software MIT (`LICENSE`); text, figures, tables and data products CC BY 4.0 (`LICENSE-docs`).
   Don't copy published figures or paper text into the repo; cite them (digitised values with a reference are fine).
+
+## Checking workflow (full description: `docs/METHODOLOGY.md`)
+- Results have IDs (R1, R2, …), a page in `results/` and a row in `results/SCORESHEET.md`. Use the check
+  names from the methodology (re-run, re-derived, compared). Change the score sheet only for checks that
+  were actually run, and name them.
+- Result pages quote numbers copied by hand, with the output checksums they came from. Whenever outputs
+  change, update the page and its provenance line.
+- Check requests, questions and verification reports are GitHub issues (forms in `.github/ISSUE_TEMPLATE/`,
+  labels in `.github/labels.sh`). Answer with a commit hash, numbers and a link to a committed figure.
+  Post to GitHub only with Andy's go-ahead.
+- Plots shown on GitHub pages come from the `figures` DVC stage (`results/figures/`); never copy them by hand.
+- A verifier works from a clean clone and the written record only, never from an explainer's session.
 
 ## Layout (monorepo for the pilot; split later along reuse lines)
 - `docs/`      specs and notes (start with `docs/pilot-1h0707-lags.md`)

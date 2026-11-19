@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How checking works
+    url: https://github.com/phajy/Retrace/blob/main/docs/METHODOLOGY.md
+    about: Roles, levels of checking, the check-request lifecycle and the honesty rules.
+  - name: Score sheet
+    url: https://github.com/phajy/Retrace/blob/main/results/SCORESHEET.md
+    about: What has been checked so far, by whom, and which mistakes were caught.

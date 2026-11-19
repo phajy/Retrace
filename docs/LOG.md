@@ -49,3 +49,22 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * Licences added at Andy's request: MIT for software (`LICENSE`), CC BY 4.0 for everything else (`LICENSE-docs`; legal
   code downloaded from creativecommons.org and included unmodified). Copyright holder written as Andy Young, pending a
   check of the University of Bristol IP policy.
+* Andy confirmed the copyright holder (Andy Young) and that his work email may appear in the public commit history.
+* Andy pushed the repository to GitHub (public: github.com/phajy/Retrace). The DVC cache stays local for the
+  pilot; verifiers re-download the raw data from HEASARC.
+
+**Later in session 1 (documentation pass)**
+* New `figures` DVC stage copies the flare-screen and light-curve plots from DVC-tracked `output/` folders
+  into git-tracked `results/figures/`, so GitHub pages can show them. `dvc repro` ran only this stage
+  (upstream stages unchanged).
+* Added `docs/METHODOLOGY.md` (roles, chain of trust, levels of checking, check-request lifecycle, labels,
+  independence limits, proof-of-concept simplifications), `results/R1-lag-frequency.md`, a restructured
+  score sheet with result IDs and separate re-run / re-derived / compared columns, `verification/README.md`,
+  GitHub issue forms (check request, question, verification report), a pull-request checklist and
+  `.github/labels.sh`. README rewritten as a front page. No analysis code or results changed.
+* Created the eight issue labels on GitHub with `.github/labels.sh` (at Andy's request). GitHub's default
+  `question` label already existed and was updated in place. Its colour was set back to GitHub's original
+  purple so it differs from `documentation`.
+* Andy confirmed he is the "Young" among the F09 authors. Disclosed in the README and in `METHODOLOGY.md`
+  (conflict of interest). His recollections of the original analysis would be a separate, labelled source
+  (`AY` in `assumptions.md`). None has been used.
