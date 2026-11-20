@@ -14,6 +14,8 @@ Steps:
   2. Read the two digitisations (results/compare/digitised/<id>/points.csv and digitisation.json), match their
      points, run the agreement check and combine them (mean of the two readings; half the difference, with a floor
      of 0.5% of the plotted lag-axis range, is the digitisation uncertainty delta).            (A-18)
+     Amendment 2 (A-20): F09's values are taken from the primary digitisation (PRIMARY_DIGITISATION, the vector
+     reading), with delta still from both readings; the mean of both is reported as a sensitivity variant.
   3. F09's frequency bins: ends of horizontal error bars if drawn, otherwise geometric midpoints between
      consecutive points. Only the frequencies of F09's points are used for this.                  (A-15)
   4. Our lag on each F09 bin; per bin d = ours - F09, z_F = d / sqrt(S^2 + delta^2) (main statistic),
@@ -58,7 +60,7 @@ import matplotlib.pyplot as plt  # noqa: E402  (lags has already selected the Ag
 NPZ = ROOT / "analysis/lags/output/unbinned_cross_spectrum.npz"
 CSV_R1 = ROOT / "analysis/lags/lag_frequency.csv"
 LCDIR = ROOT / "analysis/lightcurves/output"
-PLAN = "results/compare/PLAN.md (commit 13438ec, with Amendment 1 of 2026-11-20)"
+PLAN = "results/compare/PLAN.md (commit 13438ec, with Amendments 1 and 2 of 2026-11-20)"
 
 # Numbers fixed in PLAN.md. Do not change them without a new commit of the plan and a LOG entry.
 AGREE_DLAG_FRAC_OF_S = 0.25      # agreement check: lags differ by less than 0.25 S
@@ -76,6 +78,8 @@ REF_EDGE_SHIFTS = (-0.10, -0.05, 0.05, 0.10)    # reference variants: all edges 
 REF_WINDOWS_S = (95000, 90000, 80000)           # reference variants: one window of this length per orbit (A-19)
 CAL_EDGE_SHIFTS = (-0.25, 0.25)                 # calibration only (reported, not in the reference spread)
 CAL_CUTS = (2, 3, 4)                            # calibration only: the 100 ks windows cut into this many segments
+# Amendment 2 (2026-11-20, after the digitisations were received, before the comparison was run; A-20)
+PRIMARY_DIGITISATION = "ai-grok-4.7-2026-11-20"  # F09's values come from this reading (vector extraction); delta from both
 
 POINT_COLUMNS = ["point", "series", "f_hz", "lag_s", "lag_top_s", "lag_bottom_s", "f_left_hz", "f_right_hz",
                  "marker", "note"]
@@ -339,6 +343,38 @@ def combine(da, db):
               "unmatched": {da["id"]: [a[i]["point"] for i in ua], db["id"]: [b[j]["point"] for j in ub]},
               "n_failing": sum(not c["passes"] for c in checks), "points": checks}
     return out, report
+
+
+def primary_points(dp, ds):
+    """Amendment 2 (A-20): F09's values (frequency, lag, error-bar ends, horizontal-bar ends) from the primary
+    digitisation dp; the digitisation uncertainty delta still from both readings, as in A-18 (half the difference,
+    at least the floor). Only points found by both are compared; points found by one digitiser only are kept, not
+    compared, so that their frequencies still supply bin edges (as in combine)."""
+    a, b = dp["points"], ds["points"]
+    pairs, ua, ub = match_points(a, b)
+    floor = DELTA_FLOOR_FRAC * (dp["y_range_s"] + ds["y_range_s"]) / 2
+    keys = ("f_hz", "lag_s", "lag_top_s", "lag_bottom_s", "f_left_hz", "f_right_hz")
+    out = []
+    for i, j in pairs:
+        pa, pb = a[i], b[j]
+        if has_hbar(pa) != has_hbar(pb):
+            raise SystemExit(f"points {dp['id']}:{pa['point']} and {ds['id']}:{pb['point']}: only one digitiser "
+                             "recorded a horizontal error bar. Both should look again (PLAN.md step 4).")
+        S, asym = error_bar(pa["lag_top_s"], pa["lag_bottom_s"], pa["lag_s"])
+        half = lambda k: abs(pa[k] - pb[k]) / 2 if finite(pa[k]) and finite(pb[k]) else math.nan
+        out.append({"points": {dp["id"]: pa["point"], ds["id"]: pb["point"]}, "usable": True, **{k: pa[k] for k in keys},
+                    "S": S, "asym_s": asym, "delta_s": max(half("lag_s"), floor),
+                    "delta_top_s": max(half("lag_top_s"), floor) if finite(half("lag_top_s")) else math.nan,
+                    "delta_bottom_s": max(half("lag_bottom_s"), floor) if finite(half("lag_bottom_s")) else math.nan,
+                    "hbar": has_hbar(pa)})
+    for ids, pts, dd in ((ua, a, dp), (ub, b, ds)):
+        for i in ids:
+            q = pts[i]
+            out.append({"points": {dd["id"]: q["point"]}, "usable": False, **{k: q[k] for k in keys}, "S": math.nan,
+                        "asym_s": math.nan, "delta_s": math.nan, "delta_top_s": math.nan, "delta_bottom_s": math.nan,
+                        "hbar": has_hbar(q)})
+    out.sort(key=lambda q: q["f_hz"])
+    return out
 
 
 def single(dd):
@@ -713,7 +749,8 @@ POINT_OUT_COLUMNS = ["f_hz", "lag_s", "lag_top_s", "lag_bottom_s", "f_left_hz", 
                      "delta_s", "delta_top_s", "delta_bottom_s", "usable", "points"]
 
 
-def run(dirs, out: Path, label: str | None = None):
+def run(dirs, out: Path, label: str | None = None, primary: str | None = None):
+    """primary: the id of the digitisation that gives F09's values (Amendment 2); None for the mean of both."""
     dirs = [Path(d) for d in dirs]
     if len(dirs) != 2:
         raise SystemExit(f"PLAN.md needs exactly two digitisations; found {len(dirs)}: {[d.name for d in dirs]}")
@@ -726,9 +763,19 @@ def run(dirs, out: Path, label: str | None = None):
     if not chk["segmentation"]["passed"]:
         raise SystemExit(f"self-check FAILED: rebuilding the segments does not reproduce the lags stage: {chk}")
     da, db = (load_digitisation(d) for d in dirs)
-    points, agreement = combine(da, db)
-    base = evaluate(r1, points)
+    combined, agreement = combine(da, db)
     variants = {}
+    if primary is None:
+        points, used = combined, f"mean of {da['id']} and {db['id']}"
+    else:
+        ids = [da["id"], db["id"]]
+        if primary not in ids:
+            raise SystemExit(f"primary digitisation {primary!r} not found among {ids} (PLAN.md Amendment 2)")
+        dp, ds = (da, db) if da["id"] == primary else (db, da)
+        points, used = primary_points(dp, ds), f"{primary} (primary, Amendment 2); delta from both readings"
+    base = evaluate(r1, points)
+    if primary is not None:
+        variants["mean of both digitisations (plan before Amendment 2)"] = evaluate(r1, combined)
     for s in (-EDGE_SHIFT_FRAC, EDGE_SHIFT_FRAC):
         ev = evaluate(r1, points, s)
         if ev is not None:
@@ -747,6 +794,7 @@ def run(dirs, out: Path, label: str | None = None):
                                                                  "error_bars_stated_as", "nature_version_checked")}
                        for dd in (da, db)},
         "self_check": chk,
+        "f09_values_from": used, "primary_digitisation": primary,
         "digitisation_agreement": agreement,
         "bin_spacing_A11": spacing_fit(points),
         "outcome": base["outcome"], "reasons": base["reasons"],
@@ -759,12 +807,14 @@ def run(dirs, out: Path, label: str | None = None):
                         for k, v in variants.items()},
         "n_points": {"matched": len(usable), "unmatched": len(points) - len(usable)},
     }
-    write_csv(out / "digitised_combined.csv", points, POINT_OUT_COLUMNS)
+    write_csv(out / "digitised_combined.csv", combined, POINT_OUT_COLUMNS)
+    if primary is not None:
+        write_csv(out / "digitised_primary.csv", points, POINT_OUT_COLUMNS)
     write_csv(out / "comparison.csv", base["bins"], BIN_COLUMNS)
     json.dump(clean(summary), open(out / "comparison.json", "w"), indent=2)
-    title = label or f"R1 vs F09 Fig. 3 (digitised by {da['id']} and {db['id']}): {base['edge_source']}"
+    title = label or f"R1 vs F09 Fig. 3, digitised: {used}; bins from {base['edge_source']}"
     f09_label = ("made-up test input (NOT F09)" if label else
-                 f"F09 Fig. 3, digitised (mean of {da['id']} and {db['id']}; error bars as plotted)")
+                 f"F09 Fig. 3, digitised ({primary or 'mean of both'}; error bars as plotted)")
     plot(out / "comparison.png", base, title, f09_label)
     return summary
 
@@ -825,6 +875,8 @@ def main(argv=None):
                     help="folder holding one sub-folder per digitisation")
     ap.add_argument("--out", default=str(ROOT / "results/compare"), help="output folder")
     ap.add_argument("--label", default=None, help="label for test runs (shown in the figure and the JSON)")
+    ap.add_argument("--primary", default=PRIMARY_DIGITISATION,
+                    help="id of the digitisation that gives F09's values (Amendment 2); 'none' for the mean of both")
     ap.add_argument("--calibrate", action="store_true",
                     help="write results/compare/calibration.json (our own spread on our own bins) and stop")
     a = ap.parse_args(argv)
@@ -839,7 +891,7 @@ def main(argv=None):
         return
     base = Path(a.digitised)
     dirs = sorted(d for d in base.iterdir() if (d / "points.csv").exists()) if base.is_dir() else []
-    s = run(dirs, Path(a.out), a.label)
+    s = run(dirs, Path(a.out), a.label, primary=None if a.primary == "none" else a.primary)
     print(json.dumps(clean({k: s[k] for k in ("outcome", "reasons", "outcome_original_plan", "self_check", "n_points")}), indent=2))
     print("sensitivity:", json.dumps(clean({k: v["outcome"] for k, v in s["sensitivity"].items()})))
 

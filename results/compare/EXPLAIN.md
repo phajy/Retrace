@@ -2,7 +2,8 @@
 
 Plan, with criteria fixed in advance: [`PLAN.md`](PLAN.md). The plan (commit `13438ec`) was fixed before digitising.
 Amendment 1 (2026-11-20) was made before the comparison was run, but after both digitisations had been committed;
-see [what actually happened](PLAN.md#what-actually-happened). Digitising rules: [`DIGITISE.md`](DIGITISE.md).
+see [what actually happened](PLAN.md#what-actually-happened). Amendment 2 (2026-11-20), made after the digitisations
+were received and before the comparison was run, takes F09's values from the AI's vector reading (A-20). Digitising rules: [`DIGITISE.md`](DIGITISE.md).
 Code: `compare.py` · tests: `test_compare.py` · calibration (no F09 value): `calibration.json` · outputs (once the
 digitisations exist): `comparison.json`, `comparison.csv`, `digitised_combined.csv`, `comparison.png`.
 
@@ -26,6 +27,10 @@ digitisations are merged.
    * The stage stops if either fails.
 2. **Two digitisations** are read from `digitised/<id>/`, matched, checked for agreement and combined, as in
    PLAN.md step 4.
+   * **Amendment 2:** F09's values are taken from the primary digitisation (`PRIMARY_DIGITISATION`, the vector
+     reading `ai-grok-4.7-2026-11-20`), with δ still from both readings (`primary_points`).
+   * The mean of both is evaluated as a sensitivity variant and written to `digitised_combined.csv`; the points
+     used go to `digitised_primary.csv`.
 3. **F09's bins** (A-15), **our lags on them** and the **per-bin statistics** (z_F, z_C, ρ), as in PLAN.md step 5.
 4. **Summary numbers:** the sign change, the high-frequency weighted means and **z_mean** (Amendment 1).
 5. **Our own spread** (Amendment 1, A-19):
@@ -75,6 +80,8 @@ committed on their own branches by then ([what actually happened](PLAN.md#what-a
   moved to its end.
 * **The segmentation variants** are built in `compare.py` from the light curves rather than by changing `lags.py`.
   The lags stage, and R1, are left untouched. The baseline self-check guards against the two codes drifting apart.
+* **Amendment 2, points found by one digitiser only:** they are kept but not compared, and their frequencies still
+  supply bin edges, exactly as in the mean of both. The ±¼-bin sensitivity variant uses the primary's points.
 * **Agreement check** for a point without a complete error bar: only the frequency part can be applied.
 * **δ floor** for the combined points: 0.5% of the mean of the two digitisers' plotted lag-axis ranges.
 * **One digitisation on its own** (sensitivity variant): δ is the floor, 0.5% of that digitiser's lag-axis range.
@@ -86,8 +93,8 @@ of 0.42–1.05. These numbers, and those of the larger variants, are tabulated i
 high-frequency weighted mean moves by at most 0.53 of its error (0.39 for the reference variants), and the sign
 change stays between 5.6×10⁻⁴ and 6.4×10⁻⁴ Hz. On the made-up 1.6× bins of the tests, the limits are 0.47 (rms) and
 0.81 (|z|). The limits used in the real comparison are recomputed on F09's bins.
-Provenance: `calibration.json` md5 `1f83354201aaf1e172339f277a769fb1`; `test/test_results.json` md5
-`69265cabe16168fa710a2af2fbefe913`.
+Provenance: `calibration.json` md5 `6095ef2a1524023bf7fc9c3bac26e854`; `test/test_results.json` md5
+`bf4920117f4f456df64246b2118161fa`.
 
 Before Amendment 1, the same measurement was first run as a scratch script outside the repository. That script gave
 the same picture, with z divided by the baseline error instead of the variant's error. It was not kept: the stage
@@ -96,7 +103,7 @@ replaces it.
 ## Tests (`test_compare.py`; made-up input only)
 The made-up "published" points are our own baseline lags on geometric bins with a factor of 1.6 (neither 1.4 nor
 2.4), with error bars equal to ours. Two made-up "digitisations" add reading errors of 0.05 of the error bar in lag
-and 0.002 dex in frequency. No value from F09 is used. Result: **all 58 checks passed** (`test/test_results.json`):
+and 0.002 dex in frequency. No value from F09 is used. Result: **all 66 checks passed** (`test/test_results.json`):
 * **identical points:**
   * "agrees" under both rules;
   * both self-checks pass;
@@ -117,6 +124,12 @@ and 0.002 dex in frequency. No value from F09 is used. Result: **all 58 checks p
   * the outcome is still "agrees";
 * **one digitiser misses a point:** it is listed as unmatched, its bin is not compared, and the outcome is still
   "agrees";
+* **Amendment 2:** with a primary digitisation named, and the readings 1.5 error bars apart at one point:
+  * every compared F09 lag and frequency, and every bin edge, is the primary's reading;
+  * δ at that point is half the difference between the readings (above the floor there);
+  * the mean of both is reported as a sensitivity variant, and the outcome is "agrees";
+  * a point the other digitiser missed is not compared;
+  * the code stops if the named primary is not one of the two digitisations;
 * **the code stops** for two data series and for a single digitisation;
 * **the amended rule on its own,** with hand-made inputs, in 14 cases: all four outcomes; z_mean either side of 1
   and 2; opposite signs; a distant sign change and an undetermined one; a missing weighted mean, spread or bin.
@@ -131,6 +144,10 @@ History of the tests:
     code was right to use it.
   * **Edge shifts:** the test expected the edge-shift variants to "agree" as well. They don't, which led to the
     finding below and to Amendment 1.
+* The tests for Amendment 2 passed on their first run (67 checks). Two of the new checks were then changed. One,
+  which only tested that the demonstration folder existed, was removed. The δ check was made stronger: the first
+  version used readings so close that δ was the floor, so it could not tell "δ from both readings" from "floor only".
+  That leaves 66 checks, all passing.
 * The reworked tests passed on their first run. Before that run, one rule in `classify` was changed: a missing own
   spread now gives "not covered by the plan" instead of "agrees, with differences". After it, the label in the
   lower panel of the figure was changed for test runs, to read "made-up points" instead of "F09 points".
@@ -160,7 +177,8 @@ result.
 * **Averaging the bar ends leaves small gaps between bins.** In the AI's vector reading, neighbouring horizontal
   segments share their ends exactly. AY's right-hand ends are 0.002–0.006 dex lower. Averaging the two leaves gaps of
   up to 0.004 dex between neighbouring bins, and 11 of our Fourier frequencies (about 1% of those in the bins) fall
-  into them and are used in no bin. This is smaller than the ±0.05-bin shifts among the reference variants.
+  into them and are used in no bin. This is smaller than the ±0.05-bin shifts among the reference variants. Since
+  Amendment 2 the bins come from the vector reading alone, so this affects only the mean-of-both sensitivity variant.
 * **The low-frequency bin edges sit on multiples of about 2.49×10⁻⁵ Hz** (1, 5, 7, 13 and 21 times it), not on our
   10⁻⁵ Hz grid. This suggests that F09's Fourier frequencies were about 2.5×10⁻⁵ Hz apart, which would mean segments
   of about 40 ks rather than the 100 ks of A-09. It is a reading of F09's method from its frequencies, like the A-11

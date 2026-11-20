@@ -229,3 +229,25 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
     40 ks, not the 100 ks of A-09; it is a candidate for a sensitivity test after the comparison.
 * AY's notes do not give the WebPlotDigitizer version or the resolution of the screen grab, and his frequency axis was
   calibrated on the unlabelled 2×10⁻⁵ tick. Given the agreement with the vector reading, this is not followed up.
+
+**Session 1 continued, 2026-11-20 (UTC): Amendment 2, F09's values from the vector reading**
+* Andy decided that F09's values should come from the AI's vector reading of the PDF (`ai-grok-4.7-2026-11-20`),
+  not from the mean of the two readings. His reason: reading the PDF's drawing commands is more precise than his
+  points placed by eye on a screen grab, and the two readings agree (largest differences 0.35 s and 0.003 dex).
+* The decision was made after both digitisations were received and had passed the agreement check, and before the
+  comparison was run. The explainer had not computed our values on F09's bins.
+* This departs from PLAN.md step 4 ("neither reading is ever preferred"), so it is Amendment 2 (new assumption
+  A-20).
+  * δ still comes from both readings (A-18).
+  * Only points found by both are compared.
+  * The mean of both readings, and each digitisation on its own, are reported as sensitivity variants.
+  * With the bins from the vector reading, the small gaps left by averaging the bar ends no longer arise, except in
+    the mean-of-both variant.
+* Code: `compare.py` gained `primary_points` and `PRIMARY_DIGITISATION` (overridable with `--primary`; `none` gives
+  the mean of both). It writes `digitised_primary.csv` beside `digitised_combined.csv`.
+* Tests: the new tests passed on their first run (67 checks). Two new checks were then changed: one that tested
+  nothing (it only checked that the demonstration folder existed) was removed, and the δ check was strengthened
+  so that it can tell "δ from both readings" from "floor only". That leaves 66 checks, all passing; repeat runs give
+  identical files.
+* Andy decided that Grok's extraction does not need to be re-run on the PDF.
+* Not yet done: merging the two digitise branches into `main`, uncommenting the `compare` stage, running it.

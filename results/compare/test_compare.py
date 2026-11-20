@@ -4,7 +4,7 @@
 The made-up "published" points are our own baseline lags, re-binned onto geometric bins with a factor of 1.6
 (deliberately neither 1.4 nor 2.4), with their error bars set equal to ours. Two made-up "digitisations" add small
 reading errors (0.05 of the error bar in lag, 0.002 dex in frequency). Each scenario then changes one thing and
-checks that compare.py does what results/compare/PLAN.md (with Amendment 1) says. The outcome under the original
+checks that compare.py does what results/compare/PLAN.md (with Amendments 1 and 2) says. The outcome under the original
 plan (13438ec) is checked on hand-made bins and recorded for every scenario.
 
 Writes test/test_results.json and a demonstration run in test/demo/ (scenario "one bin outside our spread").
@@ -77,12 +77,17 @@ def write_digitisation(folder: Path, pts, seed, hbars=False, drop=None, extra=No
     (folder / "digitisation.json").write_text(json.dumps(meta, indent=2))
 
 
-def scenario(tmp: Path, name, pts, out=None, **kw_b):
+def scenario(tmp: Path, name, pts, out=None, primary=None, **kw_b):
     a, b = tmp / name / "made-up-a", tmp / name / "made-up-b"
     kw_a = {k: v for k, v in kw_b.items() if k in ("hbars", "series")}
     write_digitisation(a, pts, 1, **kw_a)
     write_digitisation(b, pts, 2, **kw_b)
-    return cmp.run([a, b], out or (tmp / name / "out"), label=f"MADE-UP TEST INPUT ({name}), not F09")
+    return cmp.run([a, b], out or (tmp / name / "out"), label=f"MADE-UP TEST INPUT ({name}), not F09", primary=primary)
+
+
+def read_points(folder: Path):
+    with open(folder / "points.csv") as fh:
+        return list(csv.DictReader(fh))
 
 
 def in_hf(p):
@@ -227,6 +232,44 @@ def main():
               f"the missed point is listed as unmatched ({s['digitisation_agreement']['unmatched']})")
         check(name, st.get("found by one digitiser only") == 1, f"its bin is not compared ({st})")
         check(name, s["outcome"] == "agrees", f"outcome 'agrees' (got '{s['outcome']}')")
+
+        # Amendment 2: F09's values from one digitisation (the primary), delta from both
+        name = "primary digitisation (Amendment 2)"
+        s = scenario(tmp, name, pts, primary="made-up-a", extra={k: 1.5}, hbars=True)
+        record(name, s)
+        ra = read_points(tmp / name / "made-up-a")
+        bins = s["baseline"]["bins"]
+        check(name, s["primary_digitisation"] == "made-up-a" and "primary" in s["f09_values_from"],
+              f"the summary names the primary digitisation ({s['f09_values_from']})")
+        check(name, len(bins) == len(ra) and all(math.isclose(b["f09_lag_s"], float(r["lag_s"]), rel_tol=1e-12)
+                                                 and math.isclose(b["f09_f_hz"], float(r["f_hz"]), rel_tol=1e-12)
+                                                 for b, r in zip(bins, ra)),
+              "every compared F09 lag and frequency is the primary's reading, not the mean")
+        check(name, all(math.isclose(b["f_lo_hz"], float(r["f_left_hz"]), rel_tol=1e-12)
+                        and math.isclose(b["f_hi_hz"], float(r["f_right_hz"]), rel_tol=1e-12) for b, r in zip(bins, ra)),
+              "the bin edges are the primary's horizontal-bar ends")
+        ag = s["digitisation_agreement"]
+        ck = next(c for c in ag["points"] if abs(math.log10(c["f_hz"] / pts[k]["F"])) < 0.01)
+        bk = next(x for x in bins if abs(math.log10(x["f09_f_hz"] / pts[k]["F"])) < 0.01)
+        check(name, abs(ck["dlag_s"]) / 2 > ag["floor_s"] and abs(bk["delta_s"] - abs(ck["dlag_s"]) / 2) < 1e-9,
+              f"delta still comes from both readings: half the difference, here above the floor "
+              f"({bk['delta_s']:.3f} s; floor {ag['floor_s']:.3f} s)")
+        mean_v = s["sensitivity"].get("mean of both digitisations (plan before Amendment 2)")
+        check(name, mean_v is not None,
+              f"the mean of both readings is reported as a sensitivity variant (outcome, recorded not tested: "
+              f"{mean_v and mean_v['outcome']})")
+        check(name, s["outcome"] == "agrees", f"outcome 'agrees' (got '{s['outcome']}')")
+
+        name = "primary digitisation, other digitiser misses a point"
+        s = scenario(tmp, name, pts, primary="made-up-a", drop=k)
+        st = s["baseline"]["n_bins_by_status"]
+        check(name, st.get("found by one digitiser only") == 1,
+              f"a point the other digitiser did not find is not compared ({st})")
+        try:
+            scenario(tmp, "primary not found", pts, primary="made-up-c")
+            check("primary not found", False, "stops when the primary digitisation is not among the two")
+        except SystemExit as e:
+            check("primary not found", "not found" in str(e), "stops when the primary digitisation is not among the two")
 
         for name, kw in (("two series", {"series": "inset"}),):
             try:

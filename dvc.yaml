@@ -147,6 +147,8 @@ stages:
   #         cache: false
   #     - results/compare/digitised_combined.csv:
   #         cache: false
+  #     - results/compare/digitised_primary.csv:
+  #         cache: false
   #     - results/compare/test:
   #         cache: false
   #   metrics:

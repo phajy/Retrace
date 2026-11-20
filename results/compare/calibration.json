@@ -1,6 +1,6 @@
 {
   "what": "Our own spread on our own baseline bins (PLAN.md Amendment 1, A-19). For each variant of our analysis: z = (baseline - variant) / variant error in each reliable bin, and the shift of the high-frequency weighted mean in units of the variant's error (z_mean). No F09 value is used.",
-  "plan": "results/compare/PLAN.md (commit 13438ec, with Amendment 1 of 2026-11-20)",
+  "plan": "results/compare/PLAN.md (commit 13438ec, with Amendments 1 and 2 of 2026-11-20)",
   "inputs": {
     "unbinned_cross_spectrum.npz": "129040dccad52c9379f6d73a3937aad8",
     "lag_frequency.csv": "65575e5cfa9b79ea56fae770108f018e",

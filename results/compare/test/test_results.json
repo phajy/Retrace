@@ -160,6 +160,44 @@
         "passed": true
       }
     ],
+    "primary digitisation (Amendment 2)": [
+      {
+        "check": "the summary names the primary digitisation (made-up-a (primary, Amendment 2); delta from both readings)",
+        "passed": true
+      },
+      {
+        "check": "every compared F09 lag and frequency is the primary's reading, not the mean",
+        "passed": true
+      },
+      {
+        "check": "the bin edges are the primary's horizontal-bar ends",
+        "passed": true
+      },
+      {
+        "check": "delta still comes from both readings: half the difference, here above the floor (4.350 s; floor 3.000 s)",
+        "passed": true
+      },
+      {
+        "check": "the mean of both readings is reported as a sensitivity variant (outcome, recorded not tested: agrees)",
+        "passed": true
+      },
+      {
+        "check": "outcome 'agrees' (got 'agrees')",
+        "passed": true
+      }
+    ],
+    "primary digitisation, other digitiser misses a point": [
+      {
+        "check": "a point the other digitiser did not find is not compared ({'counts': 6, 'found by one digitiser only': 1, 'ours not reliable (A-13)': 8})",
+        "passed": true
+      }
+    ],
+    "primary not found": [
+      {
+        "check": "stops when the primary digitisation is not among the two",
+        "passed": true
+      }
+    ],
     "two series": [
       {
         "check": "stops when a digitisation has more than one series",
@@ -337,6 +375,15 @@
       "max_abs_z_F": 0.1302294116381633,
       "rms_limit": 0.49846778900414396,
       "abs_z_limit": 0.8137062291539492
+    },
+    "primary digitisation (Amendment 2)": {
+      "outcome": "agrees",
+      "outcome_original_plan": "agrees",
+      "z_mean": 0.12494673523677546,
+      "rms_z_F": 0.07552984842909327,
+      "max_abs_z_F": 0.11969043854120782,
+      "rms_limit": 0.5938268313679033,
+      "abs_z_limit": 1.2908289993310504
     }
   },
   "binning_sensitivity_measurement": {

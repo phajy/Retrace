@@ -1,6 +1,6 @@
 {
   "label": "MADE-UP TEST INPUT (one bin outside our spread), not F09",
-  "plan": "results/compare/PLAN.md (commit 13438ec, with Amendment 1 of 2026-11-20)",
+  "plan": "results/compare/PLAN.md (commit 13438ec, with Amendments 1 and 2 of 2026-11-20)",
   "sign_convention": "lag > 0: hard (1-4 keV) lags soft (0.3-1 keV); lag < 0: soft lags hard",
   "inputs": {
     "unbinned_cross_spectrum.npz": "129040dccad52c9379f6d73a3937aad8",
@@ -63,6 +63,8 @@
       "passed": true
     }
   },
+  "f09_values_from": "mean of made-up-a and made-up-b",
+  "primary_digitisation": null,
   "digitisation_agreement": {
     "floor_s": 3.0,
     "n_matched": 15,

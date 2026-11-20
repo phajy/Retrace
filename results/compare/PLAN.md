@@ -14,6 +14,10 @@ is commit `13438ec`. Amendment 1 changes how the outcome is decided, for the rea
 computed and reported next to the amended one. Everything else (what is compared, the digitisations, the bins, the
 statistics per bin, the sensitivity variants) is unchanged.
 
+**Amendment 2 (2026-11-20), made after both digitisations had been received and checked, and before the comparison
+was run.** F09's values are taken from the AI's vector reading of the PDF instead of the mean of the two readings,
+for the reason given in [its own section](#amendment-2-2026-11-20-f09s-values-from-the-vector-reading).
+
 F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383).
 
 ## What is compared, and what is not used
@@ -69,6 +73,8 @@ place in the opposite order, and the AI digitisation was not done as step 3 desc
     compared his points with R1 by then is not recorded.
 * **Wrong statements, now corrected:** the commit message of `6426985` said Amendment 1 was made before any point was
   digitised. So did, until this correction, this plan, `EXPLAIN.md`, A-19, the README and the R1 page. That was wrong.
+* **Amendment 2:** after the agreement check below, the maintainer decided that F09's values should come from the
+  vector reading. This was before the comparison was run.
 * **Step 4:** the agreement check was then run on the two digitisations. All 12 points match, and none fails the
   check: the largest differences are 0.35 s in lag (0.05 of F09's error bar) and 0.003 dex in frequency.
 * The outcome under the original rule (13438ec), whose plan did come before any digitising, is reported next to the
@@ -82,7 +88,8 @@ place in the opposite order, and the AI digitisation was not done as step 3 desc
   less than 0.25 of F09's error bar for that point and their frequencies by less than 0.02 dex. Points that fail
   are looked at again by both digitisers. Whatever difference remains is kept.
 * **Combined value:** the mean of the two readings, for every quantity (frequency, lag, error-bar ends).
-  Neither reading is ever preferred, and never because it agrees better with our result.
+  Neither reading is ever preferred, and never because it agrees better with our result. *(Changed by Amendment 2:
+  F09's values now come from the vector reading, and the mean is reported as a sensitivity variant.)*
 * **Digitisation uncertainty** of a lag, δ: half the difference between the two readings, with a floor of 0.5%
   of the plotted lag-axis range (a typical precision for placing a point on a printed figure; A-18). Error-bar ends
   are treated the same way.
@@ -173,7 +180,7 @@ A-07). Those are reported next to the baseline comparison and never replace it.
 ## Sensitivity of the comparison itself, reported alongside
 * Bin edges shifted by ±¼ of a bin width (in log frequency), when the edges come from midpoints rather than
   horizontal error bars.
-* Each digitisation on its own instead of their mean (A-18).
+* Each digitisation on its own (A-18), and, since Amendment 2, the mean of both readings.
 
 If either changes the outcome, that is stated next to it. The reference variants (Amendment 1) are not sensitivity
 variants: they define our own spread and are part of every evaluation, including the sensitivity variants.
@@ -196,7 +203,7 @@ plan does not see them):
 
 Over all of these variants, the high-frequency weighted mean moves by at most 0.53 of its error (0.39 for the
 reference variants), and the frequency of the sign change moves by at most 0.04 dex.
-(Numbers copied by hand from `calibration.json`, md5 `1f83354201aaf1e172339f277a769fb1`.)
+(Numbers copied by hand from `calibration.json`, md5 `6095ef2a1524023bf7fc9c3bac26e854`.)
 
 So a reproduction that differs from F09 only in choices the figure cannot show would move single bins by about
 1σ. Under the original rule it would probably not "agree", and a quarter-bin error in the edges alone could make it
@@ -214,6 +221,24 @@ less plausible for F09 are reported in the calibration but are not reference var
 error, or segments much shorter than 100 ks, which Z10 and the 10⁻⁵ Hz start of the Fig. 3 axis argue against
 (A-09). The explainer chose them without having seen any digitised value, and no recollection of the maintainer was
 used. The maintainer approved them after making his own digitisation (see [what actually happened](#what-actually-happened)).
+
+## Amendment 2 (2026-11-20): F09's values from the vector reading
+Made by the maintainer after both digitisations had been received and the agreement check had been run, and before
+the comparison was run (A-20).
+* **F09's values** (frequency, lag, error-bar ends and horizontal-bar ends) are taken from the AI digitisation
+  `ai-grok-4.7-2026-11-20`, not from the mean of the two readings.
+* **The maintainer's reason:** that digitisation read the coordinates from the PDF's drawing commands, which is more
+  precise than placing points by eye on a screen grab. The two readings agree closely: the largest differences are
+  0.35 s and 0.003 dex.
+* **δ is unchanged** (A-18): half the difference between the two readings, at least the floor. The second
+  digitisation still sets the uncertainty and checks the first.
+* **Only points found by both digitisers are compared,** as before.
+* **The bins come from the vector reading's horizontal segments,** which share their ends exactly. So the small gaps
+  that averaging the bar ends would leave (`EXPLAIN.md`) do not arise.
+* **The mean of both readings** (the plan before this amendment) is reported as a sensitivity variant, next to each
+  digitisation on its own.
+* **This departs from step 4,** which said neither reading would be preferred. The preference is for a method,
+  decided before the comparison was run, not for whichever reading agrees better with our result.
 
 ## What this check will and will not show
 * It shows whether our baseline agrees with Fig. 3 as published: in the summary numbers F09's text states, and
