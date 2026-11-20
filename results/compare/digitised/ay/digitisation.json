@@ -1,0 +1,37 @@
+{
+  "digitiser": "Andy Young",
+  "source": {
+    "arxiv_id": "0905.4383",
+    "version": "v1",
+    "pdf_sha256": "e8846b5df83b809ec11ea7b425ef1a7ae555668372da34a6d353b8a3d52b5388",
+    "page": 9,
+    "figure": "3"
+  },
+  "nature_version_checked": "looks the same",
+  "method": "A raster of Fig. 3 was loaded into WebPlotDigitizer. The axes were calibrated on two ticks each, and the centre of every filled circle and the four ends of its error bars were clicked by hand.",
+  "tool": "WebPlotDigitizer (saved project format 4.2; the application version is not stored in the project file)",
+  "render_dpi": null,
+  "x_axis": {
+    "scale": "log",
+    "plotted_range": [0.00001, 0.012],
+    "calibration": [
+      {"pixel": [499.72443799854966, 1686.741116751269], "value": 0.00002},
+      {"pixel": [2532.849891225526, 1685.3720087019578], "value": 0.01}
+    ]
+  },
+  "y_axis": {
+    "scale": "linear",
+    "plotted_range": [-50, 200],
+    "calibration": [
+      {"pixel": [271.0833937635968, 1619.6548223350253], "value": -40},
+      {"pixel": [271.0833937635968, 141.01812907904278], "value": 190}
+    ]
+  },
+  "y_axis_label": "Lag (s)",
+  "error_bars_stated_as": "not stated",
+  "other_marks_in_figure": "A horizontal line at a lag of 0 s. The frequency axis is titled Temporal Frequency (Hz). There is no model curve and no inset.",
+  "started_utc": "2026-11-20T10:15:00Z",
+  "finished_utc": "2026-11-20T10:45:00Z",
+  "had_seen_retrace_result": true,
+  "had_seen_other_digitisation": false
+}
