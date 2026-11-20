@@ -5,7 +5,7 @@
 | Computed by the explainer | **done** (2026-11-19) |
 | Re-run by a verifier | **matched** at `9eea9a1` (2026-11-19, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2)) |
 | Re-derived by a verifier | not yet |
-| Compared with the paper | not yet (needs digitised Fig. 3 points; [plan and criteria](compare/PLAN.md), fixed before digitising and amended before the comparison was run) |
+| Compared with the paper | **agrees, with differences** (2026-11-20, [result](compare/RESULT.md)). The high-frequency mean lag and the frequency where the lag changes sign agree with F09. In 2 of the 8 bins that count, the difference (1.8–1.9 of F09's error bars) is larger than our own binning and segmentation variants produce. [Plan and criteria](compare/PLAN.md): fixed before digitising, amended before the comparison was run |
 | Challenges | [#1](https://github.com/phajy/Retrace/issues/1) background flares: **confirmed** ([result](checks/issue-1/RESULT.md)) · [open another](https://github.com/phajy/Retrace/issues/new?template=check-request.yml) |
 
 **This is not yet a reproduction claim.**
@@ -37,10 +37,9 @@ top or bottom of the plot are printed next to the axis.
 | Weighted mean, reliable bins in 7×10⁻⁴ – 5×10⁻³ Hz | −16.8 ± 3.4 s (5 bins) |
 | Intrinsic coherence | 0.72–0.98 from 10⁻⁵ to 2.6×10⁻³ Hz |
 
-**Descriptive comparison only** (the formal comparison is the planned `compare` stage). The shape and
-sign match F09's description: positive at low frequency, negative above about 0.6 mHz. Our most negative
-bin is consistent with "about 30 s". Our mean over 0.7–5 mHz is smaller in magnitude. F09 does not say
-whether its "about 30 s" is a peak or an average, or over which range.
+**Comparison with F09's figure:** see the [comparison result](compare/RESULT.md). On F09's own bins, our weighted
+mean lag over 0.7–5 mHz is −17.5 ± 3.4 s and F09's digitised points give −19.0 ± 3.5 s. F09's most negative point is
+−27.1 ± 6.3 s. So F09's "about 30 s" is closer to its most negative point than to its average over that range.
 
 ## How it was made (short version)
 Four XMM-Newton EPIC-pn exposures, one 100 ks window per orbit, 10 s bins, background-subtracted light
@@ -71,7 +70,11 @@ version of this figure was made. Full details:
    is still possible but no longer a priority.
 2. **PATTERN ≤ 12** for timing (Zoghbi et al. 2010 say patterns were relaxed for timing; we use ≤ 4, A-07).
 3. **Frequency binning** factor 1.4 vs 2.4 (A-11: the source text is ambiguous).
-4. **What "about 30 s" means** (peak or average; which frequency range).
+4. **What "about 30 s" means** (peak or average; which frequency range). The comparison shows that F09's own points
+   average −19.0 ± 3.5 s over 0.7–5 mHz, with the most negative at −27.1 ± 6.3 s ([result](compare/RESULT.md)).
+5. **Bins 3 and 9 of the comparison** (1.7–3.2×10⁻⁴ and 2.7–3.9×10⁻³ Hz) differ from F09 by more than our own
+   binning and segmentation variants do. The cause is not known. Candidates are the reduction (M-01, A-07, A-05) and
+   the segment length: F09's frequency grid suggests about 40 ks rather than our 100 ks (A-09).
 
 ## Provenance
 The numbers on this page were copied by hand from [`analysis/lags/summary.json`](../analysis/lags/summary.json)

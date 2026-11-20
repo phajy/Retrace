@@ -698,6 +698,8 @@ def plot(path, ev, title, f09_label):
     cnt = [b for b in bins if b["status"] == "counts"]
     vals = [v for b in cnt for v in (b["ours_lag_s"] - b["ours_lag_err_s"], b["ours_lag_s"] + b["ours_lag_err_s"],
                                      b["f09_lag_s"] - b["f09_err_S_s"], b["f09_lag_s"] + b["f09_err_S_s"])]
+    # keep every plotted point on the figure (error bars of bins that do not count may run off the edge)
+    vals += [b["ours_lag_s"] for b in have] + [b["f09_lag_s"] for b in bins]
     if vals:
         lo_y, hi_y = min(vals), max(vals)
         pad = 0.15 * (hi_y - lo_y)
@@ -735,7 +737,7 @@ def plot(path, ev, title, f09_label):
     hft = (f"; high-frequency mean: ours {hfm['ours']['weighted_mean_lag_s']:.1f} ± {hfm['ours']['error_s']:.1f} s, "
            f"F09 {hfm['f09']['weighted_mean_lag_s']:.1f} ± {hfm['f09']['error_s']:.1f} s, z_mean {hfm['z_mean']:+.2f}"
            if hfm.get("z_mean") is not None else "")
-    fig.text(0.01, 0.022, f"Outcome (PLAN.md with Amendment 1): {ev['outcome']}{hft}", fontsize=7.5)
+    fig.text(0.01, 0.022, f"Outcome (PLAN.md with Amendments 1 and 2): {ev['outcome']}{hft}", fontsize=7.5)
     fig.text(0.01, 0.004, f"Outcome under the original plan (13438ec): {ev['outcome_original_plan']}", fontsize=7.5)
     plt.tight_layout(rect=(0, 0.04, 1, 1))
     plt.savefig(path, dpi=110)
@@ -812,7 +814,7 @@ def run(dirs, out: Path, label: str | None = None, primary: str | None = None):
         write_csv(out / "digitised_primary.csv", points, POINT_OUT_COLUMNS)
     write_csv(out / "comparison.csv", base["bins"], BIN_COLUMNS)
     json.dump(clean(summary), open(out / "comparison.json", "w"), indent=2)
-    title = label or f"R1 vs F09 Fig. 3, digitised: {used}; bins from {base['edge_source']}"
+    title = label or f"R1 vs F09 Fig. 3. F09 values: {used}\nBins: F09's {base['edge_source']}"
     f09_label = ("made-up test input (NOT F09)" if label else
                  f"F09 Fig. 3, digitised ({primary or 'mean of both'}; error bars as plotted)")
     plot(out / "comparison.png", base, title, f09_label)

@@ -251,3 +251,33 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
   identical files.
 * Andy decided that Grok's extraction does not need to be re-run on the PDF.
 * Not yet done: merging the two digitise branches into `main`, uncommenting the `compare` stage, running it.
+
+**Session 1 continued, 2026-11-20 (UTC): the comparison with F09 Fig. 3 run**
+* Merged `digitise/ai-grok-4.7-2026-11-20` (`7f0853a`) and `digitise/ay` (`95d1a75`) into `main` with merge commits
+  (`0bed961`, `b770923`), so that the digitisation commits keep their original times. Uncommented the `compare`
+  stage as written and ran it with `dvc repro compare`. All 66 tests passed and both self-checks passed.
+* **Outcome (PLAN.md with Amendments 1 and 2): agrees, with differences.**
+  * The high-frequency weighted mean (0.7–5 mHz): ours −17.5 ± 3.4 s, F09 −19.0 ± 3.5 s, z_mean +0.39.
+  * The sign change falls between the same pair of bins: ours at 6.4×10⁻⁴ Hz, F09 at 6.1×10⁻⁴ Hz.
+  * No bin has opposite signs.
+  * Of the 8 bins that count, bins 3 and 9 are outside our own spread: z_F +1.88 and +1.78, against a limit of
+    0.94; rms z_F 0.98, against 0.44.
+  * The original rule gives the same outcome, for the same bins. So do the mean of both digitisations and each
+    digitisation on its own.
+  * The error bars are similar (median ρ 0.97).
+* Side results:
+  * The ratio between F09's point frequencies falls from 2.0 to 1.44, so it is not constant and A-11 is not
+    updated.
+  * F09's own points average −19.0 ± 3.5 s over 0.7–5 mHz, and the most negative is −27.1 ± 6.3 s.
+* **Changed after the run, presentation only.** In the figure, the title was cut off, our unreliable value in bin 2
+  (264 s) was off the top because the y-range covered only the bins that count, and the footer named only
+  Amendment 1. Fixed in `compare.py` and re-run. `comparison.json` and `comparison.csv` are the same run's numbers
+  (the stage re-ran with identical results), and the calibration output is unchanged.
+* **Writing the result page,** three values copied from printouts that were already rounded to two decimals came
+  out 0.1 off in the last digit. A script check of the page against `comparison.json` caught them before
+  committing.
+* New: `results/compare/RESULT.md`. Updated: R1 page (Compared row, known concerns 4 and 5), score sheet (Compared
+  column, a row in Verifications, two mistakes caught), README (status, stage row), EXPLAIN.md (status).
+* Possible next steps, not started: sensitivity tests for the two bins outside our spread (A-07 PATTERN ≤ 12;
+  segments of about 40 ks, as F09's frequency grid suggests), reported next to this result and never replacing it.
+  A re-derivation of R1 by a verifier is still needed before any reproduction claim.

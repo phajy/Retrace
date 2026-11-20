@@ -303,8 +303,8 @@ stages:
       nfiles: 8
     - path: results/compare/compare.py
       hash: md5
-      md5: 580f7275e2766c370593a57bd04456da
-      size: 52542
+      md5: 1ca00a8d86bb4d8d8b2d06ab6f789b67
+      size: 52734
     params:
       params.yaml:
         exposures:
@@ -344,3 +344,99 @@ stages:
       hash: md5
       md5: 6095ef2a1524023bf7fc9c3bac26e854
       size: 16073
+  compare:
+    cmd:
+    - python results/compare/test_compare.py
+    - python results/compare/compare.py
+    deps:
+    - path: analysis/lags/lag_frequency.csv
+      hash: md5
+      md5: 65575e5cfa9b79ea56fae770108f018e
+      size: 4023
+    - path: analysis/lags/lags.py
+      hash: md5
+      md5: 4b4b1149fb2323893254aea94f1711c2
+      size: 18994
+    - path: analysis/lags/output
+      hash: md5
+      md5: 7aed2a2cd1811a1305cd734f41daa98d.dir
+      size: 201268
+      nfiles: 1
+    - path: analysis/lightcurves/output
+      hash: md5
+      md5: e4ff83a3d9cba241eefe714faea9f063.dir
+      size: 2003947
+      nfiles: 8
+    - path: results/compare/compare.py
+      hash: md5
+      md5: 1ca00a8d86bb4d8d8b2d06ab6f789b67
+      size: 52734
+    - path: results/compare/digitised
+      hash: md5
+      md5: 9e7f56ecc12fefd885707ce4b5583219.dir
+      size: 25885
+      nfiles: 7
+    - path: results/compare/test_compare.py
+      hash: md5
+      md5: 4ff0dccc8ee770d1341681c6942c2127
+      size: 21824
+    params:
+      params.yaml:
+        exposures:
+        - obsid: '0511580101'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNS001
+          include: true
+        - obsid: '0511580201'
+          expo: PNU027
+          include: false
+        - obsid: '0511580301'
+          expo: PNU002
+          include: true
+        - obsid: '0511580401'
+          expo: PNU002
+          include: true
+        lags:
+          background_subtract: true
+          timing_gti: orbit
+          segment_s: 100000
+          max_gap_fill_s: 200
+          freq_bin_factor: 1.4
+        lightcurves:
+          dt_s: 10
+          pattern_max: 4
+          bands_kev:
+            soft:
+            - 0.3
+            - 1.0
+            hard:
+            - 1.0
+            - 4.0
+    outs:
+    - path: results/compare/comparison.csv
+      hash: md5
+      md5: 6bc0c54a6610bfd789ca9ead36e8bf48
+      size: 2805
+    - path: results/compare/comparison.json
+      hash: md5
+      md5: 5461463fe6889b2cbb4a8c12ef598060
+      size: 35644
+    - path: results/compare/comparison.png
+      hash: md5
+      md5: 908b4f0ec988778e9dd6ee535424f942
+      size: 74971
+    - path: results/compare/digitised_combined.csv
+      hash: md5
+      md5: e41a3ad8d09c57b397b400d20ff6779b
+      size: 1826
+    - path: results/compare/digitised_primary.csv
+      hash: md5
+      md5: a5d7b83638b214a49f5c33624d40d375
+      size: 1840
+    - path: results/compare/test
+      hash: md5
+      md5: 4f6107fb1ae2498c573b8ba763d20e6b.dir
+      size: 128835
+      nfiles: 5

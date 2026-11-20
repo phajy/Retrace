@@ -11,12 +11,14 @@ by whom, and which mistakes were caught.
 **The pilot:** reproduce the X-ray time lags in the active galaxy 1H 0707–495 reported by
 Fabian et al. 2009 (*Nature* 459, 540; arXiv:0905.4383; Fig. 3), using public XMM-Newton data.
 
-> **Status (2026-11-20):** the pipeline runs end to end and gives the shape described in the paper.
-> An independent verifier has re-run it from a clean clone and got identical outputs
-> ([report](verification/2026-11-19-grok-4.7-high-fast/REPORT.md)). That shows the result follows from
-> what is in the repository, not that it is right. It has **not** yet been re-derived or compared point by
-> point with the paper, so it is **not** a reproduction claim. Details: [R1 result page](results/R1-lag-frequency.md),
-> [score sheet](results/SCORESHEET.md).
+> **Status (2026-11-20):** the pipeline runs end to end. An independent verifier has re-run it from a clean
+> clone and got identical outputs ([report](verification/2026-11-19-grok-4.7-high-fast/REPORT.md)). That shows the
+> result follows from what is in the repository, not that it is right.
+>
+> **Compared with the paper's figure, it agrees, with differences** ([result](results/compare/RESULT.md)). The
+> high-frequency lag and the frequency where the lag changes sign agree. Two of eight bins differ by more than our own
+> binning choices explain. It has **not** yet been re-derived, so it is **not** a reproduction claim. Details:
+> [R1 result page](results/R1-lag-frequency.md), [score sheet](results/SCORESHEET.md).
 
 ## The pilot in one figure
 
@@ -92,7 +94,7 @@ All open issues: <https://github.com/phajy/Retrace/issues>
 | 3 lightcurves | Source and background light curves, 0.3–1 and 1–4 keV, 10 s bins | [EXPLAIN](analysis/lightcurves/EXPLAIN.md) | done |
 | 4 lags | Cross-spectrum, lag vs frequency, coherence, self-tests | [EXPLAIN](analysis/lags/EXPLAIN.md) | baseline done; sensitivity tests pending |
 | figures | Copies diagnostic plots into [`results/figures/`](results/figures) so GitHub can show them | `dvc.yaml` | done |
-| 5 compare | Comparison with digitised Fig. 3 points | [PLAN](results/compare/PLAN.md), [EXPLAIN](results/compare/EXPLAIN.md) | plan fixed before digitising and amended (Amendment 1) before the comparison was run; code tested on made-up input; our own spread measured (`compare_calibration`); two digitisations done and agreeing, on branches, not yet merged; comparison not run |
+| 5 compare | Comparison with digitised Fig. 3 points | [PLAN](results/compare/PLAN.md), [EXPLAIN](results/compare/EXPLAIN.md) | **done**: agrees, with differences ([result](results/compare/RESULT.md)) |
 | 6 report | Summary of what was and was not reproduced | — | not started |
 
 ## Reproduce it yourself
@@ -104,7 +106,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.lock
 dvc update -R reduction/raw   # download the raw data again from HEASARC (~0.9 GB)
 git diff --stat reduction/raw # must be empty: the downloads match the recorded checksums
-dvc repro                     # filter -> lightcurves -> lags -> figures, compare_calibration
+dvc repro                     # filter -> lightcurves -> lags -> figures, compare_calibration, compare
 git status --short            # any git-tracked output that differs from the committed version
 dvc metrics show              # summary numbers
 ```

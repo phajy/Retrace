@@ -7,15 +7,10 @@ were received and before the comparison was run, takes F09's values from the AI'
 Code: `compare.py` · tests: `test_compare.py` · calibration (no F09 value): `calibration.json` · outputs (once the
 digitisations exist): `comparison.json`, `comparison.csv`, `digitised_combined.csv`, `comparison.png`.
 
-**Status (2026-11-20):**
-* **Code** written and tested on made-up input.
-* **Our own spread** measured on our own bins.
-* **The two digitisations** are committed on their own branches: `digitise/ay` (`95d1a75`) and
-  `digitise/ai-grok-4.7-2026-11-20` (`7f0853a`). They pass the agreement check but are not yet merged.
-* **The comparison has not been run.**
+**Status (2026-11-20): run.** The two digitisations are merged into `main` (`b770923`) and the `compare` stage is
+enabled. **Outcome: agrees, with differences.** See [`RESULT.md`](RESULT.md).
 
-Two DVC stages: `compare_calibration` runs now, and `compare` is in `dvc.yaml` but commented out until the
-digitisations are merged.
+Two DVC stages: `compare_calibration` (our own spread on our own bins, no F09 value) and `compare`.
 
 ## What the code does
 1. **Self-checks (every run).**

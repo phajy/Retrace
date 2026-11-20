@@ -124,36 +124,36 @@ stages:
       - results/compare/calibration.json:
           cache: false
 
-  # compare is commented out until both digitisations of F09 Fig. 3 are merged into results/compare/digitised/;
-  # uncomment then (with a LOG entry).
-  # compare:
-  #   cmd:
-  #     - python results/compare/test_compare.py
-  #     - python results/compare/compare.py
-  #   deps:
-  #     - results/compare/compare.py
-  #     - results/compare/test_compare.py
-  #     - analysis/lags/lags.py
-  #     - analysis/lags/output
-  #     - analysis/lags/lag_frequency.csv
-  #     - analysis/lightcurves/output
-  #     - results/compare/digitised
-  #   params:
-  #     - exposures
-  #     - lightcurves
-  #     - lags
-  #   outs:
-  #     - results/compare/comparison.csv:
-  #         cache: false
-  #     - results/compare/digitised_combined.csv:
-  #         cache: false
-  #     - results/compare/digitised_primary.csv:
-  #         cache: false
-  #     - results/compare/test:
-  #         cache: false
-  #   metrics:
-  #     - results/compare/comparison.json:
-  #         cache: false
-  #   plots:
-  #     - results/compare/comparison.png:
-  #         cache: false
+  # compare: R1 against the digitised F09 Fig. 3 (results/compare/PLAN.md with Amendments 1 and 2).
+  # Enabled 2026-11-20 after both digitisations were merged (docs/LOG.md).
+  compare:
+    cmd:
+      - python results/compare/test_compare.py
+      - python results/compare/compare.py
+    deps:
+      - results/compare/compare.py
+      - results/compare/test_compare.py
+      - analysis/lags/lags.py
+      - analysis/lags/output
+      - analysis/lags/lag_frequency.csv
+      - analysis/lightcurves/output
+      - results/compare/digitised
+    params:
+      - exposures
+      - lightcurves
+      - lags
+    outs:
+      - results/compare/comparison.csv:
+          cache: false
+      - results/compare/digitised_combined.csv:
+          cache: false
+      - results/compare/digitised_primary.csv:
+          cache: false
+      - results/compare/test:
+          cache: false
+    metrics:
+      - results/compare/comparison.json:
+          cache: false
+    plots:
+      - results/compare/comparison.png:
+          cache: false
