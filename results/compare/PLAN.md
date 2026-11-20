@@ -6,6 +6,12 @@ Result: **R1** (lag–frequency spectrum, 0.3–1 keV vs 1–4 keV). Check: **Co
 that adds this file is the reference version. Any later change to it is made in a new commit with the reason
 recorded in [`docs/LOG.md`](../../docs/LOG.md), and the outcome under this version is still reported.
 
+**Amendment 1 (2026-11-20), made before any point of Fig. 3 was digitised.** The reference version is commit
+`13438ec`. Amendment 1 changes how the outcome is decided, for the reason given in
+[its own section](#amendment-1-2026-11-20-why-the-outcome-rule-changed). The outcome under the original rule is still
+computed and reported next to the amended one. Everything else (what is compared, the digitisations, the bins, the
+statistics per bin, the sensitivity variants) is unchanged.
+
 F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383).
 
 ## What is compared, and what is not used
@@ -24,10 +30,13 @@ F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383).
 2. The explainer writes the comparison code (`results/compare/compare.py`, a DVC stage `compare`) and tests it
    on made-up input in the digitised format (our own points with noise added, never F09 values). It is committed
    **before** any digitised values are in the repository. The explainer does not look at Fig. 3 points until then.
+   Amendment 1 and the `compare_calibration` stage (our own spread on our own bins, no F09 value) are also
+   committed at this step, before any digitised values exist.
 3. Two independent digitisations, each committed on its own (see [`DIGITISE.md`](DIGITISE.md) for the rules):
    * **AY:** Andy Young with WebPlotDigitizer. Not blind: he has seen our result.
    * **AI:** an AI agent in Cursor, working in a clean clone of a commit that has no digitised values (from
-     step 1 or 2). It is told not to open our results, so it is blind to them, and AY's file is not in that commit.
+     step 1 or 2, preferably the commit with Amendment 1). It is told not to open our results, so it is blind to
+     them, and AY's file is not in that commit.
      Its prompt is drafted by the explainer and quoted word for word in its notes.
    Both read the arXiv version of the figure (A-17).
    Neither digitiser looks at the other's values before their own are saved.
@@ -76,13 +85,45 @@ Summary numbers, computed the same way for both spectra on F09's bins:
   falls between;
 * the weighted mean lag over the bins with frequency in [7×10⁻⁴, 5×10⁻³) Hz (the A-14 range), with F09's
   errors as the weights for F09's points.
+* *(Amendment 1)* **z_mean = (m_ours − m_F09) / √(e_F09² + δ_m²)**, where m are the two weighted means, e_F09 is the
+  error of F09's weighted mean and δ_m is the digitisation uncertainty of F09's mean, taken as the weighted mean of
+  the δ of its points (fully correlated between points). As for z_F, our own error is not added, because the
+  photons are shared.
+
+**Our own spread** *(Amendment 1; A-19)*. The same comparison is made between our baseline and **reference
+variants** of our own analysis: other choices that F09 does not state or that cannot be read from Fig. 3. For each
+variant, z = (ours − variant) / (variant's error) in each bin that counts, the analogue of z_F with no digitisation
+term. The reference variants are fixed now:
+* all bin edges moved by −0.10, −0.05, +0.05 and +0.10 of the median bin width (in log frequency). This applies
+  to edges from horizontal bars as well as from midpoints;
+* one window of 95, 90 or 80 ks per orbit instead of 100 ks, placed by the A-09 rule;
+* the 100 ks window placed at the end of each orbit's usable stretch instead of where A-09 puts it.
+
+On F09's bins, the **rms limit** is the largest rms of z over the bins that count among the reference variants, and
+the **|z| limit** is the largest single |z| among them. F09's points are **within our own spread** if the rms of
+z_F over the bins that count is no larger than the rms limit and no |z_F| is larger than the |z| limit.
 
 **Which bins count.** The outcome below uses the compared bins where our re-binned value is reliable (A-13; this
 depends on our data only, not on F09's). All other bins are shown in the table and the figure, with their
 z values, but do not decide the outcome.
 
-## Outcomes, decided now
+## Outcomes (Amendment 1), decided before digitising
 For the R1 "Compared" entry in the score sheet:
+* **Agrees with F09 Fig. 3:** all of
+  * |z_mean| ≤ 1;
+  * the sign change falls between the same pair of bins, or an adjacent pair;
+  * F09's points are within our own spread.
+* **Does not agree:** any of
+  * |z_mean| > 2;
+  * a bin where the two lags have opposite signs and each is more than 2σ from zero (σ for ours, S for F09's);
+  * a sign change more than one bin away from F09's.
+* **Agrees, with differences:** neither of the above, with 1 < |z_mean| ≤ 2 or F09's points outside our own spread
+  (or both). Each reason is stated, and the bins with |z_F| above the |z| limit are listed.
+* **Not covered by the plan:** none of the criteria for a difference is met, but one criterion for "agrees" cannot
+  be applied (the sign change is not a single crossing in both spectra, the weighted mean has no bin that counts,
+  or our own spread cannot be computed). The reason is stated.
+
+### Outcomes under the original plan (13438ec), still computed and reported
 * **Agrees with F09 Fig. 3:** |z_F| ≤ 1 in every bin that counts, and the sign change falls between the same
   pair of bins, or an adjacent pair.
 * **Agrees, with differences:** every |z_F| ≤ 2, and at least one is between 1 and 2. Each such bin is listed.
@@ -92,7 +133,7 @@ For the R1 "Compared" entry in the score sheet:
   * a sign change more than one bin away from F09's.
 
 Separately, the error bars are called **similar** if the median ρ is between 0.67 and 1.5. Otherwise they
-**differ**, and A-12 is the first thing to look at. This does not change the outcome above.
+**differ**, and A-12 is the first thing to look at. This does not change either outcome above.
 
 Whatever the outcome, the baseline does not change because of it. Differences may be explored only with
 the sensitivity tests already in [`docs/assumptions.md`](../../docs/assumptions.md) (for example PATTERN ≤ 12,
@@ -103,10 +144,48 @@ A-07). Those are reported next to the baseline comparison and never replace it.
   horizontal error bars.
 * Each digitisation on its own instead of their mean (A-18).
 
-If either changes the outcome, that is stated next to it.
+If either changes the outcome, that is stated next to it. The reference variants (Amendment 1) are not sensitivity
+variants: they define our own spread and are part of every evaluation, including the sensitivity variants.
+
+## Amendment 1 (2026-11-20): why the outcome rule changed
+Testing the comparison code on made-up input showed that moving F09's bin edges by a fraction of a bin changes
+z_F noticeably, even when F09's points are exactly our own values. Before any digitising, the explainer then
+measured how far choices that F09 does not state, or that cannot be read from Fig. 3, move our own spectrum on our
+own 1.4× bins: the `compare_calibration` stage, output [`calibration.json`](calibration.json). It uses no F09 value.
+Over the bins where our lag is reliable (our lag values are left out here, so that a blind digitiser reading this
+plan does not see them):
+
+| Variant of our own analysis | rms z | largest \|z\| |
+|---|---|---|
+| Edges moved −0.10, −0.05, +0.05, +0.10 bin | 0.55, 0.43, 0.40, 0.54 | 0.99, 0.88, 0.74, 1.05 |
+| One 95, 90, 80 ks window per orbit | 0.41, 0.46, 0.57 | 0.82, 0.78, 0.95 |
+| 100 ks window at the end of the usable stretch | 0.26 | 0.42 |
+| *Not reference variants:* edges moved −0.25, +0.25 bin | 1.19, 0.90 | 2.81, 1.39 |
+| *Not reference variants:* 100 ks windows cut into 2, 3, 4 segments | 0.38, 0.41, 0.71 | 0.86, 0.97, 1.74 |
+
+Over all of these variants, the high-frequency weighted mean moves by at most 0.53 of its error (0.39 for the
+reference variants), and the frequency of the sign change moves by at most 0.04 dex.
+(Numbers copied by hand from `calibration.json`, md5 `8e813ae73131877345294405b9ee50ab`.)
+
+So a reproduction that differs from F09 only in choices the figure cannot show would move single bins by about
+1σ. Under the original rule it would probably not "agree", and a quarter-bin error in the edges alone could make it
+"not agree". The outcome would then say more about how well F09's bins were recovered than about whether the two
+analyses match. The amended rule therefore
+* decides agreement on the two summary numbers that F09's text states and that these variants barely move: the
+  high-frequency mean lag (F09: about −30 s above about 0.6 mHz) and the sign change; and
+* judges the points bin by bin against our own spread, measured on F09's bins, instead of against fixed limits.
+  Points outside it give "agrees, with differences", which would point to choices beyond binning and segmentation,
+  such as the data reduction.
+
+The reference variants are chosen by one rule: choices that F09 does not state or that the figure cannot show, and
+that are close to what the published descriptions imply (Z10: "4 segments of about 100 ks"). Variants that are
+less plausible for F09 are reported in the calibration but are not reference variants. Examples: a quarter-bin
+error, or segments much shorter than 100 ks, which Z10 and the 10⁻⁵ Hz start of the Fig. 3 axis argue against
+(A-09). No digitised value, and no recollection of the maintainer, was used to choose them.
 
 ## What this check will and will not show
-* It shows whether our baseline agrees with Fig. 3 as published, bin by bin, within the stated assumptions.
+* It shows whether our baseline agrees with Fig. 3 as published: in the summary numbers F09's text states, and
+  bin by bin within the spread of choices that the paper and the figure leave open.
 * It does not show which assumption causes a difference, if there is one.
 * It does not make R1 a reproduction on its own. A re-derivation (new code from the written method) is a separate check.
 * The comparison code is written by the explainer, who also wrote R1. The safeguards are that this plan and the

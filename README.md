@@ -92,7 +92,7 @@ All open issues: <https://github.com/phajy/Retrace/issues>
 | 3 lightcurves | Source and background light curves, 0.3–1 and 1–4 keV, 10 s bins | [EXPLAIN](analysis/lightcurves/EXPLAIN.md) | done |
 | 4 lags | Cross-spectrum, lag vs frequency, coherence, self-tests | [EXPLAIN](analysis/lags/EXPLAIN.md) | baseline done; sensitivity tests pending |
 | figures | Copies diagnostic plots into [`results/figures/`](results/figures) so GitHub can show them | `dvc.yaml` | done |
-| 5 compare | Comparison with digitised Fig. 3 points | [PLAN](results/compare/PLAN.md) | plan and criteria written; digitisation not started |
+| 5 compare | Comparison with digitised Fig. 3 points | [PLAN](results/compare/PLAN.md), [EXPLAIN](results/compare/EXPLAIN.md) | plan fixed and amended before digitising (Amendment 1); code tested on made-up input; our own spread measured (`compare_calibration`); digitisation not started |
 | 6 report | Summary of what was and was not reproduced | — | not started |
 
 ## Reproduce it yourself
@@ -104,7 +104,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.lock
 dvc update -R reduction/raw   # download the raw data again from HEASARC (~0.9 GB)
 git diff --stat reduction/raw # must be empty: the downloads match the recorded checksums
-dvc repro                     # filter -> lightcurves -> lags -> figures
+dvc repro                     # filter -> lightcurves -> lags -> figures, compare_calibration
 git status --short            # any git-tracked output that differs from the committed version
 dvc metrics show              # summary numbers
 ```

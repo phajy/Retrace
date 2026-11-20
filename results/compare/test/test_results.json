@@ -1,0 +1,437 @@
+{
+  "input": "MADE-UP: our own baseline lags on 1.6x geometric bins with reading errors; no F09 values",
+  "made_up_bins": 15,
+  "bin_near_1e-3_hz": 10,
+  "low_frequency_bin": 6,
+  "passed": true,
+  "failures": [],
+  "tests": {
+    "identical, midpoint edges": [
+      {
+        "check": "self-check reproduces lag_frequency.csv",
+        "passed": true
+      },
+      {
+        "check": "rebuilding the segments from the light curves reproduces the lags stage's cross spectrum",
+        "passed": true
+      },
+      {
+        "check": "outcome 'agrees' (got 'agrees')",
+        "passed": true
+      },
+      {
+        "check": "outcome under the original plan 'agrees' (got 'agrees')",
+        "passed": true
+      },
+      {
+        "check": "our own spread uses all 8 reference variants (8)",
+        "passed": true
+      },
+      {
+        "check": "points within our own spread (rms z_F 0.06 <= 0.47, max 0.13 <= 0.81)",
+        "passed": true
+      },
+      {
+        "check": "high-frequency mean: |z_mean| < 0.5 (got +0.101)",
+        "passed": true
+      },
+      {
+        "check": "A-11 side result recovers the spacing 1.6 (got 1.5999)",
+        "passed": true
+      },
+      {
+        "check": "all points pass the agreement check",
+        "passed": true
+      },
+      {
+        "check": "error bars 'similar' (median rho 0.998)",
+        "passed": true
+      },
+      {
+        "check": "each digitisation on its own agrees ({'made-up-a alone': 'agrees', 'made-up-b alone': 'agrees'})",
+        "passed": true
+      },
+      {
+        "check": "both edge-shift variants run (outcomes, recorded not tested: {'edges shifted -0.25 bin': ('agrees, with differences', 'agrees, with differences'), 'edges shifted +0.25 bin': ('agrees, with differences', 'agrees, with differences')})",
+        "passed": true
+      }
+    ],
+    "edge inference": [
+      {
+        "check": "geometric midpoints of geometric bin centres give the true edges",
+        "passed": true
+      }
+    ],
+    "horizontal bars": [
+      {
+        "check": "edges taken from the bars",
+        "passed": true
+      },
+      {
+        "check": "outcome 'agrees' (got 'agrees')",
+        "passed": true
+      },
+      {
+        "check": "the reference edge shifts also apply to edges from horizontal bars (all 8 variants run)",
+        "passed": true
+      }
+    ],
+    "one bin outside our spread": [
+      {
+        "check": "outcome 'agrees, with differences' (got 'agrees, with differences')",
+        "passed": true
+      },
+      {
+        "check": "bin 6 is the one listed ([6])",
+        "passed": true
+      },
+      {
+        "check": "the high-frequency mean is unaffected (the moved bin is below 7e-4 Hz)",
+        "passed": true
+      }
+    ],
+    "high-frequency mean 1.5 off": [
+      {
+        "check": "|z_mean| close to 1.5 (got +1.602)",
+        "passed": true
+      },
+      {
+        "check": "outcome 'agrees, with differences' (got 'agrees, with differences')",
+        "passed": true
+      },
+      {
+        "check": "the high-frequency mean is named in the reasons (['high-frequency weighted mean differs by |z_mean| = 1.60, between 1 and 2', 'the points differ from ours by more than our own reference variants do: rms z_F 0.72 (limit 0.47), max |z_F| 1.13 (limit 0.81); bin(s) beyond the limit: [10, 11, 12]'])",
+        "passed": true
+      }
+    ],
+    "high-frequency mean 3 off": [
+      {
+        "check": "|z_mean| close to 3.0 (got +3.101)",
+        "passed": true
+      },
+      {
+        "check": "outcome 'does not agree' (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "the high-frequency mean is named in the reasons (['high-frequency weighted mean differs by |z_mean| = 3.10 > 2'])",
+        "passed": true
+      }
+    ],
+    "opposite signs in one bin": [
+      {
+        "check": "outcome 'does not agree' (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "opposite signs named for bin 6 (['opposite signs, each more than 2 sigma from zero, in bin(s) [6]'])",
+        "passed": true
+      }
+    ],
+    "digitisers disagree on one point": [
+      {
+        "check": "exactly one point fails the agreement check (got 1)",
+        "passed": true
+      },
+      {
+        "check": "it is the point read 0.6 S apart (got -0.616 S)",
+        "passed": true
+      },
+      {
+        "check": "its delta is half the difference or the floor, whichever is larger (3.000 s; half the difference 1.838 s, floor 3.000 s)",
+        "passed": true
+      },
+      {
+        "check": "outcome 'agrees' (got 'agrees')",
+        "passed": true
+      }
+    ],
+    "one digitiser misses a point": [
+      {
+        "check": "the missed point is listed as unmatched ({'made-up-a': [10], 'made-up-b': []})",
+        "passed": true
+      },
+      {
+        "check": "its bin is not compared ({'counts': 6, 'found by one digitiser only': 1, 'ours not reliable (A-13)': 8})",
+        "passed": true
+      },
+      {
+        "check": "outcome 'agrees' (got 'agrees')",
+        "passed": true
+      }
+    ],
+    "two series": [
+      {
+        "check": "stops when a digitisation has more than one series",
+        "passed": true
+      }
+    ],
+    "one digitisation": [
+      {
+        "check": "stops with only one digitisation",
+        "passed": true
+      }
+    ],
+    "classification rule (amended)": [
+      {
+        "check": "'agrees' for z_mean=0.5, within our spread=True, sign change same or adjacent, bins [(-20, -22)] (got 'agrees')",
+        "passed": true
+      },
+      {
+        "check": "'agrees, with differences' for z_mean=1.5, within our spread=True, sign change same or adjacent, bins [(-20, -22)] (got 'agrees, with differences')",
+        "passed": true
+      },
+      {
+        "check": "'agrees, with differences' for z_mean=0.5, within our spread=False, sign change same or adjacent, bins [(-20, -22)] (got 'agrees, with differences')",
+        "passed": true
+      },
+      {
+        "check": "'does not agree' for z_mean=2.5, within our spread=True, sign change same or adjacent, bins [(-20, -22)] (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "'does not agree' for z_mean=-2.5, within our spread=True, sign change same or adjacent, bins [(-20, -22)] (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "'does not agree' for z_mean=0.5, within our spread=True, sign change same or adjacent, bins [(15, -15)] (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "'agrees' for z_mean=0.5, within our spread=True, sign change same or adjacent, bins [(3, -3)] (got 'agrees')",
+        "passed": true
+      },
+      {
+        "check": "'does not agree' for z_mean=0.5, within our spread=True, sign change far, bins [(-20, -22)] (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "'not covered by the plan' for z_mean=0.5, within our spread=True, sign change undetermined, bins [(-20, -22)] (got 'not covered by the plan')",
+        "passed": true
+      },
+      {
+        "check": "'agrees, with differences' for z_mean=0.5, within our spread=False, sign change undetermined, bins [(-20, -22)] (got 'agrees, with differences')",
+        "passed": true
+      },
+      {
+        "check": "'not covered by the plan' for z_mean=None, within our spread=True, sign change same or adjacent, bins [(-20, -22)] (got 'not covered by the plan')",
+        "passed": true
+      },
+      {
+        "check": "'not covered by the plan' for z_mean=0.5, within our spread=None, sign change same or adjacent, bins [(-20, -22)] (got 'not covered by the plan')",
+        "passed": true
+      },
+      {
+        "check": "'agrees, with differences' for z_mean=1.5, within our spread=None, sign change same or adjacent, bins [(-20, -22)] (got 'agrees, with differences')",
+        "passed": true
+      },
+      {
+        "check": "'not covered by the plan' for z_mean=0.5, within our spread=True, sign change same or adjacent, bins [] (got 'not covered by the plan')",
+        "passed": true
+      }
+    ],
+    "classification rule (original plan)": [
+      {
+        "check": "'agrees' for z_F=0.5, ours -20, F09 -22, sign change same or adjacent (got 'agrees')",
+        "passed": true
+      },
+      {
+        "check": "'agrees, with differences' for z_F=1.5, ours -20, F09 -27, sign change same or adjacent (got 'agrees, with differences')",
+        "passed": true
+      },
+      {
+        "check": "'does not agree' for z_F=2.5, ours -20, F09 -32, sign change same or adjacent (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "'does not agree' for z_F=0.5, ours 15, F09 -15, sign change same or adjacent (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "'agrees' for z_F=0.5, ours 3, F09 -3, sign change same or adjacent (got 'agrees')",
+        "passed": true
+      },
+      {
+        "check": "'does not agree' for z_F=0.5, ours -20, F09 -22, sign change far (got 'does not agree')",
+        "passed": true
+      },
+      {
+        "check": "'not covered by the plan' for z_F=0.5, ours -20, F09 -22, sign change undetermined (got 'not covered by the plan')",
+        "passed": true
+      },
+      {
+        "check": "'agrees, with differences' for z_F=1.5, ours -20, F09 -27, sign change undetermined (got 'agrees, with differences')",
+        "passed": true
+      }
+    ]
+  },
+  "outcomes_by_scenario": {
+    "identical, midpoint edges": {
+      "outcome": "agrees",
+      "outcome_original_plan": "agrees",
+      "z_mean": 0.10149913053289056,
+      "rms_z_F": 0.06450019497314213,
+      "max_abs_z_F": 0.1302294116381633,
+      "rms_limit": 0.4730294699382505,
+      "abs_z_limit": 0.8137062291539492
+    },
+    "horizontal bars": {
+      "outcome": "agrees",
+      "outcome_original_plan": "agrees",
+      "z_mean": 0.01798661431082487,
+      "rms_z_F": 0.07516031635256555,
+      "max_abs_z_F": 0.11426036294832094,
+      "rms_limit": 0.5714580489020007,
+      "abs_z_limit": 1.1782285869012277
+    },
+    "one bin outside our spread": {
+      "outcome": "agrees, with differences",
+      "outcome_original_plan": "agrees, with differences",
+      "z_mean": 0.10149913053289056,
+      "rms_z_F": 0.7089352232836501,
+      "max_abs_z_F": 1.8680122592771107,
+      "rms_limit": 0.4730294699382505,
+      "abs_z_limit": 0.8137062291539492
+    },
+    "high-frequency mean 1.5 off": {
+      "outcome": "agrees, with differences",
+      "outcome_original_plan": "agrees, with differences",
+      "z_mean": 1.601503851025667,
+      "rms_z_F": 0.720871070341919,
+      "max_abs_z_F": 1.1287944980524107,
+      "rms_limit": 0.4730294699382505,
+      "abs_z_limit": 0.8137062291539492
+    },
+    "high-frequency mean 3 off": {
+      "outcome": "does not agree",
+      "outcome_original_plan": "does not agree",
+      "z_mean": 3.1014995823062654,
+      "rms_z_F": 1.4097955978059367,
+      "max_abs_z_F": 2.236771231936634,
+      "rms_limit": 0.4730294699382505,
+      "abs_z_limit": 0.8137062291539492
+    },
+    "opposite signs in one bin": {
+      "outcome": "does not agree",
+      "outcome_original_plan": "does not agree",
+      "z_mean": 0.10149913053289056,
+      "rms_z_F": 4.321367956653834,
+      "max_abs_z_F": 11.432011759208685,
+      "rms_limit": 0.4730294699382505,
+      "abs_z_limit": 0.8137062291539492
+    },
+    "digitisers disagree on one point": {
+      "outcome": "agrees",
+      "outcome_original_plan": "agrees",
+      "z_mean": -0.019089225678628922,
+      "rms_z_F": 0.11495368329963947,
+      "max_abs_z_F": 0.25221176917907284,
+      "rms_limit": 0.4730294699382505,
+      "abs_z_limit": 0.8137062291539492
+    },
+    "one digitiser misses a point": {
+      "outcome": "agrees",
+      "outcome_original_plan": "agrees",
+      "z_mean": 0.08172380825519418,
+      "rms_z_F": 0.06938980306529044,
+      "max_abs_z_F": 0.1302294116381633,
+      "rms_limit": 0.49846778900414396,
+      "abs_z_limit": 0.8137062291539492
+    }
+  },
+  "binning_sensitivity_measurement": {
+    "what": "our own spectrum compared with itself (exact made-up points on the true 1.6x bins, S = our error, delta = 3 s) after shifting all bin edges by the given fraction of a bin width in log frequency. Not a test: it shows how far binning alone moves z_F and z_mean, and the outcome under the amended and the original plan.",
+    "shifts": {
+      "-0.05": {
+        "outcome": "agrees",
+        "outcome_original_plan": "agrees",
+        "max_abs_z_F": 0.5098670960945911,
+        "z_mean": 0.18220477299946525,
+        "z_F": {
+          "0.000199": 0.07565575465940105,
+          "0.000318": 0.5098670960945911,
+          "0.000509": -0.24392929266151875,
+          "0.000815": -0.011848628606169266,
+          "0.0013": -0.18746166783165244,
+          "0.00209": 0.2563339284783397,
+          "0.00334": -0.03312779230701355
+        }
+      },
+      "+0.05": {
+        "outcome": "agrees",
+        "outcome_original_plan": "agrees",
+        "max_abs_z_F": 0.5455175933282168,
+        "z_mean": -0.14886391841275215,
+        "z_F": {
+          "0.000199": -0.20072625129411406,
+          "0.000318": -0.17709689176900456,
+          "0.000509": 0.035591956442517794,
+          "0.000815": -0.13841887743896586,
+          "0.0013": -0.5455175933282168,
+          "0.00209": 0.1469361263228309,
+          "0.00334": -0.33004838717032153
+        }
+      },
+      "-0.10": {
+        "outcome": "agrees",
+        "outcome_original_plan": "agrees",
+        "max_abs_z_F": 0.6604522213783782,
+        "z_mean": 0.29651595247136725,
+        "z_F": {
+          "0.000199": 0.07565575465940105,
+          "0.000318": 0.5810750840037029,
+          "0.000509": 0.19348637168520819,
+          "0.000815": -0.6604522213783782,
+          "0.0013": 0.6057635135687108,
+          "0.00209": 0.057145095810837876,
+          "0.00334": -0.22654939846386987
+        }
+      },
+      "+0.10": {
+        "outcome": "agrees",
+        "outcome_original_plan": "agrees",
+        "max_abs_z_F": 0.8062166521717478,
+        "z_mean": 0.08645771616121144,
+        "z_F": {
+          "0.000199": -0.39037889748644194,
+          "0.000318": -0.26502301587864413,
+          "0.000509": -0.8062166521717478,
+          "0.000815": -0.0866785527334189,
+          "0.0013": -0.48141197133358093,
+          "0.00209": 0.15395018806356398,
+          "0.00334": -0.02174922926350054
+        }
+      },
+      "-0.25": {
+        "outcome": "agrees, with differences",
+        "outcome_original_plan": "agrees, with differences",
+        "max_abs_z_F": 1.45411765755172,
+        "z_mean": -0.020600438914698732,
+        "z_F": {
+          "0.000199": -0.16253964846364394,
+          "0.000318": 1.3408221444005612,
+          "0.000509": 0.9110095466655951,
+          "0.000815": 0.36463138468878714,
+          "0.0013": 1.45411765755172,
+          "0.00209": -1.3707877769469996,
+          "0.00334": -0.10683221936346805
+        }
+      },
+      "+0.25": {
+        "outcome": "agrees, with differences",
+        "outcome_original_plan": "agrees, with differences",
+        "max_abs_z_F": 1.6812302705065914,
+        "z_mean": 0.4618239983629662,
+        "z_F": {
+          "0.000199": -0.18551813274845738,
+          "0.000318": -1.6812302705065914,
+          "0.000509": -1.2077474178173342,
+          "0.000815": 0.5854929615486214,
+          "0.0013": -0.5030878424802535,
+          "0.00209": 0.9436240125406767,
+          "0.00334": -0.3844422646189227
+        }
+      }
+    }
+  }
+}

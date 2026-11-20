@@ -105,3 +105,53 @@ stages:
           cache: false
       - results/figures/lc_0511580401_PNU002.png:
           cache: false
+
+  # Stage 5, compare: results/compare/PLAN.md (with Amendment 1) and EXPLAIN.md.
+  # compare_calibration uses no F09 value: it measures our own spread on our own bins (A-19), before digitising.
+  compare_calibration:
+    cmd: python results/compare/compare.py --calibrate
+    deps:
+      - results/compare/compare.py
+      - analysis/lags/lags.py
+      - analysis/lags/output
+      - analysis/lags/lag_frequency.csv
+      - analysis/lightcurves/output
+    params:
+      - exposures
+      - lightcurves
+      - lags
+    metrics:
+      - results/compare/calibration.json:
+          cache: false
+
+  # compare is commented out until both digitisations of F09 Fig. 3 are committed in results/compare/digitised/;
+  # uncomment then (with a LOG entry).
+  # compare:
+  #   cmd:
+  #     - python results/compare/test_compare.py
+  #     - python results/compare/compare.py
+  #   deps:
+  #     - results/compare/compare.py
+  #     - results/compare/test_compare.py
+  #     - analysis/lags/lags.py
+  #     - analysis/lags/output
+  #     - analysis/lags/lag_frequency.csv
+  #     - analysis/lightcurves/output
+  #     - results/compare/digitised
+  #   params:
+  #     - exposures
+  #     - lightcurves
+  #     - lags
+  #   outs:
+  #     - results/compare/comparison.csv:
+  #         cache: false
+  #     - results/compare/digitised_combined.csv:
+  #         cache: false
+  #     - results/compare/test:
+  #         cache: false
+  #   metrics:
+  #     - results/compare/comparison.json:
+  #         cache: false
+  #   plots:
+  #     - results/compare/comparison.png:
+  #         cache: false

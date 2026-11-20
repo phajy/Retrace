@@ -140,3 +140,51 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
   the figure) and A-18 (digitisation uncertainty).
 * Next, in this order: commit the plan; write and test the `compare` code on made-up input and commit it before any
   digitised values are in the repository; then the two digitisations.
+
+**Session 1 continued, 2026-11-20 (UTC): comparison code, written before any digitised values exist**
+* `results/compare/compare.py` implements PLAN.md (`13438ec`). Our values on F09's bins come from `lags.bin_spectra`,
+  the function that made R1, applied bin by bin. A self-check on every run re-bins on the lags stage's own bins and
+  must reproduce `lag_frequency.csv`. Choices the plan left to the code are listed in `results/compare/EXPLAIN.md`.
+* `results/compare/test_compare.py` tests it on made-up input: our own lags on 1.6× bins with made-up reading errors,
+  never F09 values. All 30 checks passed. Two tests failed on the first run and were fixed in the tests, not the
+  code: the δ check had ignored the 0.5% floor, and the edge-shift variants were wrongly expected to "agree".
+* Finding: comparing our spectrum with itself after shifting the bin edges by ±0.05, ±0.10 and ±0.25 of a bin gives
+  largest |z_F| of 0.51–0.55, 0.66–0.81 and 1.45–1.68. Binning alone can therefore turn "agrees" into "agrees, with
+  differences" unless F09's bins are recovered to about a tenth of a bin. The criteria in PLAN.md are unchanged;
+  whether to change them before digitising is Andy's decision.
+* The `compare` stage is in `dvc.yaml` but commented out until both digitisations are committed; `dvc status` is unchanged.
+
+**Session 1 continued, 2026-11-20 (UTC): Amendment 1 to the comparison plan, before any digitising**
+* Andy asked to discuss changing the criteria after the binning finding, before digitising starts. To make the
+  discussion concrete, the explainer first measured, in a scratch script outside the repository, how far choices
+  that F09 does not state, or that Fig. 3 cannot show, move our own spectrum on our own 1.4× bins. Only our own
+  data were used. The scratch script was then replaced by the `compare_calibration` stage, which gives the same
+  picture (`results/compare/calibration.json`).
+* Finding (fact):
+  * Over our 9 reliable bins, the reference variants (edges moved by ±0.05 and ±0.10 of a bin; 95, 90 or 80 ks
+    windows; the window at the end of the stretch) move single bins by rms 0.26–0.57 and at most 1.05 of their error.
+  * A quarter-bin edge shift moves one bin by 2.81 of its error. Cutting the windows into 4 segments moves one by 1.74.
+  * The high-frequency weighted mean moves by at most 0.53 of its error, and the sign change stays within
+    5.6–6.4×10⁻⁴ Hz.
+  * Under the original rule, a faithful reproduction would therefore probably not "agree", and a quarter-bin
+    error in the edges alone could make it "not agree".
+* Andy chose to amend the plan as the explainer proposed (Amendment 1):
+  * Agreement is decided on the high-frequency weighted mean (new statistic z_mean; thresholds 1 and 2) and on the
+    sign change, together with the opposite-sign criterion as before.
+  * The points are judged bin by bin against our own spread (A-19), recomputed on F09's bins. Points outside it
+    give "agrees, with differences".
+  * The outcome under the original rule (13438ec) is still computed and reported.
+  * The reference variants were chosen by a rule (choices the paper and the figure leave open, close to Z10's
+    description), with no F09 value and no AY recollection. A weighted mean below 5×10⁻⁴ Hz was considered as a
+    further criterion and rejected: it moved by up to 3σ in the scratch measurement, because bins drop in and out
+    of the reliable set where the lag changes steeply.
+* Code: `compare.py` gained a second self-check (rebuilding the baseline segments from the light curves must give
+  the lags stage's cross spectrum exactly), the reference variants, z_mean, the amended rule (the original rule kept
+  as `classify_original`) and a `--calibrate` mode. `lags.py` is unchanged.
+* Tests reworked: 58 checks, all passed on the first run, and repeat runs give identical files. Before that run, one
+  rule was changed: a missing own spread now gives "not covered by the plan" instead of "agrees, with differences".
+* New active DVC stage `compare_calibration` (no F09 value). The `compare` stage stays commented out until both
+  digitisations are committed. Updated PLAN.md, EXPLAIN.md, A-19 and the README stage row.
+* PLAN.md is the one repository file, besides DIGITISE.md, that the blind AI digitiser may read. Its Amendment 1
+  section therefore gives the spread as rms and |z| values and relative shifts only, not our lags or our sign-change
+  frequency. A first draft quoted the sign-change frequency range and was corrected before anything was committed.
