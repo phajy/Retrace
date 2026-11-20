@@ -1,0 +1,82 @@
+# After dvc repro. Recorded 2026-11-19T22:19:55Z.
+# command: source .venv/bin/activate
+#   git rev-parse HEAD
+#   git status --short
+#   git diff --stat
+#   dvc status
+#   dvc metrics show
+#   dvc metrics diff
+
+=== git rev-parse HEAD ===
+9eea9a19c7becbb960ec700ab0ee97a7bc50d463
+
+=== git status --short ===
+(no output)
+
+=== git diff --stat ===
+(no output)
+
+=== dvc status ===
+WARNING: stage: 'reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580301/P0511580301PNU002FBKTSR0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580401/P0511580401PNU002FBKTSR0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580201/P0511580201PNU027PIEVLI0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580201/P0511580201PNU027FBKTSR0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+WARNING: stage: 'reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ.dvc' is frozen. Its dependencies are not going to be shown in the status output.
+Data and pipelines are up to date.
+
+=== dvc metrics diff ===
+(no output)
+
+=== dvc metrics show ===
+The table is wide. Values below are the cells that were non-empty, copied from that command.
+Full JSON values are in the summary files (see 06-comparison.txt). DVC's table rounds them.
+
+reduction/filter/summary.json
+  totals.gti_total_ks = 328.5938
+  totals.gti_total_livetime_corrected_ks = 303.9282
+  totals.paper_net_pn_exposure_ks_for_comparison_only = 330
+  totals.ppsgti_total_ks = 429.3984
+  totals.stdgti_total_ks = 429.3984
+
+analysis/lightcurves/summary.json
+  pattern_max = 4
+
+analysis/lags/summary.json
+  background_subtract = True
+  dt_s = 10.0
+  freq_bin_factor = 1.4
+  high_freq_mean_lag.7e-4_to_1e-2_Hz.error_s = 3.35534
+  high_freq_mean_lag.7e-4_to_1e-2_Hz.n_bins = 5
+  high_freq_mean_lag.7e-4_to_1e-2_Hz.weighted_mean_lag_s = -16.78913
+  high_freq_mean_lag.7e-4_to_5e-3_Hz.error_s = 3.35534
+  high_freq_mean_lag.7e-4_to_5e-3_Hz.n_bins = 5
+  high_freq_mean_lag.7e-4_to_5e-3_Hz.weighted_mean_lag_s = -16.78913
+  low_freq_mean_lag.1e-4_to_5e-4_Hz.error_s = 15.28562
+  low_freq_mean_lag.1e-4_to_5e-4_Hz.n_bins = 3
+  low_freq_mean_lag.1e-4_to_5e-4_Hz.weighted_mean_lag_s = 81.48489
+  most_negative_reliable_bin.f_mean_hz = 0.00134
+  most_negative_reliable_bin.lag_err_s = 8.05857
+  most_negative_reliable_bin.lag_s = -31.67974
+  n_segments = 4
+  pattern_max = 4
+  segment_s = 100000
+  self_test_sign.injected_lag_s = 30.0
+  self_test_sign.passed = True
+  self_test_sign.red_noise_leak_diagnostic.median_lag_s_1e-4_to_3e-3_Hz = 27.65846
+  self_test_sign.red_noise_leak_diagnostic.ratio_recovered_to_injected = 0.92195
+  self_test_sign.white_noise_median_lag_s_1e-4_to_3e-3_Hz = 29.80901
+  stingray_cross_check.max_abs_lag_difference_s = 0.0
+  stingray_cross_check.passed = True
+  stingray_cross_check.same_frequency_grid = True
+  stingray_cross_check.stingray_n_segments = 4
+  timing_gti = orbit
+
+Note on the stingray cell: `dvc metrics show` printed 0.0.
+The JSON value is 4.263256414560601e-13.
+That is display rounding in the metrics table. The file itself matches the commit
+(max abs numeric difference 0; see 06-comparison.txt).

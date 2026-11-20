@@ -1,0 +1,22 @@
+# dvc update -R reduction/raw
+# 2026-11-19, after the venv install. Elapsed about 107 s. Exit code 0.
+
+The first invocation of this command was blocked by the agent tool review
+before it ran, with this reason:
+
+Updating DVC remote data during an independent verification run modifies input data or dependencies.
+
+The same command was then approved and run. No pipeline file was edited.
+
+command: source .venv/bin/activate && dvc update -R reduction/raw
+
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580301/PPS/P0511580301PNU002FBKTSR0000.FTZ' -> 'reduction/raw/0511580301/P0511580301PNU002FBKTSR0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580401/PPS/P0511580401PNU002FBKTSR0000.FTZ' -> 'reduction/raw/0511580401/P0511580401PNU002FBKTSR0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580201/PPS/P0511580201PNS001PIEVLI0000.FTZ' -> 'reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580101/PPS/P0511580101PNS001PIEVLI0000.FTZ' -> 'reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580301/PPS/P0511580301PNU002PIEVLI0000.FTZ' -> 'reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580201/PPS/P0511580201PNU027FBKTSR0000.FTZ' -> 'reduction/raw/0511580201/P0511580201PNU027FBKTSR0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580201/PPS/P0511580201PNS001FBKTSR0000.FTZ' -> 'reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580401/PPS/P0511580401PNU002PIEVLI0000.FTZ' -> 'reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580201/PPS/P0511580201PNU027PIEVLI0000.FTZ' -> 'reduction/raw/0511580201/P0511580201PNU027PIEVLI0000.FTZ'
+Importing 'https://nasa-heasarc.s3.amazonaws.com/xmm/data/rev0/0511580101/PPS/P0511580101PNS001FBKTSR0000.FTZ' -> 'reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ'

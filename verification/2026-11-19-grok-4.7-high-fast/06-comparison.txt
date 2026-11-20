@@ -1,0 +1,111 @@
+=== git-tracked output md5 vs dvc.lock ===
+MATCH reduction/filter/content_hashes.json size=13332 md5=4b41852bf145527e3847b1de426c8f57 lock=4b41852bf145527e3847b1de426c8f57
+MATCH reduction/filter/summary.json size=7656 md5=adca30f2fee3d11f7fcda22e40afec35 lock=adca30f2fee3d11f7fcda22e40afec35
+MATCH analysis/lightcurves/content_hashes.json size=2654 md5=7f7ee8c504e8524fd7424b0b64d5f4ee lock=7f7ee8c504e8524fd7424b0b64d5f4ee
+MATCH analysis/lightcurves/summary.json size=2602 md5=03a7ec085601ce129e8aedb4ed549f03 lock=03a7ec085601ce129e8aedb4ed549f03
+MATCH analysis/lags/lag_frequency.csv size=4023 md5=65575e5cfa9b79ea56fae770108f018e lock=65575e5cfa9b79ea56fae770108f018e
+MATCH analysis/lags/lag_frequency.png size=48118 md5=ce554ff2853d0383b6b7a006666e956e lock=ce554ff2853d0383b6b7a006666e956e
+MATCH analysis/lags/summary.json size=3215 md5=269f66aa7da601e95a1c8546fd095f98 lock=269f66aa7da601e95a1c8546fd095f98
+MATCH results/figures/diag_0511580101_PNS001.png size=337140 md5=abf8862be323ad8de2f9a813b46c28c3 lock=abf8862be323ad8de2f9a813b46c28c3
+MATCH results/figures/diag_0511580201_PNS001.png size=360757 md5=4b86ecd87a990f29e50c94f3dfbfd2e9 lock=4b86ecd87a990f29e50c94f3dfbfd2e9
+MATCH results/figures/diag_0511580201_PNU027.png size=288646 md5=2a04ad5765930c8a14a91cbaf09d9577 lock=2a04ad5765930c8a14a91cbaf09d9577
+MATCH results/figures/diag_0511580301_PNU002.png size=353794 md5=a862125099036c7515a32480496b95c5 lock=a862125099036c7515a32480496b95c5
+MATCH results/figures/diag_0511580401_PNU002.png size=365794 md5=05c4088e2015c0edcc042dab5f395a6e lock=05c4088e2015c0edcc042dab5f395a6e
+MATCH results/figures/lc_0511580101_PNS001.png size=84316 md5=bd50742d354eba4dfcd9dba4b00e778f lock=bd50742d354eba4dfcd9dba4b00e778f
+MATCH results/figures/lc_0511580201_PNS001.png size=40596 md5=eb338c011402300045d0f07cd26ac72e lock=eb338c011402300045d0f07cd26ac72e
+MATCH results/figures/lc_0511580301_PNU002.png size=81292 md5=3ede628527087835eff115c1d21c3b16 lock=3ede628527087835eff115c1d21c3b16
+MATCH results/figures/lc_0511580401_PNU002.png size=40943 md5=9e536a14dcb39eca62b22c28524a9a3c lock=9e536a14dcb39eca62b22c28524a9a3c
+git-tracked md5 mismatches: 0 of 16
+
+=== lock contains each expected md5 ===
+present 4b41852bf145527e3847b1de426c8f57 reduction/filter/content_hashes.json
+present adca30f2fee3d11f7fcda22e40afec35 reduction/filter/summary.json
+present 7f7ee8c504e8524fd7424b0b64d5f4ee analysis/lightcurves/content_hashes.json
+present 03a7ec085601ce129e8aedb4ed549f03 analysis/lightcurves/summary.json
+present 65575e5cfa9b79ea56fae770108f018e analysis/lags/lag_frequency.csv
+present ce554ff2853d0383b6b7a006666e956e analysis/lags/lag_frequency.png
+present 269f66aa7da601e95a1c8546fd095f98 analysis/lags/summary.json
+present abf8862be323ad8de2f9a813b46c28c3 results/figures/diag_0511580101_PNS001.png
+present 4b86ecd87a990f29e50c94f3dfbfd2e9 results/figures/diag_0511580201_PNS001.png
+present 2a04ad5765930c8a14a91cbaf09d9577 results/figures/diag_0511580201_PNU027.png
+present a862125099036c7515a32480496b95c5 results/figures/diag_0511580301_PNU002.png
+present 05c4088e2015c0edcc042dab5f395a6e results/figures/diag_0511580401_PNU002.png
+present bd50742d354eba4dfcd9dba4b00e778f results/figures/lc_0511580101_PNS001.png
+present eb338c011402300045d0f07cd26ac72e results/figures/lc_0511580201_PNS001.png
+present 3ede628527087835eff115c1d21c3b16 results/figures/lc_0511580301_PNU002.png
+present 9e536a14dcb39eca62b22c28524a9a3c results/figures/lc_0511580401_PNU002.png
+
+=== directory output hashes named in dvc.lock (dvc status already up to date) ===
+reduction/filter/output lock md5 2f37220141a0f185b23a6cf249b858c4.dir present_in_lock=True
+analysis/lightcurves/output lock md5 e4ff83a3d9cba241eefe714faea9f063.dir present_in_lock=True
+analysis/lags/output lock md5 7aed2a2cd1811a1305cd734f41daa98d.dir present_in_lock=True
+
+=== raw downloads vs .dvc outs md5 ===
+MATCH reduction/raw/0511580101/P0511580101PNS001FBKTSR0000.FTZ size=190431 expected_size=190431 md5=afba19dc1054c2076b903fb32bd2308d dvc=afba19dc1054c2076b903fb32bd2308d
+MATCH reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ size=212214929 expected_size=212214929 md5=65597e2ee80d914677537b31e588959e dvc=65597e2ee80d914677537b31e588959e
+MATCH reduction/raw/0511580201/P0511580201PNS001FBKTSR0000.FTZ size=161167 expected_size=161167 md5=d06a75e98f717564ac414e785e6641f4 dvc=d06a75e98f717564ac414e785e6641f4
+MATCH reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ size=206032824 expected_size=206032824 md5=314a1be84a9c016955898e763aba7cf7 dvc=314a1be84a9c016955898e763aba7cf7
+MATCH reduction/raw/0511580201/P0511580201PNU027FBKTSR0000.FTZ size=16327 expected_size=16327 md5=1d4bc554566d520248fdaf221f4757ac dvc=1d4bc554566d520248fdaf221f4757ac
+MATCH reduction/raw/0511580201/P0511580201PNU027PIEVLI0000.FTZ size=26542231 expected_size=26542231 md5=9a72a4a05bcb2ff610752a50658f76c1 dvc=9a72a4a05bcb2ff610752a50658f76c1
+MATCH reduction/raw/0511580301/P0511580301PNU002FBKTSR0000.FTZ size=163930 expected_size=163930 md5=579789af17b2cc420e80cda6c053718d dvc=579789af17b2cc420e80cda6c053718d
+MATCH reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ size=226362026 expected_size=226362026 md5=827b8d66d0a45e50e8a1916ca7c149fb dvc=827b8d66d0a45e50e8a1916ca7c149fb
+MATCH reduction/raw/0511580401/P0511580401PNU002FBKTSR0000.FTZ size=160099 expected_size=160099 md5=2390b5a6a7e3c688cf9d5c31a62d7e33 dvc=2390b5a6a7e3c688cf9d5c31a62d7e33
+MATCH reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ size=244785334 expected_size=244785334 md5=ffab219f0c4937dd3eb2d908e1515621 dvc=ffab219f0c4937dd3eb2d908e1515621
+raw mismatches: 0 of 10
+
+=== independent FITS column hashes vs committed content_hashes.json ===
+reduction/filter/content_hashes.json: files committed=5 recomputed=5 columns_compared=150 differences=0 missing_files=[] extra_files=[]
+analysis/lightcurves/content_hashes.json: files committed=4 recomputed=4 columns_compared=28 differences=0 missing_files=[] extra_files=[]
+total FITS column differences: 0
+
+=== lag_frequency.csv numeric diff vs HEAD ===
+byte_identical=True head_bytes=3997 work_bytes=3997
+nrows head=25 work=25
+columns: ['f_lo_hz', 'f_hi_hz', 'f_mean_hz', 'n_freq', 'K', 'phase_rad', 'phase_err_rad', 'phase_err_stingray_rad', 'lag_s', 'lag_err_s', 'coh_raw', 'coh_intrinsic', 'coh_intrinsic_err', 'power_soft', 'power_hard', 'noise_soft', 'noise_hard', 'reliable']
+  f_lo_hz: identical on all 25 rows (max abs diff 0)
+  f_hi_hz: identical on all 25 rows (max abs diff 0)
+  f_mean_hz: identical on all 25 rows (max abs diff 0)
+  n_freq: identical on all 25 rows (max abs diff 0)
+  K: identical on all 25 rows (max abs diff 0)
+  phase_rad: identical on all 25 rows (max abs diff 0)
+  phase_err_rad: identical on all 25 rows (max abs diff 0)
+  phase_err_stingray_rad: identical on all 25 rows (max abs diff 0)
+  lag_s: identical on all 25 rows (max abs diff 0)
+  lag_err_s: identical on all 25 rows (max abs diff 0)
+  coh_raw: identical on all 25 rows (max abs diff 0)
+  coh_intrinsic: identical on all 25 rows (max abs diff 0)
+  coh_intrinsic_err: identical on all 25 rows (max abs diff 0)
+  power_soft: identical on all 25 rows (max abs diff 0)
+  power_hard: identical on all 25 rows (max abs diff 0)
+  noise_soft: identical on all 25 rows (max abs diff 0)
+  noise_hard: identical on all 25 rows (max abs diff 0)
+  reliable: identical on all 25 rows (max abs diff 0)
+
+=== summary.json numeric diff vs HEAD ===
+reduction/filter/summary.json: keys=194 numeric_leaves=145 differences=0 max_abs_numeric_diff=0.0
+analysis/lightcurves/summary.json: keys=69 numeric_leaves=65 differences=0 max_abs_numeric_diff=0.0
+analysis/lags/summary.json: keys=74 numeric_leaves=60 differences=0 max_abs_numeric_diff=0.0
+
+=== R1 and R3 numbers from re-run files ===
+R3 gti_total_ks 328.5938048570752
+R3 gti_total_livetime_corrected_ks 303.9281959996232
+R3 stdgti_total_ks 429.3983997284174
+R3 paper_net_pn_exposure_ks_for_comparison_only 330
+R3 included ['0511580101_PNS001', '0511580201_PNS001', '0511580301_PNU002', '0511580401_PNU002']
+R1 low mean {'1e-4_to_5e-4_Hz': {'f_range_hz': [0.0001, 0.0005], 'n_bins': 3, 'weighted_mean_lag_s': 81.48488566416749, 'error_s': 15.285618657551048}}
+R1 high mean {'7e-4_to_5e-3_Hz': {'f_range_hz': [0.0007, 0.005], 'n_bins': 5, 'weighted_mean_lag_s': -16.789131939569263, 'error_s': 3.3553378354805523}, '7e-4_to_1e-2_Hz': {'f_range_hz': [0.0007, 0.01], 'n_bins': 5, 'weighted_mean_lag_s': -16.789131939569263, 'error_s': 3.3553378354805523}}
+R1 crossing [0.0005946881976190911]
+R1 most negative {'f_mean_hz': 0.0013350000000000002, 'lag_s': -31.679741123563655, 'lag_err_s': 8.058573330967949}
+R1 reliable range [0.00024500000000000005, 0.003655]
+R1 self test white 29.809010703855684
+R1 stingray max abs 4.263256414560601e-13
+
+per-exposure gti_total_s (included only summed):
+  0511580101_PNS001 include=True gti_total_s=110326.78827440739 gti_n=12
+  0511580201_PNS001 include=True gti_total_s=76283.8419520855 gti_n=67
+  0511580201_PNU027 include=False gti_total_s=1200.0 gti_n=3
+  0511580301_PNU002 include=True gti_total_s=68593.13636744022 gti_n=61
+  0511580401_PNU002 include=True gti_total_s=73390.03826314211 gti_n=26
+sum included gti_total_s 328593.8048570752 ks 328.5938048570752
+totals.gti_total_ks * 1000 328593.8048570752
+sum minus total_ks*1000 0.0
