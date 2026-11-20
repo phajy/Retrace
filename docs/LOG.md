@@ -96,3 +96,24 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
   including the 39 mHz noise-floor bin that flips sign. That is consistent with the A-13 flag.
 * Outcome `confirmed`. The baseline is unchanged, as the plan specified. Updated A-08, the R1 page, the lag stage's
   EXPLAIN, the score sheet and METHODOLOGY (agent posts appear under Andy's GitHub account).
+
+**Session 1 continued, 2026-11-20 (UTC): first independent verification (re-run of R1 and R3)**
+* Andy ran Grok 4.7 High Fast in Cursor as a verifier in a new empty folder (`~/GitHub/Retrace-check`), with a
+  prompt drafted by the explainer. It cloned `9eea9a1` (check request #1 was not yet pushed), followed the README,
+  and committed its report on a local branch without pushing, as instructed. Report:
+  `verification/2026-11-19-grok-4.7-high-fast/REPORT.md`. Outcome: matches. All three computing stages re-ran,
+  `dvc.lock` was unchanged, and every compared output was identical.
+* Checked on receipt by the explainer, against the repository: every checksum the report quotes (16 files,
+  3 directories, 10 raw downloads with sizes) matches `dvc.lock` and the `.dvc` files at `9eea9a1`. The logs show
+  the stages running and both self-tests passing. `9eea9a1` and current `main` have the same pipeline, lockfile,
+  parameters, package versions and code.
+* Andy pushed the branch. With his go-ahead the explainer opened issue #2 (Verification report) and PR #3, then
+  merged PR #3 with a merge commit (`ba8aecc`), so the verifier's commit `0b9284e` is unchanged in the history.
+* Found by the verifier: `analysis/lags/lag_frequency.csv` mixes `\n` (comment lines) and `\r\n` (CSV rows).
+  Cosmetic. Recorded under "Mistakes caught" and in the lags EXPLAIN; the fix waits for the next lags change.
+  Also reported, not repo problems: a `numba` warning from Stingray, an extra pip upgrade, and Cursor's sandbox
+  blocking `git clone` and `dvc` until they were re-run outside it.
+* Recorded in METHODOLOGY: verifier commits made in Cursor carry Andy's git identity, so the report says who
+  verified. The verifier's prompt was drafted by the explainer and is quoted in the report.
+* Updated the score sheet (R1 and R3 re-run: matched at `9eea9a1`; a Verifications row), the R1 page, the README
+  (status, reproduce section, who did what) and `verification/README.md`.

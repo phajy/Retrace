@@ -80,3 +80,9 @@ or a sign/unit bug. The pass/fail test now uses white noise, and the red-noise r
 3. **Frequency binning factor 2.4** (literal reading of Z10) — `lags.freq_bin_factor=2.4`.
 4. No background subtraction; 20 s bins; gap filling by segment mean.
 5. Timmer & König simulations with the measured PSD for errors and bias (as in Z10 §5.3).
+
+## Known minor issue (found by a verifier)
+`lag_frequency.csv` mixes line endings. The three `#` comment lines end in `\n`, but Python's `csv` writer ends
+the column-header and data rows in `\r\n`. No number is affected. It was found during the independent re-run of
+2026-11-19 ([#2](https://github.com/phajy/Retrace/issues/2)). The fix (`lineterminator="\n"` in `lags.py`) changes
+the file's checksum, so it will be made with the next real change to this stage.

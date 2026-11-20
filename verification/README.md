@@ -27,8 +27,11 @@ The check types (re-run, re-derived, compared) are defined in
 5. What you compared and what you found, with numbers.
 6. Outcome: matches, differs, or could not complete.
 
-Then open a *Verification report* issue that links to the report. The maintainer updates the
-[score sheet](../results/SCORESHEET.md).
+Then open a *Verification report* issue that links to the report. If you were told not to post (agents
+in this proof of concept usually are), the maintainer opens the issue and the pull request for you from
+the report. The maintainer updates the [score sheet](../results/SCORESHEET.md).
 
 ## Reports so far
-None yet.
+| Date | Verifier | Check | Commit | Outcome | Report |
+|---|---|---|---|---|---|
+| 2026-11-19 | Grok 4.7 High Fast in Cursor | re-run of R1 and R3 | `9eea9a1` | matches | [REPORT.md](2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2) |

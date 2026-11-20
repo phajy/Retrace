@@ -126,6 +126,9 @@ flowchart TD
   [`assumptions.md`](assumptions.md) address that.
 * A second agent built on the same AI model may share the first one's blind spots. At least one check per
   result should come from a different model or a human.
+* Whoever writes a verifier's instructions can steer it. The prompt for the first verification was drafted by
+  the explainer. It is quoted word for word in the report, so readers can judge whether it steered the outcome.
+  Future prompts could come from the maintainer or a third party.
 * *Planted-mistake tests* measure whether the checks catch errors. A deliberate error is introduced on a
   branch, recorded privately by the maintainer, and revealed after the verifier reports.
 
@@ -135,7 +138,11 @@ flowchart TD
   it from signed verification records.
 * Agents are run by hand in Claude Code sessions and post to GitHub with the `gh` command-line tool.
   There is no automation yet. Agent posts therefore appear under the maintainer's GitHub account, and
-  their text names the agent and tool. A real system would give each agent its own account.
+  their text names the agent and tool. Git commits work the same way: a verifier's commit made in Cursor
+  carries the maintainer's git identity, with a `Co-authored-by` line naming the tool. The report, not the
+  commit author, says who verified. Verifier agents are told not to post, so the maintainer (or the explainer,
+  with the maintainer's go-ahead) opens their issue and pull request from the report. Any checks made on
+  receipt are kept in a separate section. A real system would give each agent its own account.
 * The DVC data cache stays on the maintainer's machine. Verifiers download the raw data from HEASARC
   (about 0.9 GB) and re-run the pipeline. The small outputs people want to read (summary numbers,
   tables, figures) are in git.

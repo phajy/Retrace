@@ -3,7 +3,7 @@
 | Check ([what these mean](../docs/METHODOLOGY.md#levels-of-checking)) | Status |
 |---|---|
 | Computed by the explainer | **done** (2026-11-19) |
-| Re-run by a verifier | not yet |
+| Re-run by a verifier | **matched** at `9eea9a1` (2026-11-19, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2)) |
 | Re-derived by a verifier | not yet |
 | Compared with the paper | not yet (needs digitised Fig. 3 points) |
 | Challenges | [#1](https://github.com/phajy/Retrace/issues/1) background flares: **confirmed** ([result](checks/issue-1/RESULT.md)) · [open another](https://github.com/phajy/Retrace/issues/new?template=check-request.yml) |
@@ -77,5 +77,6 @@ version of this figure was made. Full details:
 The numbers on this page were copied by hand from [`analysis/lags/summary.json`](../analysis/lags/summary.json)
 and [`analysis/lags/lag_frequency.csv`](../analysis/lags/lag_frequency.csv). Those outputs were produced at
 commit `b60e201` and have not changed since. Their checksums in [`dvc.lock`](../dvc.lock) are
-`summary.json` md5 `269f66aa…` and `lag_frequency.csv` md5 `65575e5c…`. If `dvc.lock` shows different
+`summary.json` md5 `269f66aa…` and `lag_frequency.csv` md5 `65575e5c…`. An independent re-run at `9eea9a1`
+produced the same checksums ([#2](https://github.com/phajy/Retrace/issues/2)). If `dvc.lock` shows different
 values, this page is out of date and the JSON and CSV files are authoritative.
