@@ -28,6 +28,12 @@ X-ray band (0.3–1 keV) with a harder band (1–4 keV), one timescale at a time
 horizontal axis is one over the timescale. Above zero, the hard band follows the soft band; below
 zero, the soft band follows the hard band. Filled points are reliable bins; open grey points are not.
 
+The lower panel shows the **coherence**: how closely the two bands vary together at each frequency, from
+1 (one band is a delayed, rescaled copy of the other) to 0 (unrelated). Blue squares are the raw coherence,
+which counting noise pulls down at high frequencies. Black points are the intrinsic coherence, with the expected
+noise removed, so they describe the source itself. Above about 4×10⁻³ Hz the noise swamps the signal and the
+intrinsic coherence cannot be measured. More detail: [question #4](https://github.com/phajy/Retrace/issues/4).
+
 **Facts** (from our baseline; see the [R1 page](results/R1-lag-frequency.md) before quoting any number):
 the hard band lags at low frequencies (+211 ± 32 s at 2.45×10⁻⁴ Hz). The lag changes sign at
 5.9×10⁻⁴ Hz, and the soft band lags at higher frequencies (most negative bin −31.7 ± 8.1 s at 1.34×10⁻³ Hz).

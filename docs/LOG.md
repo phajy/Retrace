@@ -117,3 +117,14 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
   verified. The verifier's prompt was drafted by the explainer and is quoted in the report.
 * Updated the score sheet (R1 and R3 re-run: matched at `9eea9a1`; a Verifications row), the R1 page, the README
   (status, reproduce section, who did what) and `verification/README.md`.
+
+**Session 1 continued, 2026-11-20 (UTC): question #4 (raw vs intrinsic coherence; asked by Andy as a human)**
+* The question showed a documentation gap. The README did not explain the coherence panel of the R1 figure,
+  and the lags EXPLAIN gave only formulas. Both now explain it in plain language.
+* New `results/answers/issue-4/coherence_noise.py` (output `coherence_noise.json`) gives the numbers behind the answer:
+  power-to-noise ratios per bin, and the intrinsic coherence recomputed with the noise levels scaled by ±5% using the
+  same Stingray function. At the nominal noise level it reproduces the stored values (asserted in the script).
+* Finding (fact): where the power is only 1.2–3 times the noise (1.3–3.7 mHz), the intrinsic coherence is very
+  sensitive to the noise level (0.40–0.83 at 3.7 mHz for ±5%). Above 1e-2 Hz the measured power over the predicted
+  noise averages 0.98 (soft) and 1.00 (hard), so the noise level is right to about 2%. No result or flag changed.
+* METHODOLOGY: calculations behind answers go in `results/answers/issue-<N>/`.

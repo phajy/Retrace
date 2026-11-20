@@ -41,6 +41,27 @@ the softer flux"), Z10 and K13. It is computed as lag(f) = arg⟨H*(f) S(f)⟩ /
 * The intrinsic coherence is 0.72–0.98 from 1e-5 to 2.6e-3 Hz and 0.55 ± 0.15 at 3.7e-3 Hz. Above ~4e-3 Hz
   the powers are too close to the Poisson noise for the coherence to be defined.
 
+## Raw and intrinsic coherence, in plain language (added for [question #4](https://github.com/phajy/Retrace/issues/4))
+Both measure how closely the two bands vary together at a given frequency: 1 means one band is a delayed,
+rescaled copy of the other, 0 means they are unrelated.
+* The **raw** coherence uses the measured spectra, which include Poisson counting noise. The noise is independent
+  in the two bands, so it lowers the raw coherence wherever it is a large part of the measured power.
+* The **intrinsic** coherence subtracts the expected noise first, (|⟨C⟩|² − b²) / ((⟨|S|²⟩ − N_S)(⟨|H|²⟩ − N_H)),
+  so it describes the source. Stingray leaves it undefined when either power is less than 3 N/√K above its noise level N.
+* They are used for different things. The lag error uses the **raw** coherence (Nowak et al. 1999), because the
+  noise also makes the measured phase uncertain. The reliability flag (A-13) uses whether the **intrinsic** coherence is defined.
+
+Facts (from [`results/answers/issue-4/coherence_noise.json`](../../results/answers/issue-4/coherence_noise.json)):
+* Below ~3e-4 Hz the source power is 68–4500 times the noise, and the two coherences agree to within 0.02.
+* At higher frequencies the raw coherence falls (0.51 at 9.6e-4 Hz, 0.03 at 3.7e-3 Hz), while the intrinsic
+  coherence stays at 0.72–0.91 up to 2.6e-3 Hz. The fall of the raw coherence there is mostly counting noise.
+* Where the power is only 1.2–3 times the noise (1.3e-3 to 3.7e-3 Hz), the intrinsic coherence depends strongly on
+  the noise level. Recomputed with both noise levels 5% lower or higher, it ranges from 0.86 to 0.96 at 1.34e-3 Hz,
+  0.68 to 1.02 at 2.6e-3 Hz, and 0.40 to 0.83 at 3.7e-3 Hz. Below 1e-3 Hz it moves by at most 0.016.
+* Noise-level check: above 1e-2 Hz, where the source adds little power, the measured power over the predicted noise
+  averages 0.98 (soft) and 1.00 (hard), with a range of 0.95–1.03. So the noise level is right to about 2%. The
+  intrinsic-coherence error bars (Vaughan & Nowak 1997 eq. 8) assume high powers, so they do not include this.
+
 ## Comparison with the publication (descriptive only; the formal comparison is the `compare` stage, not yet built)
 F09 (text and Fig. 3 caption): positive lags at low frequency; negative above ~0.6 mHz (caption: 7e-4 Hz);
 "the soft reflection dominated band follows the hard powerlaw dominated one by about 30 s".

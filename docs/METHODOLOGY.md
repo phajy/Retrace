@@ -84,6 +84,8 @@ flowchart TD
   everything downstream is re-run.
 * **Questions** ("why was this done?", "what does this number mean?") use the Question template.
   If an answer shows a gap in an `EXPLAIN.md`, the file is updated and the issue links to the commit.
+  Any calculation behind an answer is committed in `results/answers/issue-<N>/`, just as check results are
+  committed in `results/checks/issue-<N>/`.
 
 ### Labels
 
