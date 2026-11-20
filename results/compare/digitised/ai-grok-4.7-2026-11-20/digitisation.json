@@ -1,0 +1,37 @@
+{
+  "digitiser": "Grok 4.7 High Fast, in Cursor",
+  "source": {
+    "arxiv_id": "0905.4383",
+    "version": "v1",
+    "pdf_sha256": "e8846b5df83b809ec11ea7b425ef1a7ae555668372da34a6d353b8a3d52b5388",
+    "page": 9,
+    "figure": "3"
+  },
+  "nature_version_checked": "not checked",
+  "method": "Fig. 3 is vector graphics. Marker centres and the ends of the lines through them were read from the PDF drawing commands and converted using the labelled ticks at 10^-5 Hz, 0.01 Hz, -50 s and 200 s.",
+  "tool": "PyMuPDF 1.28.2, script extract_fig3.py",
+  "render_dpi": null,
+  "x_axis": {
+    "scale": "log",
+    "plotted_range": [1e-5, 0.01200013371058352],
+    "calibration": [
+      {"pixel": [172.6156768798828, 337.0673217773438], "value": 1e-5},
+      {"pixel": [455.3055114746094, 337.0673217773438], "value": 0.01}
+    ]
+  },
+  "y_axis": {
+    "scale": "linear",
+    "plotted_range": [-50, 200],
+    "calibration": [
+      {"pixel": [172.6156768798828, 337.0673217773438], "value": -50},
+      {"pixel": [172.6156768798828, 535.9441528320312], "value": 200}
+    ]
+  },
+  "y_axis_label": "Lag (s)",
+  "error_bars_stated_as": "not stated",
+  "other_marks_in_figure": "One rectangular axis box with major and minor ticks on all four sides. A horizontal line at 0 s crosses the plot in the same stroke as the axes. The horizontal axis is labelled Temporal Frequency (Hz). No second series, curve, arrow, open symbol, or inset.",
+  "started_utc": "2026-11-20T10:04Z",
+  "finished_utc": "2026-11-20T10:10Z",
+  "had_seen_retrace_result": true,
+  "had_seen_other_digitisation": false
+}
