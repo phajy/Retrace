@@ -3,22 +3,23 @@
 Which results have been checked, by which check, by whom, and which mistakes were caught.
 The checks are defined in [How Retrace works](../docs/METHODOLOGY.md#levels-of-checking).
 An entry changes only when a named check has actually been run, and the commit that changes it says which.
+Every check records who ran it and whether they were independent of the explainer. Only checks by someone other
+than the explainer count as verification.
 
 ## Results
 | ID | Result (published value) | Explainer | Re-run | Re-derived | Compared | Challenges |
 |---|---|---|---|---|---|---|
-| [R1](R1-lag-frequency.md) | F09 Fig. 3: lag–frequency spectrum, 0.3–1 vs 1–4 keV (soft lags hard by "about 30 s" above ~0.6 mHz) | baseline computed 2026-11-19 | **matched** at `9eea9a1` (Grok 4.7 in Cursor, [#2](https://github.com/phajy/Retrace/issues/2)) | not yet | **agrees, with differences** (explainer, 2026-11-20, [result](compare/RESULT.md)): summary numbers agree; 2 of 8 bins outside our own spread | [#1](https://github.com/phajy/Retrace/issues/1) background flares: confirmed ([result](checks/issue-1/RESULT.md)) |
+| [R1](R1-lag-frequency.md) | F09 Fig. 3: lag–frequency spectrum, 0.3–1 vs 1–4 keV (soft lags hard by "about 30 s" above ~0.6 mHz) | baseline computed 2026-11-19 | **matched** at `9eea9a1` (Grok 4.7 in Cursor, [#2](https://github.com/phajy/Retrace/issues/2)) | not yet | **agrees, with differences** (2026-11-20, [result](compare/RESULT.md)): summary numbers agree; 2 of 8 bins outside our own spread. Run by the explainer, so **not independent** | [#1](https://github.com/phajy/Retrace/issues/1) background flares: confirmed ([result](checks/issue-1/RESULT.md)) |
 | R2 | F09 SI: mean lag above 7×10⁻⁴ Hz, 0.5–1 vs 3–7 keV (−6 ± 18 s) | not started | — | — | — | — |
 | R3 | F09: 330 ks net pn exposure after flare filtering | 328.6 ks with a 0.4 c/s screen chosen in advance (F09's definition of "net" is unknown) | **matched** at `9eea9a1` (Grok 4.7 in Cursor, [#2](https://github.com/phajy/Retrace/issues/2)) | — | comparison only | — |
 
 F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383). SI = its Supplementary Information.
 
-## Verifications
-| Date | Result | Check | Verifier (human, or model and tool) | Commit | Outcome | Report |
-|---|---|---|---|---|---|---|
-| 2026-11-19 | R1, R3 | re-run | Grok 4.7 High Fast in Cursor (AI agent, run by Andy Young; the prompt was drafted by the explainer and is quoted in the report) | `9eea9a1` | **matches**: `dvc.lock` unchanged; 16 of 16 git-tracked outputs, 10 of 10 raw downloads, 178 of 178 FITS column hashes and 337 of 337 summary values identical | [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2) |
-
-| 2026-11-20 | R1 | compared | explainer (Claude Opus 5.5), against F09 Fig. 3 as digitised by Grok 4.7 High Fast in Cursor (vector reading, primary) and Andy Young (WebPlotDigitizer) | inputs at `b770923` | **agrees, with differences**: high-frequency mean z_mean +0.39 and sign change in the same pair of bins; bins 3 and 9 differ by 1.88 and 1.78 of F09's error bars, beyond our own spread (0.94); the original rule and all sensitivity variants give the same outcome | [result](compare/RESULT.md) |
+## Checks run
+| Date | Result | Check | Run by (human, or model and tool) | Independent of the explainer? | Commit | Outcome | Report |
+|---|---|---|---|---|---|---|---|
+| 2026-11-19 | R1, R3 | re-run | Grok 4.7 High Fast in Cursor (AI agent, run by Andy Young) | **yes**: a different agent and model family, working from a clean clone. Its prompt was drafted by the explainer and is quoted in the report | `9eea9a1` | **matches**: `dvc.lock` unchanged; 16 of 16 git-tracked outputs, 10 of 10 raw downloads, 178 of 178 FITS column hashes and 337 of 337 summary values identical | [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2) |
+| 2026-11-20 | R1 | compared | the explainer (Claude Opus 5.5 in Claude Code), against F09 Fig. 3 as digitised by Grok 4.7 High Fast in Cursor (vector reading, primary) and Andy Young (WebPlotDigitizer) | **no**: the explainer computed R1, wrote the plan and the comparison code, proposed both amendments and ran it. The independent inputs are the two digitisations, and neither digitiser was blind to our result. A verifier can make it independent by re-running the `compare` stage or re-deriving the comparison from the plan | inputs at `b770923` | **agrees, with differences**: high-frequency mean z_mean +0.39, and the sign change in the same pair of bins; bins 3 and 9 differ by 1.88 and 1.78 of F09's error bars, beyond our own spread (0.94); the original rule and all sensitivity variants give the same outcome | [result](compare/RESULT.md) |
 
 ## Mistakes caught
 | Date | What | Caught by | How | Fixed in |
@@ -28,6 +29,7 @@ F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383). SI = its Suppleme
 | 2026-11-19 | Analytic lag errors invalid at the coherence noise floor | explainer (Claude) | inspection of first results | session 1 (A-13, post hoc) |
 | 2026-11-19 | Reference FITS column hashes were inside a DVC-only folder, so a verifier on a fresh clone had nothing to compare against; light-curve FITS had no hashes | explainer (Claude) | noticed while writing the verifier's instructions | session 1 (`tools/fits_hashes.py`; hashes now in git) |
 | 2026-11-20 | The plan, EXPLAIN, A-19, README, R1 page and a commit message said Amendment 1 was made before any digitising; both digitisations had been committed first | explainer (Claude) | compared commit times when the digitise branches arrived | `fb41879` |
+| 2026-11-20 | The comparison was listed in the score sheet's "Verifications" table, which overstated its independence (it was run by the explainer). Its row was also cut off from the table by a blank line, so GitHub did not show it as part of the table | the maintainer (Andy Young) asked whether it should count as verification; the explainer agreed it should not, and found the blank line while fixing the table | discussion after the run | `Checks run` table with an "Independent of the explainer?" column |
 | 2026-11-20 | Three values on the comparison result page were rounded from already-rounded printouts (off by 0.1 in the last digit) | explainer (Claude) | script check of the page against `comparison.json` before committing | before commit |
 | 2026-11-19 | `analysis/lags/lag_frequency.csv` mixes line endings (`\n` on the comment lines, `\r\n` on the CSV rows). Cosmetic: no number is affected | verifier (Grok 4.7 High Fast in Cursor) | byte-level check of the file during the re-run ([#2](https://github.com/phajy/Retrace/issues/2)) | not yet (with the next change to the lags stage, because the fix changes the file's checksum) |
 

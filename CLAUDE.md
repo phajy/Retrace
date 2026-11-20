@@ -57,6 +57,14 @@ analysis was done is not published information. Use it only as an explicit assum
   Post to GitHub only with Andy's go-ahead.
 - Plots shown on GitHub pages come from the `figures` DVC stage (`results/figures/`); never copy them by hand.
 - A verifier works from a clean clone and the written record only, never from an explainer's session.
+- The score sheet records who ran each check and whether they were independent of the explainer. Checks the
+  explainer runs, comparisons with the paper included, never count as verification.
+- AI checkers (verifiers, digitisers) start in a new clone and a new workspace or session with no earlier history
+  of the project, with the drafted prompt pasted unchanged.
+- Comparisons with a publication: freeze the plan and the code before the data exist. Once the data exist,
+  amendments are secondary to the first registered rule. Judge differences against our own spread of reasonable
+  choices, not only against error bars (`docs/METHODOLOGY.md`, "Comparing with a publication").
+- Before committing a result page, check its hand-copied numbers against the output files with a script.
 
 ## Layout (monorepo for the pilot; split later along reuse lines)
 - `docs/`      specs and notes (start with `docs/pilot-1h0707-lags.md`)

@@ -17,7 +17,7 @@ Fabian et al. 2009 (*Nature* 459, 540; arXiv:0905.4383; Fig. 3), using public XM
 >
 > **Compared with the paper's figure, it agrees, with differences** ([result](results/compare/RESULT.md)). The
 > high-frequency lag and the frequency where the lag changes sign agree. Two of eight bins differ by more than our own
-> binning choices explain. It has **not** yet been re-derived, so it is **not** a reproduction claim. Details:
+> binning choices explain. The explainer ran this comparison, so it is not an independent check. It has **not** yet been re-derived, so it is **not** a reproduction claim. Details:
 > [R1 result page](results/R1-lag-frequency.md), [score sheet](results/SCORESHEET.md).
 
 ## The pilot in one figure

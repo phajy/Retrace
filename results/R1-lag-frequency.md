@@ -5,7 +5,7 @@
 | Computed by the explainer | **done** (2026-11-19) |
 | Re-run by a verifier | **matched** at `9eea9a1` (2026-11-19, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2)) |
 | Re-derived by a verifier | not yet |
-| Compared with the paper | **agrees, with differences** (2026-11-20, [result](compare/RESULT.md)). The high-frequency mean lag and the frequency where the lag changes sign agree with F09. In 2 of the 8 bins that count, the difference (1.8–1.9 of F09's error bars) is larger than our own binning and segmentation variants produce. [Plan and criteria](compare/PLAN.md): fixed before digitising, amended before the comparison was run |
+| Compared with the paper | **agrees, with differences** (2026-11-20, [result](compare/RESULT.md)). The high-frequency mean lag and the frequency where the lag changes sign agree with F09. In 2 of the 8 bins that count, the difference (1.8–1.9 of F09's error bars) is larger than our own binning and segmentation variants produce. Run by the explainer, so **not independent**. [Plan and criteria](compare/PLAN.md): fixed before digitising, amended before the comparison was run |
 | Challenges | [#1](https://github.com/phajy/Retrace/issues/1) background flares: **confirmed** ([result](checks/issue-1/RESULT.md)) · [open another](https://github.com/phajy/Retrace/issues/new?template=check-request.yml) |
 
 **This is not yet a reproduction claim.**

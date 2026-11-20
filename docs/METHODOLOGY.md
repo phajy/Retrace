@@ -37,7 +37,7 @@ flowchart LR
     data[("XMM-Newton data<br/>HEASARC archive")] -->|"URL + checksum"| filter["filter<br/>event selection, flare screen<br/>+ EXPLAIN.md"]
     filter --> lc["lightcurves<br/>0.3–1 and 1–4 keV<br/>+ EXPLAIN.md"]
     lc --> lags["lags<br/>cross-spectrum, lag vs frequency<br/>+ EXPLAIN.md"]
-    lags --> compare["compare with the paper<br/>(planned)"]
+    lags --> compare["compare with the paper<br/>+ EXPLAIN.md, RESULT.md"]
     compare --> report["report<br/>(planned)"]
     params[/"params.yaml<br/>(assumption IDs)"/] -.-> filter & lc & lags
 ```
@@ -62,6 +62,11 @@ because each one shows something different:
 
 The explainer's own checks (for example the synthetic-signal self-test that runs on every pipeline
 run) are listed on each result page, but they are not independent and do not count as any of the above.
+
+**Who ran a check matters as much as which check it was.** The score sheet records who ran every check and whether
+they were independent of the explainer. Only checks by someone other than the explainer count as verification. A
+comparison with the paper can be run by the explainer: it is then recorded under "Compared", marked as not
+independent, until a verifier re-runs it or writes their own version from the written plan.
 
 ## Challenging a result: the check-request lifecycle
 
@@ -100,6 +105,41 @@ flowchart TD
 | `outcome: inconclusive` | The check could not settle the question. |
 | `planted-mistake-test` | A deliberate, labelled error used to test whether verifiers catch mistakes (revealed only after the test). |
 
+## Comparing with a publication
+
+What the pilot's comparison with Fabian et al. 2009, Fig. 3 taught us ([plan](../results/compare/PLAN.md),
+[result](../results/compare/RESULT.md)).
+
+* **Judge differences against the spread of reasonable choices, not only against the error bars.**
+  * When our analysis and the paper's use the same data, their statistical errors are largely shared. A faithful
+    reproduction can then differ by much less than an error bar, or by about one error bar if it made different
+    choices that the paper does not state.
+  * So, before looking at the published values, measure how far such choices move our own result ("our own
+    spread", A-19), and judge the comparison against that.
+* **Say what that spread covers.** In the pilot it covered binning and segmentation, not the data reduction, so a
+  difference outside it points at choices it leaves out.
+* **Lead with the numbers.** The outcome category is a summary. The numbers, and which bins differ, carry the
+  information. With a few points and coarse categories, even a faithful reproduction can land in "with differences".
+* **Freeze the plan and the code before the data exist, and make the order checkable.**
+  * In the pilot the order relied on convention, and the digitisations were committed before the comparison code
+    ([what actually happened](../results/compare/PLAN.md#what-actually-happened)).
+  * *Next time (not yet implemented):* tag the frozen plan and code before anyone digitises. Digitisers branch from
+    that tag, and the comparison stage refuses digitised files whose commits do not descend from it.
+* **Once the data exist, amendments are secondary.**
+  * The outcome under the first registered rule stays the primary outcome. Later rules are reported next to it,
+    each with its reason.
+  * The pilot adopted Amendments 1 and 2 as the main rule before this was written. The original rule gave the same
+    outcome, and both are reported.
+* **Blind checkers start fresh.**
+  * An AI digitiser or verifier runs in a new clone and a new workspace or session with no earlier history of the
+    project, and gets the drafted prompt unchanged.
+  * In the pilot, the AI digitiser reused the workspace of an earlier verification and had seen our result.
+* **Read a figure twice, and by script where possible.** A vector extraction from the PDF, with its script committed,
+  can be repeated without judgement, and a reading by hand checks it.
+* **Check hand-copied numbers by script.** Numbers on result pages are copied by hand so that the pages read well.
+  Before committing, a script compares them with the output files. In the pilot this caught three rounding errors.
+  So far the script is run by hand; a checking stage is not yet implemented.
+
 ## Honesty rules (summary of `CLAUDE.md`)
 
 1. Published values are for comparison only, never inputs. No choice is tuned to match the paper.
@@ -131,6 +171,11 @@ flowchart TD
 * Whoever writes a verifier's instructions can steer it. The prompt for the first verification was drafted by
   the explainer. It is quoted word for word in the report, so readers can judge whether it steered the outcome.
   Future prompts could come from the maintainer or a third party.
+* **In the pilot's comparison with the paper, too much sat with too few people.**
+  * The explainer computed the result, wrote the comparison plan and code, and proposed both amendments.
+  * The maintainer, an F09 co-author, approved the amendments after digitising Fig. 3 himself, having seen our result.
+  * The record says so, and the outcome under the original rule is reported too.
+  * Future comparisons should be planned or run by someone other than the explainer where possible.
 * *Planted-mistake tests* measure whether the checks catch errors. A deliberate error is introduced on a
   branch, recorded privately by the maintainer, and revealed after the verifier reports.
 

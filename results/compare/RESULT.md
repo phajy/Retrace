@@ -4,6 +4,11 @@ Check: **Compared** ([definition](../../docs/METHODOLOGY.md#levels-of-checking))
 in Claude Code) on 2026-11-20 with the `compare` DVC stage. Plan and criteria: [`PLAN.md`](PLAN.md), with Amendments 1
 and 2. F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383).
 
+**This check is not independent.** The explainer also computed R1, wrote the plan and the comparison code, and
+proposed both amendments. The independent inputs are the two digitisations. A verifier can make the comparison
+independent by re-running the `compare` stage from a clean clone, or by writing their own comparison code from
+[`PLAN.md`](PLAN.md).
+
 ## Outcome: agrees, with differences
 * **The summary numbers that F09's text states agree.**
   * Over 0.7–5 mHz, the weighted mean lag is −17.5 ± 3.4 s for us and −19.0 ± 3.5 s for F09's points:

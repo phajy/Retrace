@@ -79,8 +79,10 @@ Commit your folder in a single commit on a branch named `digitise/<id>`. Don't p
 issues or pull requests: the maintainer does that.
 
 ## Prompt for an AI digitiser
-Drafted by the explainer. The maintainer fills in the two placeholders, starts the agent in a new empty folder, and
-pastes this prompt unchanged. The agent quotes it in its `notes.md`.
+Drafted by the explainer. The maintainer fills in the two placeholders, starts the agent in a new empty folder and a
+new workspace or session with no earlier history of this project, and pastes this prompt unchanged. The agent quotes
+it in its `notes.md`. (In the pilot this was not done: the AI digitiser worked in the workspace of an earlier
+verification, with a one-line prompt. See [what actually happened](PLAN.md#what-actually-happened).)
 
 > You are a digitiser for the Retrace project (https://github.com/phajy/Retrace). Your job is to read the data
 > points off one published figure as accurately as you can, and to record exactly how you did it. You are not

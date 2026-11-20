@@ -8,6 +8,8 @@ The check types (re-run, re-derived, compared) are defined in
 
 ## Rules for verifiers
 * Start from a **clean clone** of a named commit, not from the explainer's working copy.
+* Start in a **new session or workspace** with no earlier history of this project. If you have seen any of the
+  project's results before, for example in an earlier check, you are not blind to them: say so in the report.
 * Use only the **written record**: the README, the `EXPLAIN.md` files, `docs/assumptions.md` and the code.
   You do not see the explainer's conversation.
 * For a **re-derivation**, write your own code from the written method *before* reading the explainer's
@@ -21,7 +23,7 @@ The check types (re-run, re-derived, compared) are defined in
 
 ## What a report contains
 1. Result(s) and check type, the commit checked, the date, who you are (human, or model and tool).
-2. What you had access to.
+2. What you had access to, and whether you had seen any of the project's results before (where and when).
 3. Environment (OS, Python, DVC, package versions).
 4. Exactly what you ran.
 5. What you compared and what you found, with numbers.

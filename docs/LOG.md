@@ -281,3 +281,26 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * Possible next steps, not started: sensitivity tests for the two bins outside our spread (A-07 PATTERN ≤ 12;
   segments of about 40 ks, as F09's frequency grid suggests), reported next to this result and never replacing it.
   A re-derivation of R1 by a verifier is still needed before any reproduction claim.
+
+**Session 1 continued, 2026-11-20 (UTC): who ran a check, and lessons from the comparison**
+* Andy asked whether the comparison should count as a verification step. The explainer agreed that it should not.
+  The explainer computed R1, wrote the comparison plan and code, proposed both amendments and ran it; the only
+  independent inputs were the digitisations.
+* The score sheet had listed the comparison in its "Verifications" table. Its row was also cut off from the table by a
+  blank line, so GitHub did not show it as part of the table. Both are fixed. The table is now "Checks run", with
+  columns for who ran each check and whether they were independent of the explainer. The re-run of 2026-11-19 is
+  marked independent, and the comparison is marked not independent. The R1 page, the result page and the README say
+  the same. Both mistakes are recorded under "Mistakes caught".
+* Lessons written into `docs/METHODOLOGY.md` (new section "Comparing with a publication", plus additions to "Levels of
+  checking" and "Independence and its limits"):
+  * judge differences against our own spread of reasonable choices, and say what that spread covers;
+  * lead with the numbers, not the category;
+  * freeze the plan and the code before the data exist, and make the order checkable. A git tag that the
+    comparison stage enforces is proposed, not implemented;
+  * once the data exist, amendments are secondary to the first registered rule;
+  * blind checkers start in a new clone and a new workspace;
+  * read figures twice, by script where possible;
+  * check hand-copied numbers by script.
+* The same rules were added in short to `CLAUDE.md` (checking workflow), `verification/README.md` (new session; say
+  whether you had seen results before) and `results/compare/DIGITISE.md` (new workspace for the AI digitiser).
+* Not done: the tag check in the comparison stage, and a stage that checks result pages against their outputs.
