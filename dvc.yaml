@@ -107,7 +107,7 @@ stages:
           cache: false
 
   # Stage 5, compare: results/compare/PLAN.md (with Amendment 1) and EXPLAIN.md.
-  # compare_calibration uses no F09 value: it measures our own spread on our own bins (A-19), before digitising.
+  # compare_calibration uses no F09 value: it measures our own spread on our own bins (A-19).
   compare_calibration:
     cmd: python results/compare/compare.py --calibrate
     deps:
@@ -124,7 +124,7 @@ stages:
       - results/compare/calibration.json:
           cache: false
 
-  # compare is commented out until both digitisations of F09 Fig. 3 are committed in results/compare/digitised/;
+  # compare is commented out until both digitisations of F09 Fig. 3 are merged into results/compare/digitised/;
   # uncomment then (with a LOG entry).
   # compare:
   #   cmd:

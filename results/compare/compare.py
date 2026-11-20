@@ -2,9 +2,10 @@
 """Stage 5 (compare): R1 against the digitised points of Fabian et al. 2009 (F09), Fig. 3.
 
 Implements results/compare/PLAN.md, which was fixed (commit 13438ec) before any point of Fig. 3 was digitised, and
-its Amendment 1 (2026-11-20), also made before any point was digitised. This code was written and tested on made-up
-input (test_compare.py) before any digitised values were in the repository. Choices the plan leaves to the code are
-listed in results/compare/EXPLAIN.md.
+its Amendment 1 (2026-11-20), made before the comparison was run. This code was written and tested on made-up input
+(test_compare.py) before the explainer had seen any digitised value. The two digitisations had already been committed
+on their own branches (PLAN.md, "What actually happened"). Choices the plan leaves to the code are listed in
+results/compare/EXPLAIN.md.
 
 Steps:
   1. Self-checks: re-binning our cross spectrum on the lags stage's own bins, bin by bin, must reproduce
@@ -69,7 +70,7 @@ RHO_SIMILAR = (0.67, 1.5)        # error bars "similar" if the median sigma/S is
 HF_RANGE_HZ = (7e-4, 5e-3)       # weighted-mean range (A-14)
 EDGE_SHIFT_FRAC = 0.25           # sensitivity: edges shifted by +-1/4 bin width (midpoint edges only)
 SINGLE_BIN_FACTOR = 1e9          # makes lags.bin_spectra put all the frequencies it is given into one bin
-# Amendment 1 (2026-11-20, before any digitising)
+# Amendment 1 (2026-11-20, before the comparison was run)
 Z_MEAN_AGREE, Z_MEAN_DIFFER = 1.0, 2.0          # outcome thresholds on |z_mean| (high-frequency weighted mean)
 REF_EDGE_SHIFTS = (-0.10, -0.05, 0.05, 0.10)    # reference variants: all edges moved by this fraction of a bin (A-19)
 REF_WINDOWS_S = (95000, 90000, 80000)           # reference variants: one window of this length per orbit (A-19)
@@ -770,7 +771,7 @@ def run(dirs, out: Path, label: str | None = None):
 
 def calibrate(path: Path):
     """Our own spread on our own baseline bins (lags.freq_bin_factor), over the bins where our lag is reliable.
-    Uses no F09 value. It shows, before digitising, how far the reference variants (A-19) and the larger
+    Uses no F09 value. It shows how far the reference variants (A-19) and the larger
     calibration-only variants move single bins and the summary numbers."""
     r1 = load_r1()
     chk = self_check(r1)
@@ -793,7 +794,7 @@ def calibrate(path: Path):
     hf = [b for b in counting if HF_RANGE_HZ[0] <= b["ours_f_mean_hz"] < HF_RANGE_HZ[1]]
     allv = {**ref["variants"], **extra["variants"]}
     out = {
-        "what": "Our own spread on our own baseline bins, before any digitising (PLAN.md Amendment 1, A-19). For each "
+        "what": "Our own spread on our own baseline bins (PLAN.md Amendment 1, A-19). For each "
                 "variant of our analysis: z = (baseline - variant) / variant error in each reliable bin, and the shift "
                 "of the high-frequency weighted mean in units of the variant's error (z_mean). No F09 value is used.",
         "plan": PLAN,

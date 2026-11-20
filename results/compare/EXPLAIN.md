@@ -1,14 +1,20 @@
 # Stage 5: compare (R1 against the digitised F09 Fig. 3)
 
-Plan, with criteria fixed in advance: [`PLAN.md`](PLAN.md) (commit `13438ec`, with Amendment 1 of 2026-11-20, also
-made before digitising). Digitising rules: [`DIGITISE.md`](DIGITISE.md).
+Plan, with criteria fixed in advance: [`PLAN.md`](PLAN.md). The plan (commit `13438ec`) was fixed before digitising.
+Amendment 1 (2026-11-20) was made before the comparison was run, but after both digitisations had been committed;
+see [what actually happened](PLAN.md#what-actually-happened). Digitising rules: [`DIGITISE.md`](DIGITISE.md).
 Code: `compare.py` · tests: `test_compare.py` · calibration (no F09 value): `calibration.json` · outputs (once the
 digitisations exist): `comparison.json`, `comparison.csv`, `digitised_combined.csv`, `comparison.png`.
 
-**Status (2026-11-20): code written and tested on made-up input; our own spread measured on our own bins. No point of
-F09 Fig. 3 has been digitised, and there are no digitised values in the repository.** Two DVC stages:
-`compare_calibration` runs now, and `compare` is in `dvc.yaml` but commented out until both digitisations are
-committed.
+**Status (2026-11-20):**
+* **Code** written and tested on made-up input.
+* **Our own spread** measured on our own bins.
+* **The two digitisations** are committed on their own branches: `digitise/ay` (`95d1a75`) and
+  `digitise/ai-grok-4.7-2026-11-20` (`7f0853a`). They pass the agreement check but are not yet merged.
+* **The comparison has not been run.**
+
+Two DVC stages: `compare_calibration` runs now, and `compare` is in `dvc.yaml` but commented out until the
+digitisations are merged.
 
 ## What the code does
 1. **Self-checks (every run).**
@@ -34,7 +40,8 @@ bins instead of F09's. It also runs larger variants that are not reference varia
 `calibration.json`. It needs no digitised value.
 
 ## Choices the plan left to the code
-Decided while writing the code, before any digitised values existed.
+Decided while writing the code, before the explainer had seen any digitised value. The digitisations were already
+committed on their own branches by then ([what actually happened](PLAN.md#what-actually-happened)).
 * **Matching points:** mutual nearest neighbours in log frequency, closer than half the smallest spacing between
   points in either digitisation. When both digitisers found the same points, this is the same as matching in order.
 * **Points found by one digitiser only** are not compared. Their frequency is still used for the bin edges, so a
@@ -79,7 +86,7 @@ of 0.42–1.05. These numbers, and those of the larger variants, are tabulated i
 high-frequency weighted mean moves by at most 0.53 of its error (0.39 for the reference variants), and the sign
 change stays between 5.6×10⁻⁴ and 6.4×10⁻⁴ Hz. On the made-up 1.6× bins of the tests, the limits are 0.47 (rms) and
 0.81 (|z|). The limits used in the real comparison are recomputed on F09's bins.
-Provenance: `calibration.json` md5 `8e813ae73131877345294405b9ee50ab`; `test/test_results.json` md5
+Provenance: `calibration.json` md5 `1f83354201aaf1e172339f277a769fb1`; `test/test_results.json` md5
 `69265cabe16168fa710a2af2fbefe913`.
 
 Before Amendment 1, the same measurement was first run as a scratch script outside the repository. That script gave
@@ -144,6 +151,21 @@ widely, so the bin average moves by a sizeable fraction of its error. On our own
 (the calibration above), and other segmentations do much the same. A quarter-bin shift is outside the reference
 variants, so it still gives "agrees, with differences" under the amended rule. That is reported as a sensitivity
 result.
+
+## Found when the digitisations were received (before the comparison was run)
+* **Point 2's upper error bar ends on the top of the plot frame (200 s).** Both digitisers recorded 200 s and said so.
+  Neither the plan nor the code treats a clipped bar specially, so S for that point is too small. It cannot affect the
+  outcome, because that bin holds 5 of our Fourier frequencies (K = 20 < 30), so our value there is never reliable
+  (A-13) and the bin never counts. It is to be noted on the result page. The code is not changed for it.
+* **Averaging the bar ends leaves small gaps between bins.** In the AI's vector reading, neighbouring horizontal
+  segments share their ends exactly. AY's right-hand ends are 0.002–0.006 dex lower. Averaging the two leaves gaps of
+  up to 0.004 dex between neighbouring bins, and 11 of our Fourier frequencies (about 1% of those in the bins) fall
+  into them and are used in no bin. This is smaller than the ±0.05-bin shifts among the reference variants.
+* **The low-frequency bin edges sit on multiples of about 2.49×10⁻⁵ Hz** (1, 5, 7, 13 and 21 times it), not on our
+  10⁻⁵ Hz grid. This suggests that F09's Fourier frequencies were about 2.5×10⁻⁵ Hz apart, which would mean segments
+  of about 40 ks rather than the 100 ks of A-09. It is a reading of F09's method from its frequencies, like the A-11
+  side result. Under PLAN.md it cannot change the baseline or the reference variants before the comparison is run.
+  It is a candidate for a sensitivity test afterwards, reported separately.
 
 ## Stage definitions
 In `dvc.yaml`:

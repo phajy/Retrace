@@ -1,4 +1,4 @@
-# Comparison of R1 with Fabian et al. 2009, Fig. 3: plan, fixed before digitising
+# Comparison of R1 with Fabian et al. 2009, Fig. 3: plan, fixed before digitising and amended before the comparison was run
 
 Result: **R1** (lag–frequency spectrum, 0.3–1 keV vs 1–4 keV). Check: **Compared**, as defined in
 [`docs/METHODOLOGY.md`](../../docs/METHODOLOGY.md#levels-of-checking). Plan written by the explainer
@@ -6,8 +6,10 @@ Result: **R1** (lag–frequency spectrum, 0.3–1 keV vs 1–4 keV). Check: **Co
 that adds this file is the reference version. Any later change to it is made in a new commit with the reason
 recorded in [`docs/LOG.md`](../../docs/LOG.md), and the outcome under this version is still reported.
 
-**Amendment 1 (2026-11-20), made before any point of Fig. 3 was digitised.** The reference version is commit
-`13438ec`. Amendment 1 changes how the outcome is decided, for the reason given in
+**Amendment 1 (2026-11-20), made before the comparison was run, but after both digitisations had been committed**
+(see [what actually happened](#what-actually-happened)). The explainer proposed it without having seen any digitised
+value. The maintainer approved it after making his own digitisation, having seen our result. The reference version
+is commit `13438ec`. Amendment 1 changes how the outcome is decided, for the reason given in
 [its own section](#amendment-1-2026-11-20-why-the-outcome-rule-changed). The outcome under the original rule is still
 computed and reported next to the amended one. Everything else (what is compared, the digitisations, the bins, the
 statistics per bin, the sensitivity variants) is unchanged.
@@ -30,8 +32,8 @@ F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383).
 2. The explainer writes the comparison code (`results/compare/compare.py`, a DVC stage `compare`) and tests it
    on made-up input in the digitised format (our own points with noise added, never F09 values). It is committed
    **before** any digitised values are in the repository. The explainer does not look at Fig. 3 points until then.
-   Amendment 1 and the `compare_calibration` stage (our own spread on our own bins, no F09 value) are also
-   committed at this step, before any digitised values exist.
+   Amendment 1 and the `compare_calibration` stage (our own spread on our own bins, no F09 value) were meant to be
+   committed at this step too. In fact the digitisations came first ([what actually happened](#what-actually-happened)).
 3. Two independent digitisations, each committed on its own (see [`DIGITISE.md`](DIGITISE.md) for the rules):
    * **AY:** Andy Young with WebPlotDigitizer. Not blind: he has seen our result.
    * **AI:** an AI agent in Cursor, working in a clean clone of a commit that has no digitised values (from
@@ -42,6 +44,35 @@ F09 = Fabian et al. 2009, *Nature* 459, 540 (arXiv:0905.4383).
    Neither digitiser looks at the other's values before their own are saved.
 4. Check that the two digitisations agree (below) and combine them.
 5. Run the `compare` stage. Results go on a result page in this folder, on the R1 page and in the score sheet.
+
+## What actually happened
+Recorded on 2026-11-20, when the digitisations were received. Times are git commit times (UTC). Steps 2 and 3 took
+place in the opposite order, and the AI digitisation was not done as step 3 describes.
+* **09:58:** this plan and `DIGITISE.md` committed (`13438ec`), as in step 1.
+* **10:10:** the AI digitisation (Grok 4.7 High Fast in Cursor, 10:04–10:10) committed on
+  `digitise/ai-grok-4.7-2026-11-20` (`7f0853a`), from `13438ec`. It departed from step 3 in three ways, all stated in
+  its own notes:
+  * **It was not blind.** It worked in the Cursor workspace where it had re-run the pipeline on 2026-11-19 (the
+    R1/R3 verification), and it had read the R1 page and our lag table then.
+  * **It did not start from a clean clone.**
+  * **It did not get the drafted prompt.** Its prompt was one line asking it to follow `DIGITISE.md`.
+
+  What limits the effect: it read the coordinates from the PDF's drawing commands with a script that is committed
+  (`extract_fig3.py`). The reading involves no judgement by eye and can be repeated from the PDF, whose SHA-256 is
+  recorded.
+* **10:54:** AY's digitisation (WebPlotDigitizer, by hand on a screen grab, 10:15–10:45) committed on `digitise/ay`
+  (`95d1a75`), from `13438ec`. AY had seen our result. He states that he had not seen the AI's values.
+* **13:45:** the comparison code, its tests, the `compare_calibration` stage and Amendment 1 committed (`6426985`).
+  * **The explainer had not seen any digitised value.** The digitise branches first reached the explainer's checkout
+    at 14:12 UTC, through a pull recorded in the git reflog.
+  * **The maintainer approved Amendment 1 after making his digitisation,** having seen our result. Whether he had
+    compared his points with R1 by then is not recorded.
+* **Wrong statements, now corrected:** the commit message of `6426985` said Amendment 1 was made before any point was
+  digitised. So did, until this correction, this plan, `EXPLAIN.md`, A-19, the README and the R1 page. That was wrong.
+* **Step 4:** the agreement check was then run on the two digitisations. All 12 points match, and none fails the
+  check: the largest differences are 0.35 s in lag (0.05 of F09's error bar) and 0.003 dex in frequency.
+* The outcome under the original rule (13438ec), whose plan did come before any digitising, is reported next to the
+  amended outcome.
 
 ## Step 4: combining the two digitisations
 * **Matching points.** Points are matched in order of frequency. If the two digitisers found different numbers of
@@ -107,7 +138,7 @@ z_F over the bins that count is no larger than the rms limit and no |z_F| is lar
 depends on our data only, not on F09's). All other bins are shown in the table and the figure, with their
 z values, but do not decide the outcome.
 
-## Outcomes (Amendment 1), decided before digitising
+## Outcomes (Amendment 1), decided before the comparison was run
 For the R1 "Compared" entry in the score sheet:
 * **Agrees with F09 Fig. 3:** all of
   * |z_mean| ≤ 1;
@@ -149,7 +180,7 @@ variants: they define our own spread and are part of every evaluation, including
 
 ## Amendment 1 (2026-11-20): why the outcome rule changed
 Testing the comparison code on made-up input showed that moving F09's bin edges by a fraction of a bin changes
-z_F noticeably, even when F09's points are exactly our own values. Before any digitising, the explainer then
+z_F noticeably, even when F09's points are exactly our own values. Before seeing any digitised value, the explainer then
 measured how far choices that F09 does not state, or that cannot be read from Fig. 3, move our own spectrum on our
 own 1.4× bins: the `compare_calibration` stage, output [`calibration.json`](calibration.json). It uses no F09 value.
 Over the bins where our lag is reliable (our lag values are left out here, so that a blind digitiser reading this
@@ -165,7 +196,7 @@ plan does not see them):
 
 Over all of these variants, the high-frequency weighted mean moves by at most 0.53 of its error (0.39 for the
 reference variants), and the frequency of the sign change moves by at most 0.04 dex.
-(Numbers copied by hand from `calibration.json`, md5 `8e813ae73131877345294405b9ee50ab`.)
+(Numbers copied by hand from `calibration.json`, md5 `1f83354201aaf1e172339f277a769fb1`.)
 
 So a reproduction that differs from F09 only in choices the figure cannot show would move single bins by about
 1σ. Under the original rule it would probably not "agree", and a quarter-bin error in the edges alone could make it
@@ -181,13 +212,18 @@ The reference variants are chosen by one rule: choices that F09 does not state o
 that are close to what the published descriptions imply (Z10: "4 segments of about 100 ks"). Variants that are
 less plausible for F09 are reported in the calibration but are not reference variants. Examples: a quarter-bin
 error, or segments much shorter than 100 ks, which Z10 and the 10⁻⁵ Hz start of the Fig. 3 axis argue against
-(A-09). No digitised value, and no recollection of the maintainer, was used to choose them.
+(A-09). The explainer chose them without having seen any digitised value, and no recollection of the maintainer was
+used. The maintainer approved them after making his own digitisation (see [what actually happened](#what-actually-happened)).
 
 ## What this check will and will not show
 * It shows whether our baseline agrees with Fig. 3 as published: in the summary numbers F09's text states, and
   bin by bin within the spread of choices that the paper and the figure leave open.
 * It does not show which assumption causes a difference, if there is one.
 * It does not make R1 a reproduction on its own. A re-derivation (new code from the written method) is a separate check.
-* The comparison code is written by the explainer, who also wrote R1. The safeguards are that this plan and the
-  code are committed before the digitised values exist, that the digitisations are by others, and that a verifier
-  can re-run the stage.
+* The comparison code is written by the explainer, who also wrote R1. The safeguards:
+  * the original plan was committed before any digitising;
+  * the code and Amendment 1 were committed before the explainer had seen any digitised value, and before the
+    comparison was run;
+  * the outcome under the original rule is reported as well;
+  * the digitisations are by others;
+  * a verifier can re-run the stage.

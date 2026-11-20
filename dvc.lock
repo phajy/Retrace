@@ -303,8 +303,8 @@ stages:
       nfiles: 8
     - path: results/compare/compare.py
       hash: md5
-      md5: 772248701559e41fc0c060daf3996d9a
-      size: 48825
+      md5: 7fccb3cc4b81fe566d8a7af02f5f3994
+      size: 48891
     params:
       params.yaml:
         exposures:
@@ -342,5 +342,5 @@ stages:
     outs:
     - path: results/compare/calibration.json
       hash: md5
-      md5: 8e813ae73131877345294405b9ee50ab
-      size: 16089
+      md5: 1f83354201aaf1e172339f277a769fb1
+      size: 16066

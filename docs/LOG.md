@@ -188,3 +188,44 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * PLAN.md is the one repository file, besides DIGITISE.md, that the blind AI digitiser may read. Its Amendment 1
   section therefore gives the spread as rms and |z| values and relative shifts only, not our lags or our sign-change
   frequency. A first draft quoted the sign-change frequency range and was corrected before anything was committed.
+
+**Session 1 continued, 2026-11-20 (UTC): the two digitisations received; the record corrected**
+* Andy had already done both digitisations and pushed them to `digitise/ay` (`95d1a75`) and
+  `digitise/ai-grok-4.7-2026-11-20` (`7f0853a`). Both branch from `13438ec` and change only their own folders.
+* Timing (git commit times):
+  * plan `13438ec` at 09:58;
+  * AI digitisation at 10:10;
+  * AY digitisation at 10:54;
+  * compare code and Amendment 1 (`6426985`) at 13:45.
+
+  So the code and Amendment 1 came after the digitisations, not before, as PLAN.md's order of work required.
+* **The explainer had not seen any digitised value:** the branches first reached the explainer's checkout at 14:12,
+  through a pull recorded in the git reflog.
+* **Andy approved Amendment 1 after making his digitisation,** having seen our result. Whether he had compared his
+  points with R1 by then is not recorded.
+* **Correction of earlier entries.** The two log entries above headed "comparison code, written before any digitised
+  values exist" and "Amendment 1 ... before any digitising" are wrong about the timing. So is the commit message of
+  `6426985`, which said Amendment 1 was made before any point was digitised. The entries are left as they were.
+  PLAN.md (new section "What actually happened"), EXPLAIN.md, A-19, the README, the R1 page, `compare.py` and the
+  `dvc.yaml` comments are corrected. Andy agreed that the record should say this plainly.
+* **The AI digitiser departed from the instructions in three ways,** all stated in its own notes:
+  * it was not blind: it worked in the Cursor workspace of the 2026-11-19 verification, where it had read the R1 page
+    and our lag table;
+  * it did not start from a clean clone;
+  * its prompt was one line asking it to follow DIGITISE.md, not the drafted prompt.
+
+  Its reading came from the PDF's drawing commands, with a committed script (`extract_fig3.py`) that can be re-run on
+  the PDF (SHA-256 recorded). Andy decided that the digitisation need not be repeated.
+* **Step 4 of PLAN.md (agreement check),** run with the committed `compare.py` functions, without computing anything
+  from our spectrum:
+  * 12 points in each digitisation, one series, horizontal bars on every point;
+  * all 12 matched, none failing;
+  * largest differences 0.35 s in lag (0.05 of F09's error bar), 0.003 dex in frequency, and 0.006 dex for the bar ends;
+  * δ is the 1.25 s floor for every point.
+* **Found on receipt** (details in `results/compare/EXPLAIN.md`):
+  * point 2's upper error bar ends on the top of the plot frame (200 s); its bin has K = 20 and can never count;
+  * averaging the bar ends leaves small gaps that drop 11 of our Fourier frequencies;
+  * the low-frequency bin edges sit on multiples of about 2.49×10⁻⁵ Hz. That suggests F09 used segments of about
+    40 ks, not the 100 ks of A-09; it is a candidate for a sensitivity test after the comparison.
+* AY's notes do not give the WebPlotDigitizer version or the resolution of the screen grab, and his frequency axis was
+  calibrated on the unlabelled 2×10⁻⁵ tick. Given the agreement with the vector reading, this is not followed up.
