@@ -7,6 +7,8 @@ The check types (re-run, re-derived, compared) are defined in
 [How Retrace works](../docs/METHODOLOGY.md#levels-of-checking).
 
 ## Rules for verifiers
+* AI verifiers are started with the generic [prompt](PROMPT.md), pasted unchanged with only its three fields
+  filled in (the commit, the tasks, the verifier's model and tool). Human verifiers can follow it too.
 * Start from a **clean clone** of a named commit, not from the explainer's working copy.
 * Start in a **new session or workspace** with no earlier history of this project. If you have seen any of the
   project's results before, for example in an earlier check, you are not blind to them: say so in the report.

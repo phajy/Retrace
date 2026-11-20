@@ -62,7 +62,10 @@ Facts (from [`results/answers/issue-4/coherence_noise.json`](../../results/answe
   averages 0.98 (soft) and 1.00 (hard), with a range of 0.95–1.03. So the noise level is right to about 2%. The
   intrinsic-coherence error bars (Vaughan & Nowak 1997 eq. 8) assume high powers, so they do not include this.
 
-## Comparison with the publication (descriptive only; the formal comparison is the `compare` stage, not yet built)
+## Comparison with the publication (descriptive only; written before the formal comparison)
+*The formal comparison, the `compare` stage, was run on 2026-11-20: [result](../../results/compare/RESULT.md). This
+section was written before it and is kept as it was.*
+
 F09 (text and Fig. 3 caption): positive lags at low frequency; negative above ~0.6 mHz (caption: 7e-4 Hz);
 "the soft reflection dominated band follows the hard powerlaw dominated one by about 30 s".
 * The **shape and sign** match that description: positive at low frequency, sign change at 5.9e-4 Hz,

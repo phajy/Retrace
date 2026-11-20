@@ -304,3 +304,29 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * The same rules were added in short to `CLAUDE.md` (checking workflow), `verification/README.md` (new session; say
   whether you had seen results before) and `results/compare/DIGITISE.md` (new workspace for the AI digitiser).
 * Not done: the tag check in the comparison stage, and a stage that checks result pages against their outputs.
+
+**Session 1 continued, 2026-11-20 (UTC): one prompt for every verifier**
+* Andy asked what to do next for the proof of concept. The explainer suggested, in order:
+  1. an independent re-derivation of R1, and an independent comparison;
+  2. a planted-mistake test;
+  3. automated checks of result pages;
+  4. a summary page for reviewers.
+* So that the explainer does not write instructions for a particular check, there is now one generic prompt,
+  `verification/PROMPT.md`, for every result and every check type. Only the commit, the tasks and the verifier's model
+  are filled in. It says nothing about any result or known concern, or about whether the commit contains mistakes,
+  so planted-mistake tests can use it too.
+* A re-derivation has two phases. In phase 1 the verifier reads only the method (named README sections, the
+  specification, `docs/assumptions.md`, `params.yaml`, `dvc.yaml`, and each `EXPLAIN.md` without its "Results" and
+  "Comparison" sections). It does not open the explainer's code for those stages, their outputs, `docs/LOG.md`,
+  `results/` or other reports, and it does not run `dvc repro`. Before comparing, it commits its code, its outputs
+  and its match criterion. In phase 2 it may read everything; the outcome rests on the first version.
+* The method documents still quote some of our numbers (for example the coherence section of the lags `EXPLAIN.md`
+  and the README status box), so phase 1 is not fully blind. The prompt says so and forbids adjusting towards them.
+* The verifier must not ask the maintainer about the method, because the maintainer (an F09 co-author) may know
+  things that are not in the record. Where the record leaves a choice open, the verifier makes and records its own.
+* Andy reviewed the prompt the same day without changing its text, and decided to try the phase 1 reading rules
+  as written. The verifier sets its own match criterion, and the rule against method questions stands. Linked from
+  `verification/README.md`, `docs/METHODOLOGY.md` ("Independence and its limits") and `CLAUDE.md`.
+* While checking the paths the prompt names, the explainer found that the lags `EXPLAIN.md` still called the
+  comparison stage "not yet built". Its heading now says the section was written before the formal comparison, and
+  it links to the result; the section's text is unchanged.

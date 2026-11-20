@@ -170,7 +170,10 @@ What the pilot's comparison with Fabian et al. 2009, Fig. 3 taught us ([plan](..
   result should come from a different model or a human.
 * Whoever writes a verifier's instructions can steer it. The prompt for the first verification was drafted by
   the explainer. It is quoted word for word in the report, so readers can judge whether it steered the outcome.
-  Future prompts could come from the maintainer or a third party.
+  From 2026-11-20, every verifier gets the same generic prompt, [`verification/PROMPT.md`](../verification/PROMPT.md).
+  Only the commit, the tasks and the verifier's model are filled in, and it says nothing about any particular
+  result. It was drafted by the explainer and reviewed by the maintainer before first use; a third party could
+  review it too.
 * **In the pilot's comparison with the paper, too much sat with too few people.**
   * The explainer computed the result, wrote the comparison plan and code, and proposed both amendments.
   * The maintainer, an F09 co-author, approved the amendments after digitising Fig. 3 himself, having seen our result.

@@ -60,7 +60,8 @@ analysis was done is not published information. Use it only as an explicit assum
 - The score sheet records who ran each check and whether they were independent of the explainer. Checks the
   explainer runs, comparisons with the paper included, never count as verification.
 - AI checkers (verifiers, digitisers) start in a new clone and a new workspace or session with no earlier history
-  of the project, with the drafted prompt pasted unchanged.
+  of the project, with the drafted prompt pasted unchanged. Verifiers all get the generic `verification/PROMPT.md`;
+  don't write a prompt for a particular check.
 - Comparisons with a publication: freeze the plan and the code before the data exist. Once the data exist,
   amendments are secondary to the first registered rule. Judge differences against our own spread of reasonable
   choices, not only against error bars (`docs/METHODOLOGY.md`, "Comparing with a publication").
