@@ -128,3 +128,15 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
   sensitive to the noise level (0.40–0.83 at 3.7 mHz for ±5%). Above 1e-2 Hz the measured power over the predicted
   noise averages 0.98 (soft) and 1.00 (hard), so the noise level is right to about 2%. No result or flag changed.
 * METHODOLOGY: calculations behind answers go in `results/answers/issue-<N>/`.
+
+**Session 1 continued, 2026-11-20 (UTC): plan for the comparison with F09 Fig. 3**
+* Andy decided to compare with the paper before any re-derivation, and that Fig. 3 is digitised twice,
+  independently: by himself with WebPlotDigitizer (not blind: he has seen our result) and by an AI agent in Cursor
+  (blind: told not to open our results).
+* Wrote `results/compare/PLAN.md` (what is compared, statistics and outcomes, fixed before any point is digitised)
+  and `results/compare/DIGITISE.md` (rules, file format and the AI digitiser's prompt). The main statistic is the
+  difference in units of F09's own error bar, because both analyses use the same photons. New assumptions A-15
+  (comparison bins from the frequencies of F09's points), A-16 (F09 error bars are ±1σ), A-17 (arXiv version of
+  the figure) and A-18 (digitisation uncertainty).
+* Next, in this order: commit the plan; write and test the `compare` code on made-up input and commit it before any
+  digitised values are in the repository; then the two digitisations.

@@ -5,7 +5,7 @@
 | Computed by the explainer | **done** (2026-11-19) |
 | Re-run by a verifier | **matched** at `9eea9a1` (2026-11-19, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2)) |
 | Re-derived by a verifier | not yet |
-| Compared with the paper | not yet (needs digitised Fig. 3 points) |
+| Compared with the paper | not yet (needs digitised Fig. 3 points; [plan and criteria](compare/PLAN.md), fixed before digitising) |
 | Challenges | [#1](https://github.com/phajy/Retrace/issues/1) background flares: **confirmed** ([result](checks/issue-1/RESULT.md)) · [open another](https://github.com/phajy/Retrace/issues/new?template=check-request.yml) |
 
 **This is not yet a reproduction claim.**

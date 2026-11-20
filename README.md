@@ -92,7 +92,7 @@ All open issues: <https://github.com/phajy/Retrace/issues>
 | 3 lightcurves | Source and background light curves, 0.3–1 and 1–4 keV, 10 s bins | [EXPLAIN](analysis/lightcurves/EXPLAIN.md) | done |
 | 4 lags | Cross-spectrum, lag vs frequency, coherence, self-tests | [EXPLAIN](analysis/lags/EXPLAIN.md) | baseline done; sensitivity tests pending |
 | figures | Copies diagnostic plots into [`results/figures/`](results/figures) so GitHub can show them | `dvc.yaml` | done |
-| 5 compare | Comparison with digitised Fig. 3 points | — | not started |
+| 5 compare | Comparison with digitised Fig. 3 points | [PLAN](results/compare/PLAN.md) | plan and criteria written; digitisation not started |
 | 6 report | Summary of what was and was not reproduced | — | not started |
 
 ## Reproduce it yourself
