@@ -369,3 +369,22 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * The explainer posted the *Verification report* issue on Andy's go-ahead
   ([#6](https://github.com/phajy/Retrace/issues/6), labels `verification` and `outcome: mistake found`) and linked it from
   the pages above.
+
+**Session 1 continued, 2026-11-21 (UTC): the three gaps in the written record, fixed**
+* Following the verifier's report ([#6](https://github.com/phajy/Retrace/issues/6)), the lags `EXPLAIN.md` and A-10 now
+  state the three rules the record had left out. Each was read from `lags.py`, and the numbers quoted were measured
+  from our own light curves and outputs. No code, parameter or output changed, and `dvc status` is clean.
+  1. **Gaps:** every 10 s bin not entirely inside the CCD-4 standard GTIs (`FRACEXP` < 1) is a gap, partly exposed
+     bins included, and is filled by linear interpolation. Runs of gap bins are allowed up to 200 s. In the baseline,
+     the gap bins per window are 5, 5, 2 and 3 partly exposed plus 6, 1, 0 and 0 with no exposure. That gives the
+     11, 6, 2 and 3 the file already quoted.
+  2. **Poisson level:** per window, the mean variance of the fully exposed bins times the number of bins, then
+     averaged over the windows. Measured against the plain sum of the recorded variances, it is 3.6×10⁻⁴ (soft) and
+     3.8×10⁻⁴ (hard) higher; the verifier had estimated about 10⁻³. The code comment that says "sum of the per-bin
+     variances" is left until the next real change to the lags stage, with the line-ending fix. Changing `lags.py`
+     now would change `dvc.lock`, and the code the verifier checked would no longer be the current code.
+  3. **Frequency bins:** the first edge is 10⁻⁵ × (1 − 10⁻⁹) Hz, a frequency on an edge goes to the upper bin, one empty
+     bin is skipped, and the last, incomplete bin (0.0450–0.0630 Hz) is kept.
+* The three "Mistakes caught" rows now say how each was fixed. The R1 page (concern 6), the score sheet and the README
+  say the record now states the gap rule. The verifier's outcome for `9cb723d` is unchanged: R1 differs under its
+  criterion. Whether the clarified record is enough could be tested by a new re-derivation from a later commit.

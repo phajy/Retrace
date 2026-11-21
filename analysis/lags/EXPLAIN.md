@@ -17,13 +17,40 @@ the softer flux"), Z10 and K13. It is computed as lag(f) = arg⟨H*(f) S(f)⟩ /
   flare-screen GTIs. Only 0101 (121.6 ks) has any freedom: its window starts 4.1 ks in, avoiding the opening flare.
   The other exposures are 101.8–104.0 ks long, so their windows include most of their flaring periods
   (time outside the flare GTIs: 0.8, 23.7, 31.4, 26.6 ks for 0101, 0201, 0301, 0401).
-* **Gaps** ≤ 200 s inside a window (11, 6, 2, 3 bins of 10 s) are filled by linear interpolation (A-10).
+* **Gaps** (A-10). Stated precisely on 2026-11-21 after the verifier's report ([#6](https://github.com/phajy/Retrace/issues/6)); the method is unchanged.
+  * A 10 s bin is a **gap** if it is not entirely inside the CCD-4 standard GTIs (`FRACEXP` < 1). So partly exposed
+    bins are gaps too, and their recorded counts are not used.
+  * Inside a window, the net counts of every gap bin are replaced by linear interpolation between the nearest fully
+    exposed bins (`numpy.interp`), with no added noise. If a window began or ended inside a gap, those bins would take
+    the value of the nearest fully exposed bin; this does not happen in the baseline.
+  * A window can contain only runs of gap bins at most `max_gap_fill_s` = 200 s (20 bins) long, with fully exposed
+    bins on both sides. A longer gap ends the stretch in which a window can be placed.
+  * In the baseline the four windows have 11, 6, 2 and 3 gap bins. That is a result, not part of the rule: 5, 5, 2
+    and 3 of them are partly exposed, and 6, 1, 0 and 0 have no exposure at all.
+  * Keeping the counts of partly exposed bins instead, as the verifier's phase 1 code did, moves two reliable bins and
+    the 0.7–5 mHz mean by 0.10–0.16σ ([#6](https://github.com/phajy/Retrace/issues/6)).
 * For each segment: subtract the mean, rectangular window, numpy `rfft`. Average C = H*S, |S|², |H|²
-  over the 4 segments, then over geometric frequency bins with f_hi = 1.4 f_lo (A-11).
+  over the 4 segments, then over geometric frequency bins with f_hi = 1.4 f_lo (A-11). Stated precisely on
+  2026-11-21 after the verifier's report ([#6](https://github.com/phajy/Retrace/issues/6)); the method is unchanged:
+  * The Fourier frequencies are j/T for j = 1 to 4999 (T = 100 ks, so 10⁻⁵ to 0.04999 Hz). The zero frequency and
+    the Nyquist frequency (0.05 Hz) are dropped.
+  * The first edge is just below the lowest Fourier frequency, at 10⁻⁵ × (1 − 10⁻⁹) Hz, so that 10⁻⁵ Hz falls
+    inside the first bin despite rounding. Each further edge is 1.4 times the one before, up to the first edge at or
+    above the highest Fourier frequency. So the last bin (0.0450–0.0630 Hz) is kept, although it holds only the
+    frequencies up to 0.04999 Hz.
+  * A frequency on an edge belongs to the upper bin (f_lo ≤ f < f_hi). A bin with no Fourier frequency is skipped
+    (one: 1.4–1.96×10⁻⁵ Hz), which leaves 25 bins.
+  * The lag of a bin is its phase divided by 2π times the mean of its Fourier frequencies (`f_mean_hz`).
 * **Lag error**: Nowak et al. 1999 eq. 16 with the raw coherence, K = 4 × (Fourier frequencies in the bin)
   (A-12). **Coherence**: raw |⟨C⟩|²/(⟨|S|²⟩⟨|H|²⟩), plus the intrinsic coherence and its error from
   `stingray.fourier.intrinsic_coherence` (Vaughan & Nowak 1997 eq. 8; bias term from Ingram 2019).
-  The Poisson noise level of each band is the summed per-bin variance (src + BACKRAT² × bkg).
+  The **Poisson noise level** N of each band is the expected |rfft|² of the counting noise, in the units of this
+  unnormalised FFT. For each window, it is the mean per-bin variance (src + BACKRAT² × bkg, in counts) of the fully
+  exposed bins, times the number of bins in the window (10 000), so interpolated bins are given that mean variance.
+  N is then averaged over the four windows. It is 3.6×10⁻⁴ (soft) and 3.8×10⁻⁴ (hard) higher than the plain sum of
+  the recorded per-bin variances. Until 2026-11-21 this file said "the summed per-bin variance", and a code comment
+  in `lags.py` still does (found by the verifier, [#6](https://github.com/phajy/Retrace/issues/6)). The comment will be corrected with the next real change to
+  this stage, together with the line endings below.
 * **Reliability flag** (A-13, *added after the first run, post hoc*): a bin counts as reliable only if
   its intrinsic coherence is defined (powers more than 3σ above the noise) and K ≥ 30. In the first run the analytic
   errors were visibly invalid at the noise floor (e.g. "−12.9 ± 1.6 s" at 39 mHz, γ²_raw ≈ 6e-4).
@@ -109,4 +136,5 @@ or a sign/unit bug. The pass/fail test now uses white noise, and the red-noise r
 `lag_frequency.csv` mixes line endings. The three `#` comment lines end in `\n`, but Python's `csv` writer ends
 the column-header and data rows in `\r\n`. No number is affected. It was found during the independent re-run of
 2026-11-19 ([#2](https://github.com/phajy/Retrace/issues/2)). The fix (`lineterminator="\n"` in `lags.py`) changes
-the file's checksum, so it will be made with the next real change to this stage.
+the file's checksum, so it will be made with the next real change to this stage. The code comment about the Poisson
+noise level (above, [#6](https://github.com/phajy/Retrace/issues/6)) will be corrected at the same time.

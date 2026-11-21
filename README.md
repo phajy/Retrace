@@ -23,7 +23,8 @@ Fabian et al. 2009 (*Nature* 459, 540; arXiv:0905.4383; Fig. 3), using public XM
 > **An independent verifier has re-derived R1 and R3 from the raw data** with its own code
 > ([report](verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)). R3 matches. R1 **differs** under the verifier's own
 > criterion: two bins and the high-frequency mean differ by 0.10–0.16 of an error bar, which the verifier traces to our
-> written record not saying which time bins count as gaps. So this is still **not** a reproduction claim. Details:
+> written record not saying which time bins count as gaps (it now does). So this is still **not** a reproduction claim.
+> Details:
 > [R1 result page](results/R1-lag-frequency.md), [score sheet](results/SCORESHEET.md).
 
 ## The pilot in one figure

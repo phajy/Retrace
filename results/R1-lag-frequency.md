@@ -4,7 +4,7 @@
 |---|---|
 | Computed by the explainer | **done** (2026-11-19) |
 | Re-run by a verifier | **matched** at `9eea9a1` (2026-11-19, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2)) |
-| Re-derived by a verifier | **differs** at `9cb723d` under the verifier's own criterion (2026-11-20, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)). The same 9 bins are reliable. Two of them (2.61 and 3.655 mHz) and the 0.7–5 mHz mean differ by 0.10–0.16 of 1σ, against its limit of 0.10. The verifier traces this to which time bins count as gaps, which our written record does not say (concern 6). Its labelled second version, using our rule, agrees with our lags to 0.007 s |
+| Re-derived by a verifier | **differs** at `9cb723d` under the verifier's own criterion (2026-11-20, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)). The same 9 bins are reliable. Two of them (2.61 and 3.655 mHz) and the 0.7–5 mHz mean differ by 0.10–0.16 of 1σ, against its limit of 0.10. The verifier traces this to which time bins count as gaps, which our written record did not say at that commit; it does now (concern 6). Its labelled second version, using our rule, agrees with our lags to 0.007 s |
 | Compared with the paper | **agrees, with differences** (2026-11-20, [result](compare/RESULT.md)). The high-frequency mean lag and the frequency where the lag changes sign agree with F09. In 2 of the 8 bins that count, the difference (1.8–1.9 of F09's error bars) is larger than our own binning and segmentation variants produce. The explainer's run is **not independent**; an independent verifier's own code, written from the plan, gives the same outcome and the same two bins (2026-11-20, [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)). [Plan and criteria](compare/PLAN.md): fixed before digitising, amended before the comparison was run |
 | Challenges | [#1](https://github.com/phajy/Retrace/issues/1) background flares: **confirmed** ([result](checks/issue-1/RESULT.md)) · [open another](https://github.com/phajy/Retrace/issues/new?template=check-request.yml) |
 
@@ -77,8 +77,9 @@ version of this figure was made. Full details:
    the segment length: F09's frequency grid suggests about 40 ks rather than our 100 ks (A-09).
 6. **What counts as a gap** is not in the written record (found by the 2026-11-20 verifier, [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)).
    The code interpolates every 10 s bin that is only partly exposed. A re-derivation that keeps those bins gets lags
-   that differ by 0.10–0.16σ in two reliable bins and in the 0.7–5 mHz mean. The fix is to state the rule in the lags
-   `EXPLAIN.md` and A-10; it changes none of our numbers.
+   that differ by 0.10–0.16σ in two reliable bins and in the 0.7–5 mHz mean. **Stated in the record on 2026-11-21**
+   (lags `EXPLAIN.md` and A-10), with the Poisson level and the bin edges the verifier also found unclear. No number
+   changed. A new re-derivation would show whether the record is now enough.
 
 ## Provenance
 The numbers on this page were copied by hand from [`analysis/lags/summary.json`](../analysis/lags/summary.json)
