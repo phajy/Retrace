@@ -330,3 +330,42 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * While checking the paths the prompt names, the explainer found that the lags `EXPLAIN.md` still called the
   comparison stage "not yet built". Its heading now says the section was written before the formal comparison, and
   it links to the result; the section's text is unchanged.
+
+**Session 1 continued, 2026-11-21 (UTC): the first re-derivation, by an independent verifier**
+* On 2026-11-20 Andy ran a verifier, Grok 4.7 High Fast in Cursor, with the generic prompt at `9cb723d`. Its tasks: R1
+  and R3 re-derived from the raw archive files, and R1 compared with F09 using its own code written from `PLAN.md`.
+* Andy pushed its branch. The explainer checked the branch before merging:
+  * it only adds files in `verification/2026-11-20-grok-4.7/`;
+  * no file is over 1 MB, and there are no raw data or FITS files;
+  * the phase 2 commit changes no phase 1 file.
+
+  The explainer opened [PR #5](https://github.com/phajy/Retrace/pull/5) on Andy's go-ahead and merged it with a merge
+  commit (`ec145ed`).
+* The verifier's outcomes:
+  * R3 re-derived: **matches** (difference 0 s).
+  * R1 re-derived: **differs** under its own criterion, committed before comparing. The same 9 bins are reliable. The
+    bins at 2.61 and 3.655 mHz and the 0.7–5 mHz mean differ by 0.114, 0.162 and 0.104 of 1σ; the limit was 0.10.
+  * R1 compared with F09, own code: **matches** our comparison, with the same outcome and the same two bins.
+* The verifier traces the R1 difference to the written record: neither the lags `EXPLAIN.md` nor A-10 says that every
+  partly exposed 10 s bin (`FRACEXP < 1`) is treated as a gap and interpolated. The explainer confirmed this in
+  `lags.py`, together with two smaller gaps the verifier found:
+  * the Poisson level is described as a sum of per-bin variances, but the code scales the mean variance of the fully
+    exposed bins;
+  * the first frequency edge and the kept last bin are not stated.
+
+  All three are recorded under "Mistakes caught" as not yet fixed.
+* Limits of this check, recorded with it:
+  * It was not fully blind: a repo-wide search showed the verifier some of our numbers before phase 1. Its report
+    says so.
+  * Both of its commits have author and committer times exactly on the minute, while the explainer's commits record
+    seconds. So the order of its phases rests on its reading log, not on the commit times.
+  * `dvc repro` was blocked in its session, so its comparison rebuilt the input spectrum (within 0.007 s of ours).
+  * All the independent AI checks so far, both verifications and the primary digitisation, are by one model family
+    (Grok 4.7 in Cursor).
+* The explainer did not judge the outcome. The numbers copied into the score sheet, the R1 page, the comparison result,
+  the README and `verification/README.md` were checked by script against the verifier's output files and ours.
+* Next: state the three rules in the lags `EXPLAIN.md` and A-10. This documents what the code already does and changes
+  no number.
+* The explainer posted the *Verification report* issue on Andy's go-ahead
+  ([#6](https://github.com/phajy/Retrace/issues/6), labels `verification` and `outcome: mistake found`) and linked it from
+  the pages above.

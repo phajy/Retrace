@@ -39,3 +39,4 @@ the report. The maintainer updates the [score sheet](../results/SCORESHEET.md).
 | Date | Verifier | Check | Commit | Outcome | Report |
 |---|---|---|---|---|---|
 | 2026-11-19 | Grok 4.7 High Fast in Cursor | re-run of R1 and R3 | `9eea9a1` | matches | [REPORT.md](2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2) |
+| 2026-11-20 | Grok 4.7 High Fast in Cursor | re-derivation of R1 and R3; comparison of R1 with F09, own code from the plan | `9cb723d` | R3 matches; R1 differs (0.10–0.16σ in two bins and the high-frequency mean); comparison matches | [REPORT.md](2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6) |
