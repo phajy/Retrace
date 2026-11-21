@@ -68,3 +68,7 @@ omitted; exit status and any failure text are retained.
   `adjust_bias=False` within 0.00000798, while setting it true changes a
   reliable-bin coherence by as much as 0.0050974. Reliability flags do not
   change.
+* Final Python compilation, JSON parsing, linter checks and `git diff --check`
+  passed. The first size-check command returned status 1 only because `wc`
+  was also given the `__pycache__` directory. A replacement file-only check
+  confirmed every verification artifact is under 1 MB.

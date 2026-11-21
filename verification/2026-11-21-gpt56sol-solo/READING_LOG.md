@@ -75,3 +75,4 @@ All times UTC.
 | 2026-11-21T12:20:43Z | `reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ` | Secondary post-comparison extraction of the R3 flare-filtered exposure omitted from phase-1 output. |
 | 2026-11-21T12:21:00Z | `verification/2026-11-21-gpt56sol-solo/phase2_bin_comparison.csv` | Identify the largest reliable-bin differences for the report. |
 | 2026-11-21T12:21:00Z | `.venv/lib/python3.15/site-packages/stingray/fourier.py` (`intrinsic_coherence`) | Check exactly what Stingray's `adjust_bias` default does after finding a record/code discrepancy. |
+| 2026-11-21T12:23:00Z | verification code, JSON outputs, CSV outputs and `REPORT.md` | Final syntax, JSON, lint, size and report-quality checks before committing. |
