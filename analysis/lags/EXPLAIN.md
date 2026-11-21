@@ -43,7 +43,13 @@ the softer flux"), Z10 and K13. It is computed as lag(f) = arg⟨H*(f) S(f)⟩ /
   * The lag of a bin is its phase divided by 2π times the mean of its Fourier frequencies (`f_mean_hz`).
 * **Lag error**: Nowak et al. 1999 eq. 16 with the raw coherence, K = 4 × (Fourier frequencies in the bin)
   (A-12). **Coherence**: raw |⟨C⟩|²/(⟨|S|²⟩⟨|H|²⟩), plus the intrinsic coherence and its error from
-  `stingray.fourier.intrinsic_coherence` (Vaughan & Nowak 1997 eq. 8; bias term from Ingram 2019).
+  `stingray.fourier.intrinsic_coherence` (Vaughan & Nowak 1997 eq. 8). Stingray computes the bias term with
+  Ingram 2019's formula, evaluated for an intrinsic coherence of 1 and **not iterated**: the code leaves Stingray's
+  default `adjust_bias=False`. Stingray also sets the bias term to zero when K > 500. Iterating it
+  (`adjust_bias=True`, Ingram 2019 §5) changes a reliable bin's intrinsic coherence by up to 0.005, and no lag, lag
+  error or reliability flag (a verifier's check, [report](../../verification/2026-11-21-gpt56sol-solo/REPORT.md)).
+  Stated precisely on 2026-11-21 after that report, which read "bias term from Ingram 2019" as the iterated version;
+  the method is unchanged.
   The **Poisson noise level** N of each band is the expected |rfft|² of the counting noise, in the units of this
   unnormalised FFT. For each window, it is the mean per-bin variance (src + BACKRAT² × bkg, in counts) of the fully
   exposed bins, times the number of bins in the window (10 000), so interpolated bins are given that mean variance.

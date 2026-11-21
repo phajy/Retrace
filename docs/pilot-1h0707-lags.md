@@ -12,6 +12,19 @@
 - Supplementary Information: mean high-frequency lag (> 7e-4 Hz) between 0.5–1 and 3–7 keV is
   −6 ± 18 s. Band choice matters; this is a natural first check request.
 
+### Result IDs
+The score sheet, the result pages and the verification reports refer to these results by ID. Only F09's values
+are given here. Our values are in the output files named, and on the result pages.
+
+| ID | Quantity | F09 value (for comparison only) | Our value is produced by |
+|---|---|---|---|
+| R1 | Lag against Fourier frequency between 0.3–1 keV (soft) and 1–4 keV (hard), with the sign convention of Fig. 3 and the flag that says which bins are reliable. The result page also quotes summary numbers from it, such as the weighted mean lag of the reliable bins in 7×10⁻⁴ – 5×10⁻³ Hz | Fig. 3; "about 30 s" soft lag above ~0.6 mHz | lags stage: `analysis/lags/lag_frequency.csv`; the summary numbers are in `analysis/lags/summary.json` (the mean is `high_freq_mean_lag`) |
+| R2 | Mean lag above 7×10⁻⁴ Hz between 0.5–1 keV and 3–7 keV | −6 ± 18 s (Supplementary Information) | not computed yet |
+| R3 | Net EPIC-pn exposure after flare filtering: the summed length of the CCD-4 standard GTIs intersected with the flare-screen GTIs, over the four included exposures, before the 100 ks windows are chosen and without live-time scaling | 330 ks (F09 does not say how "net" is defined) | filter stage: `totals.gti_total_ks` in `reduction/filter/summary.json` |
+
+Added on 2026-11-21, after a verifier could not tell what R3 was from the files a re-derivation may read before
+it compares (see `verification/README.md`).
+
 ## Data (XMM-Newton EPIC-pn, Large Window mode, four consecutive orbits from 2008-01-29)
 | ObsID | Start (UT) | Duration | PPS pn calibrated event list (size, compressed) |
 |---|---|---|---|

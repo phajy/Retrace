@@ -388,3 +388,50 @@ in F09 (comparison only). The screened GTIs are fragmented, which drove the timi
 * The three "Mistakes caught" rows now say how each was fixed. The R1 page (concern 6), the score sheet and the README
   say the record now states the gap rule. The verifier's outcome for `9cb723d` is unchanged: R1 differs under its
   criterion. Whether the clarified record is enough could be tested by a new re-derivation from a later commit.
+
+**Session 1 continued, 2026-11-21 (UTC): a second re-derivation of R1 and R3, by GPT-5.6 Sol High in Cursor**
+* Andy ran the verifier with the generic prompt, filled in with commit `d104bc4` and the task "R1 and R3: re-derived,
+  starting from the raw archive files." The explainer suggested a model family other than Grok (the earlier verifiers)
+  and Claude (the explainer); Andy chose GPT-5.6.
+* Checks on receipt, before merging:
+  * the branch starts from `d104bc4` and adds 15 files, all in its own folder, none over 1 MB, no raw data or FITS files;
+  * three commits, timed to the second: `fb4d748` (phase 1), `5d28d40` (phase 2) and `c1c99d7` (report);
+  * no phase 1 file changes after `fb4d748`; the command log and the reading log only grow.
+
+  Merged in [#7](https://github.com/phajy/Retrace/pull/7) with a merge commit (`9cd9978`).
+* **Outcome, as the verifier reports it.**
+  * **R1 re-derived: matches** its own criterion. The same 25 bins and the same 9 reliable bins. The largest
+    reliable-bin difference is 0.057 s (0.0037 of 1σ), and the 0.7–5 mHz mean is −16.797 ± 3.355 s against our
+    −16.789 ± 3.355 s. The gap rule stated in the record at `d104bc4`
+    ([#6](https://github.com/phajy/Retrace/issues/6)) was enough for this verifier.
+  * **R3 re-derived: could not complete.** Phase 1 may not read the score sheet, the only place R3 was defined, so no
+    R3 value was committed before comparing. A labelled post-comparison extraction gives 328 593.80 s, the same as
+    ours, and the verifier does not count it.
+* **A second process wrote into the verifier's folder.** At about 12:15 UTC it appended a second program to the
+  verifier's `derive.py` and made its own commit (`43e6802`, not pushed). The verifier moved to a separate worktree at
+  `d104bc4` and repeated phase 1 there.
+  * Andy started one agent. Whether the second process was a sub-agent of it is not known.
+  * Found on receipt, and not stated in the report: the committed `PHASE1.md` also holds the second process's phase 1
+    record, with a second criterion (0.05 of 1σ). The committed `READING_LOG.md` holds the second process's rows, which
+    show our code being opened at 12:13:56, before the verifier's phase 1 commit at 12:19:44. Neither is labelled.
+  * The committed `derive.py` uses Stingray with `adjust_bias=True`, as the verifier's own record says. The second
+    record says its code does not use Stingray. The reported numbers are within the limits of both criteria.
+  * Recorded as limits in the score sheet and the PR description. The verifier's files were not changed.
+* **Gaps in the written record it found**, each confirmed by the explainer in the code (and, for the coherence, in
+  Stingray 2.3.2's source), and fixed in the record. No code, parameter or output changed, and `dvc status` is clean.
+  * Nothing a phase 1 re-derivation may read said what R1–R3 are. The spec now has a "Result IDs" table with F09's
+    values only, and the filter `EXPLAIN.md` names R3 (the total of the flare-screened standard GTIs, `gti_total_ks`).
+  * "Bias term from Ingram 2019" in the lags `EXPLAIN.md` did not say that the bias term is not iterated
+    (`adjust_bias=False`). Iterating it changes a reliable bin's coherence by up to 0.005 (the verifier's check); no
+    lag, error or flag moves.
+  * Four filter and light-curve details: the upper energy limits of the centroid and flare selections, the events used
+    for the sky↔RAW fit, the flare-rate denominator, and that the last partial 10 s bin is dropped.
+  * The R1 page's concern 6 still said the gap rule was not in the record.
+* The explainer did not judge the outcome. The numbers copied into the score sheet, the R1 page, the comparison result,
+  the README and `verification/README.md` were checked by script against the verifier's output files and ours.
+* The explainer posted the *Verification report* issue on Andy's go-ahead
+  ([#8](https://github.com/phajy/Retrace/issues/8), labels `verification`, `outcome: confirmed` and `outcome: mistake found`)
+  and linked it from the pages above.
+* Proposed, not done: a line in the prompt telling a verifier to work alone and start no sub-agents. That changes the
+  reviewed prompt text, so it needs the maintainer's review first. Still deferred to the next change to the lags stage:
+  the `lags.py` Poisson comment and the CSV line endings.

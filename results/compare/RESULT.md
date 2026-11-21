@@ -27,9 +27,10 @@ agree with ours to 0.001 on the bins that count.
   own. The ±¼-bin edge shift does not apply, because F09 drew horizontal error bars.
 * **The error bars are similar:** our error divided by F09's has a median of 0.97 (the plan's range is 0.67–1.5).
 
-This is a comparison with the published figure. It is not a reproduction claim: R1 has been re-run by a verifier, and a
-verifier's re-derivation differs from it by 0.10–0.16 of 1σ in two bins and the high-frequency mean, under that
-verifier's own criterion ([score sheet](../SCORESHEET.md)).
+This is a comparison with the published figure. It is not a reproduction claim. R1 has been re-run by a verifier and
+re-derived by two ([score sheet](../SCORESHEET.md)). The first re-derivation, at `9cb723d`, differed from it by 0.10–0.16
+of 1σ in two bins and the high-frequency mean, under that verifier's own criterion. The second, at `d104bc4` after the
+written record was fixed, matched under its own criterion.
 
 ![R1 re-binned onto F09's bins, with the digitised F09 points; z_F per bin below](comparison.png)
 

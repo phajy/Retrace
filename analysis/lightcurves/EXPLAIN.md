@@ -6,7 +6,9 @@ Script: `lightcurves.py` · parameters: `exposures`, `lightcurves` · numbers: `
 
 ## What was done and why
 For each included exposure, the source- and background-region events from the filter stage are binned
-on a regular **10 s** grid (A-06) from the start of the CCD standard GTIs. Bands are **0.3–1 keV (soft)**
+on a regular **10 s** grid (A-06) from the start of the CCD standard GTIs. The grid holds ⌊(last stop − first
+start)/10 s⌋ whole bins, so a final partial bin is dropped (stated on 2026-11-21 after a verifier's
+[report](../../verification/2026-11-21-gpt56sol-solo/REPORT.md); read from `lightcurves.py`, method unchanged). Bands are **0.3–1 keV (soft)**
 and **1–4 keV (hard)** (F09 Fig. 3), with PI in [lo, hi) eV. **PATTERN ≤ 4** (A-07; F09's stated selection;
 Z10 says patterns were relaxed for timing, so PATTERN ≤ 12 is the first sensitivity test).
 

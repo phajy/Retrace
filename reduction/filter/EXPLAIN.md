@@ -5,23 +5,34 @@ Script: `filter.py` · parameters: `params.yaml` → `exposures`, `filter` · nu
 `diag_*.png` · column hashes: `content_hashes.json` (in git).
 
 ## What was done and why
-1. **Source position.** Iterative centroid (20″ radius) of 0.3–10 keV, PATTERN ≤ 4, FLAG == 0
-   events, starting at the header RA_OBJ/DEC_OBJ (A-03). Result: 0.7–1.9″ from RA_OBJ in all exposures,
+1. **Source position.** Iterative centroid of PATTERN ≤ 4, FLAG == 0 events with PI 300–10 000 eV (both
+   ends included), starting at the header RA_OBJ/DEC_OBJ (A-03). Each step takes the mean sky X and Y of the
+   events within 20″ of the current position, until it moves less than 0.001 sky pixel. Result: 0.7–1.9″ from RA_OBJ in all exposures,
    all source-region events on CCD 4, at RAWX ≈ 37, RAWY ≈ 190–191. The Large Window active rows are RAWY 103–199,
    so the 35″ (8.5 pixel) circle just fits inside the chip.
 2. **Source region.** 35″ circle (paper).
 3. **Background region** (A-04). 35″ circle on CCD 4 at the same RAWY as the source (same distance
    from the readout node, K13), centred 25 RAWX pixels away (103″). Sky↔RAW positions use an affine
-   fit to the events on CCD 4. Fit residual ≈ 0.29–0.32 pixel, consistent with pixel quantisation (1/√12 = 0.29).
+   least-squares fit of RAWX and RAWY to sky X and Y. The fit uses the FLAG == 0 events on CCD 4, thinned to
+   every k-th event in list order, with k = max(1, ⌊N/300 000⌋) for N such events. Fit residual ≈ 0.29–0.32 pixel, consistent with pixel quantisation (1/√12 = 0.29).
 4. **Effective areas.** A 0.5″ grid in each circle is mapped to RAW pixels and looked up in a mask of
    pixels that recorded FLAG == 0 events. Both circles are fully on good pixels:
    3848.45 arcsec² each, so `BACKRAT` (background → source scaling) = 1.000.
-5. **Flare screen** (A-05). Full-field PATTERN == 0, 10–12 keV, FLAG == 0 rate in 100 s bins; bins
-   below 0.4 c/s are kept. These flare GTIs are stored with the CCD standard GTIs, their
-   intersection, and the PPS's own optimised GTIs. **Events are not cut by the flare GTIs here.** The
+5. **Flare screen** (A-05). Full-field PATTERN == 0, FLAG == 0 events with PI 10 000–12 000 eV (both
+   ends included) are counted in 100 s bins. The bins start at the first CCD-4 standard GTI start, and the last
+   bin reaches to or past the last stop. A bin's rate is its counts divided by the part of the bin inside the
+   CCD-4 standard GTIs; bins with none are dropped. Bins with a rate below 0.4 c/s (strictly) are kept.
+   These flare GTIs are stored with the CCD standard GTIs, their intersection, and the PPS's own optimised GTIs.
+   The total length of the intersection over the four included exposures is R3, the net exposure
+   (`totals.gti_total_ks`). **Events are not cut by the flare GTIs here.** The
    choice is made downstream (see `analysis/lags/EXPLAIN.md`).
 6. **Kept events:** FLAG == 0, PATTERN ≤ 12, PI 200–12000 eV, inside the CCD-4 standard GTIs. The timing
    pattern cut (PATTERN ≤ 4) is applied in the light-curve stage so it can be varied (A-07).
+
+The energy limits in items 1 and 5, the fit sample in item 3, the flare bins and the flare-rate denominator in item 5
+were stated precisely on 2026-11-21, after a verifier's report
+([report](../../verification/2026-11-21-gpt56sol-solo/REPORT.md)). Each was read from `filter.py`; the method is unchanged.
+The verifier's own choices for these details changed a few events per region, and neither the selected windows nor R3.
 
 ## Results (from `summary.json`)
 | Exposure | Std GTI (ks) | After flare screen (ks) | Longest clean stretch (ks) | Src counts* | Bkg counts* |

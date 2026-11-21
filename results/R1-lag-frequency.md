@@ -4,7 +4,7 @@
 |---|---|
 | Computed by the explainer | **done** (2026-11-19) |
 | Re-run by a verifier | **matched** at `9eea9a1` (2026-11-19, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-19-grok-4.7-high-fast/REPORT.md), [#2](https://github.com/phajy/Retrace/issues/2)) |
-| Re-derived by a verifier | **differs** at `9cb723d` under the verifier's own criterion (2026-11-20, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)). The same 9 bins are reliable. Two of them (2.61 and 3.655 mHz) and the 0.7–5 mHz mean differ by 0.10–0.16 of 1σ, against its limit of 0.10. The verifier traces this to which time bins count as gaps, which our written record did not say at that commit; it does now (concern 6). Its labelled second version, using our rule, agrees with our lags to 0.007 s |
+| Re-derived by a verifier | **matched** at `d104bc4` under the verifier's own criterion (2026-11-21, GPT-5.6 Sol High in Cursor: [report](../verification/2026-11-21-gpt56sol-solo/REPORT.md), [#8](https://github.com/phajy/Retrace/issues/8)). The same 25 bins and the same 9 reliable bins. The largest reliable-bin difference is 0.057 s (0.0037 of 1σ); the 0.7–5 mHz mean is −16.797 ± 3.355 s against our −16.789 ± 3.355 s. Limits: a second process wrote into the verifier's first working folder, and some of its text is in the committed phase 1 files (see the [score sheet](SCORESHEET.md#checks-run)).<br>Earlier: **differs** at `9cb723d` under that verifier's own criterion (2026-11-20, Grok 4.7 High Fast in Cursor: [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)). Two reliable bins and the 0.7–5 mHz mean differed by 0.10–0.16 of 1σ, against its limit of 0.10, because our written record did not say which time bins count as gaps (concern 6) |
 | Compared with the paper | **agrees, with differences** (2026-11-20, [result](compare/RESULT.md)). The high-frequency mean lag and the frequency where the lag changes sign agree with F09. In 2 of the 8 bins that count, the difference (1.8–1.9 of F09's error bars) is larger than our own binning and segmentation variants produce. The explainer's run is **not independent**; an independent verifier's own code, written from the plan, gives the same outcome and the same two bins (2026-11-20, [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)). [Plan and criteria](compare/PLAN.md): fixed before digitising, amended before the comparison was run |
 | Challenges | [#1](https://github.com/phajy/Retrace/issues/1) background flares: **confirmed** ([result](checks/issue-1/RESULT.md)) · [open another](https://github.com/phajy/Retrace/issues/new?template=check-request.yml) |
 
@@ -75,11 +75,13 @@ version of this figure was made. Full details:
 5. **Bins 3 and 9 of the comparison** (1.7–3.2×10⁻⁴ and 2.7–3.9×10⁻³ Hz) differ from F09 by more than our own
    binning and segmentation variants do. The cause is not known. Candidates are the reduction (M-01, A-07, A-05) and
    the segment length: F09's frequency grid suggests about 40 ks rather than our 100 ks (A-09).
-6. **What counts as a gap** is not in the written record (found by the 2026-11-20 verifier, [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)).
+6. **What counts as a gap** was not in the written record at `9cb723d` (found by the 2026-11-20 verifier,
+   [report](../verification/2026-11-20-grok-4.7/REPORT.md), [#6](https://github.com/phajy/Retrace/issues/6)).
    The code interpolates every 10 s bin that is only partly exposed. A re-derivation that keeps those bins gets lags
-   that differ by 0.10–0.16σ in two reliable bins and in the 0.7–5 mHz mean. **Stated in the record on 2026-11-21**
-   (lags `EXPLAIN.md` and A-10), with the Poisson level and the bin edges the verifier also found unclear. No number
-   changed. A new re-derivation would show whether the record is now enough.
+   that differ by 0.10–0.16σ in two reliable bins and in the 0.7–5 mHz mean. The rule was **stated in the record on
+   2026-11-21** (lags `EXPLAIN.md` and A-10), with the Poisson level and the bin edges the verifier also found unclear.
+   No number changed. **Since then,** a re-derivation from that commit (`d104bc4`) by a different verifier has matched
+   (see the table at the top).
 
 ## Provenance
 The numbers on this page were copied by hand from [`analysis/lags/summary.json`](../analysis/lags/summary.json)
