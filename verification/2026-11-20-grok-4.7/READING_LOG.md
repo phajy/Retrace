@@ -32,9 +32,28 @@ time of that batch, not a separate clock reading for each file.
 | 2026-11-20T23:52 | `CRITERION.md`, `ASSUMPTIONS.md` | Match rule and the choices left open by the record, written before comparison. |
 | 2026-11-20T23:53 | own `outputs/r1_lag_frequency.csv`, `outputs/r1_r3_summary.json`, `logs/phase1_run.log` | Products of the re-derivation. |
 
-Phase 1 stopped here. The commit that adds this folder is the record that the
-code, the outputs and `CRITERION.md` existed before the explainer’s
-implementation was read.
+Phase 1 stopped at commit `53c51d7`. That commit holds the code, the outputs
+and `CRITERION.md`. The explainer’s implementation had not been opened.
+
+## Phase 2, after that commit
+
+| When | File | Why |
+|---|---|---|
+| 2026-11-20T23:55 | `analysis/lags/lag_frequency.csv` | Committed R1 table, for the value-by-value comparison. |
+| 2026-11-20T23:55 | `analysis/lags/summary.json` | High-frequency mean, sign-change frequency, segment windows, self-test. |
+| 2026-11-20T23:55 | `analysis/lags/lags.py` | To find why the phase-1 lags differ. Read the segment, gap, Fourier and binning functions, and the part of `main` that writes the summary. |
+| 2026-11-20T23:55 | `reduction/filter/summary.json` | Committed R3 and the source-position record. |
+| 2026-11-20T23:55 | `results/compare/PLAN.md` | The comparison plan, read before any comparison code. |
+| 2026-11-20T23:56 | `results/compare/DIGITISE.md` | Column definitions the plan points to. The “What to write” section. |
+| 2026-11-20T23:56 | `results/compare/digitised/ai-grok-4.7-2026-11-20/points.csv` | Vector reading of Fig. 3. |
+| 2026-11-20T23:56 | `results/compare/digitised/ai-grok-4.7-2026-11-20/digitisation.json` | Axis range for the digitisation floor. |
+| 2026-11-20T23:56 | `results/compare/digitised/ay/points.csv` | Second digitisation. |
+| 2026-11-20T23:56 | `results/compare/digitised/ay/digitisation.json` | Axis range and method of the second reading. |
+| 2026-11-20T23:57 | `analysis/lightcurves/lightcurves.py` | Imports, and the lines that define the light-curve columns, so the rebuilt spectrum uses the same quantities the plan names. |
+| 2026-11-20T23:58 | `labelled_partial_bins.py` and its outputs | A separate copy that fills every bin with `FRACEXP < 1`. Not a change to the phase-1 code. |
+| 2026-11-21T00:00 | `compare_own.py` | Own comparison, written from the plan. `results/compare/compare.py` was not opened. |
+| 2026-11-21T00:01 | `results/compare/comparison.json` | The explainer’s comparison output, opened only after `compare_own.py` had been run. |
+| 2026-11-21T00:02 | own `outputs/comparison_own.json` and `comparison_own.csv` | To set them next to the explainer’s output. |
 
 ## Not blind
 
