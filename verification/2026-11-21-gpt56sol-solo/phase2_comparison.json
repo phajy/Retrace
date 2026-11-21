@@ -1,0 +1,30 @@
+{
+  "all_frequency_memberships_identical": true,
+  "all_reliability_flags_identical": true,
+  "criterion": {
+    "frequency_memberships_and_reliability_identical": true,
+    "max_reliable_abs_delta_over_sigma": 0.1,
+    "max_reliable_abs_relative_error_difference": 0.01,
+    "max_scalar_abs_delta_over_sigma": 0.1
+  },
+  "high_frequency_mean": {
+    "abs_delta_over_reference_sigma": 0.002462584242150842,
+    "delta_lag_s_independent_minus_reference": -0.008262802080746923,
+    "independent_error_s": 3.355017030229425,
+    "independent_lag_s": -16.79739474165001,
+    "independent_n_bins": 5,
+    "reference_error_s": 3.3553378354805523,
+    "reference_lag_s": -16.789131939569263,
+    "reference_n_bins": 5,
+    "relative_error_difference": -9.561041744742401e-05
+  },
+  "max_reliable_abs_delta_intrinsic_coherence": 0.005138524503602082,
+  "max_reliable_abs_delta_lag_over_reference_sigma": 0.0036672983582455637,
+  "max_reliable_abs_delta_lag_s": 0.0570007430334698,
+  "max_reliable_abs_relative_error_difference": 0.0005262898609611554,
+  "phase1_commit": "fb4d748",
+  "r1_matches_frozen_criterion": true,
+  "reliable_bin_count": 9,
+  "row_count_independent": 25,
+  "row_count_reference": 25
+}

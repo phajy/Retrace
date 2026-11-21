@@ -44,3 +44,27 @@ omitted; exit status and any failure text are retained.
 * The isolated command
   `python -m py_compile .../derive.py && python .../derive.py` then succeeded
   and regenerated the phase-1 CSV and JSON from the isolated raw inputs.
+
+## Phase 2
+
+* After phase-1 commit `fb4d748`, opened the explainer outputs and code.
+* `python compare_phase2.py` wrote a 25-row comparison CSV and JSON. It found:
+  identical Fourier-frequency membership and reliability flags; maximum
+  reliable lag difference 0.0570007 s = 0.0036673 of the reference 1-sigma
+  error; high-frequency mean difference -0.0082628 s = 0.0024626 sigma.
+* R3 was then identified as flare-filtered net exposure. Because the permitted
+  phase-1 record did not map R3 to this quantity, phase 1 had calculated the
+  flare GTIs internally but had not emitted their total.
+* First `derive_r3_v2.py` invocation failed because the persistent terminal was
+  again in the parent worktree. Explicitly changing to `.solo` was the only
+  workaround.
+* The labelled post-comparison extraction then returned 328.5938048570752 ks,
+  exactly the committed value, including identical per-exposure totals.
+* The first sandboxed `pip freeze` failed with a permission error while scanning
+  an external HEASoft Python directory. Repeating only `pip freeze` outside the
+  sandbox succeeded; versions are in `ENVIRONMENT.md`.
+* `bias_adjustment_check.py` reconstructed the committed binned spectra from
+  the rounded CSV. The committed coherence matches Stingray's
+  `adjust_bias=False` within 0.00000798, while setting it true changes a
+  reliable-bin coherence by as much as 0.0050974. Reliability flags do not
+  change.

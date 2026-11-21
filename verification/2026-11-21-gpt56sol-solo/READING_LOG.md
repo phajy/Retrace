@@ -58,3 +58,20 @@ All times UTC.
 | 2026-11-21T12:18:17Z | `reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ` | Repeat the independent derivation in the isolated worktree after concurrent workspace modification. |
 | 2026-11-21T12:18:17Z | `reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ` | Repeat the independent derivation in the isolated worktree after concurrent workspace modification. |
 | 2026-11-21T12:18:17Z | `reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ` | Repeat the independent derivation in the isolated worktree after concurrent workspace modification. |
+| 2026-11-21T12:19:53Z | `results/SCORESHEET.md` | Phase-2 unblinding: identify R1 and R3 precisely. |
+| 2026-11-21T12:19:53Z | `results/R1-lag-frequency.md` | Phase-2 unblinding: read the committed R1 record and provenance. |
+| 2026-11-21T12:19:53Z | `analysis/lags/summary.json` | Compare independent scalar outputs and identify R3. |
+| 2026-11-21T12:19:53Z | `analysis/lags/lag_frequency.csv` | Compare R1 value by value. |
+| 2026-11-21T12:19:53Z | `analysis/lags/lags.py` | Diagnose any R1/R3 discrepancies against the explainer implementation. |
+| 2026-11-21T12:19:53Z | `analysis/lightcurves/lightcurves.py` | Diagnose upstream light-curve differences if present. |
+| 2026-11-21T12:19:53Z | `analysis/lightcurves/summary.json` | Compare upstream count diagnostics. |
+| 2026-11-21T12:19:53Z | `reduction/filter/filter.py` | Diagnose upstream region/filter differences if present. |
+| 2026-11-21T12:19:53Z | `reduction/filter/summary.json` | Compare upstream region/filter diagnostics. |
+| 2026-11-21T12:20:00Z | `verification/2026-11-21-gpt56sol-solo/independent_lag_frequency.csv` | Phase-2 value-by-value comparison using the frozen phase-1 output. |
+| 2026-11-21T12:20:00Z | `verification/2026-11-21-gpt56sol-solo/independent_summary.json` | Phase-2 scalar comparison using the frozen phase-1 output. |
+| 2026-11-21T12:20:43Z | `reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ` | Secondary post-comparison extraction of the R3 flare-filtered exposure omitted from phase-1 output. |
+| 2026-11-21T12:20:43Z | `reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ` | Secondary post-comparison extraction of the R3 flare-filtered exposure omitted from phase-1 output. |
+| 2026-11-21T12:20:43Z | `reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ` | Secondary post-comparison extraction of the R3 flare-filtered exposure omitted from phase-1 output. |
+| 2026-11-21T12:20:43Z | `reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ` | Secondary post-comparison extraction of the R3 flare-filtered exposure omitted from phase-1 output. |
+| 2026-11-21T12:21:00Z | `verification/2026-11-21-gpt56sol-solo/phase2_bin_comparison.csv` | Identify the largest reliable-bin differences for the report. |
+| 2026-11-21T12:21:00Z | `.venv/lib/python3.15/site-packages/stingray/fourier.py` (`intrinsic_coherence`) | Check exactly what Stingray's `adjust_bias` default does after finding a record/code discrepancy. |
