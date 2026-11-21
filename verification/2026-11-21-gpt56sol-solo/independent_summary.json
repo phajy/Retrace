@@ -1,0 +1,140 @@
+{
+  "diagnostics": [
+    {
+      "background_xy": [
+        28882.40365356334,
+        23733.02961973808
+      ],
+      "counts_whole_exposure": {
+        "hard_bkg": 1731,
+        "hard_src": 65654,
+        "soft_bkg": 2639,
+        "soft_src": 309158
+      },
+      "expo": "PNS001",
+      "gap_bins": 11,
+      "obsid": "0511580101",
+      "outside_flare_gti_s": 873.2117255926096,
+      "partly_exposed_gap_bins": 5,
+      "source_rawxy": [
+        37.033260052374914,
+        190.63637601619067
+      ],
+      "source_xy": [
+        27992.757481532128,
+        25597.052286746235
+      ],
+      "window_start_s_from_grid": 4100.0,
+      "window_start_time": 318024395.52516305
+    },
+    {
+      "background_xy": [
+        28982.566187535853,
+        23850.57621637272
+      ],
+      "counts_whole_exposure": {
+        "hard_bkg": 2213,
+        "hard_src": 89306,
+        "soft_bkg": 3234,
+        "soft_src": 391345
+      },
+      "expo": "PNS001",
+      "gap_bins": 6,
+      "obsid": "0511580201",
+      "outside_flare_gti_s": 23716.158047914505,
+      "partly_exposed_gap_bins": 5,
+      "source_rawxy": [
+        36.9736719387654,
+        190.8079121100514
+      ],
+      "source_xy": [
+        28024.011464346695,
+        25680.185599293785
+      ],
+      "window_start_s_from_grid": 0.0,
+      "window_start_time": 318192633.88417673
+    },
+    {
+      "background_xy": [
+        28971.211554688598,
+        23935.100503565314
+      ],
+      "counts_whole_exposure": {
+        "hard_bkg": 2609,
+        "hard_src": 72703,
+        "soft_bkg": 3092,
+        "soft_src": 361756
+      },
+      "expo": "PNU002",
+      "gap_bins": 2,
+      "obsid": "0511580301",
+      "outside_flare_gti_s": 31406.86363255978,
+      "partly_exposed_gap_bins": 2,
+      "source_rawxy": [
+        37.163548135148034,
+        189.8402180020442
+      ],
+      "source_xy": [
+        27945.18658438187,
+        25727.365507410013
+      ],
+      "window_start_s_from_grid": 0.0,
+      "window_start_time": 318370819.6369411
+    },
+    {
+      "background_xy": [
+        29100.60240460934,
+        24050.158143005076
+      ],
+      "counts_whole_exposure": {
+        "hard_bkg": 4013,
+        "hard_src": 53554,
+        "soft_bkg": 3272,
+        "soft_src": 292535
+      },
+      "expo": "PNU002",
+      "gap_bins": 3,
+      "obsid": "0511580401",
+      "outside_flare_gti_s": 26609.961736857895,
+      "partly_exposed_gap_bins": 3,
+      "source_rawxy": [
+        36.790218977070296,
+        190.42508478421036
+      ],
+      "source_xy": [
+        28008.703677792353,
+        25802.732283923626
+      ],
+      "window_start_s_from_grid": 0.0,
+      "window_start_time": 318550621.02297854
+    }
+  ],
+  "frequency_bin_count": 25,
+  "hard_poisson_noise": 68711.57094795104,
+  "high_frequency_range_hz": [
+    0.0007,
+    0.005
+  ],
+  "high_frequency_reliable_bin_count": 5,
+  "high_frequency_weighted_mean_error_s": 3.355017030229425,
+  "high_frequency_weighted_mean_lag_s": -16.79739474165001,
+  "libraries": {
+    "astropy": "8.0.3",
+    "numpy": "2.5.5",
+    "pyyaml": "6.0.4",
+    "stingray": "2.3.2"
+  },
+  "reliable_bin_indices_zero_based": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "sign_convention": "lag > 0: hard (1-4 keV) lags soft (0.3-1 keV); lag < 0: soft lags hard",
+  "soft_poisson_noise": 325285.53151390137
+}

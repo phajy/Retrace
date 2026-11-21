@@ -1,0 +1,23 @@
+{
+  "exposures": [
+    {
+      "exposure": "0511580101_PNS001",
+      "flare_filtered_gti_s": 110326.78827440739
+    },
+    {
+      "exposure": "0511580201_PNS001",
+      "flare_filtered_gti_s": 76283.8419520855
+    },
+    {
+      "exposure": "0511580301_PNU002",
+      "flare_filtered_gti_s": 68593.13636744022
+    },
+    {
+      "exposure": "0511580401_PNU002",
+      "flare_filtered_gti_s": 73390.03826314211
+    }
+  ],
+  "rule": "phase-1 rule: 100 s bins anchored at first STDGTI04 start; FLAG=0, PATTERN=0, PI in [10000,12000), counts/100 < 0.4; quiet bins intersected with STDGTI04",
+  "status": "post-comparison extraction; secondary to frozen phase 1",
+  "total_ks": 328.5938048570752
+}
