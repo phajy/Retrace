@@ -1,0 +1,98 @@
+{
+  "high_frequency_mean": {
+    "n": 5,
+    "lag_s": -16.78853013728733,
+    "lag_err_s": 3.3551862185489973,
+    "f_lo_hz": 0.0007,
+    "f_hi_hz": 0.005
+  },
+  "fourier": {
+    "n_empty_bins": 1,
+    "n_segments": 4,
+    "n_time": 10000,
+    "nyquist_hz": 0.05
+  },
+  "exposures": [
+    {
+      "obsid": "0511580101",
+      "expo": "PNS001",
+      "gap_bins": 11,
+      "gap_fill": {
+        "soft": {
+          "filled_bins": 11,
+          "held_edge_bins": 0,
+          "gap_bins": 11
+        },
+        "hard": {
+          "filled_bins": 11,
+          "held_edge_bins": 0,
+          "gap_bins": 11
+        }
+      },
+      "window_start_s": 318024395.52516305,
+      "noise_soft": 270580.63870257285,
+      "noise_hard": 57612.37361097207
+    },
+    {
+      "obsid": "0511580201",
+      "expo": "PNS001",
+      "gap_bins": 6,
+      "gap_fill": {
+        "soft": {
+          "filled_bins": 6,
+          "held_edge_bins": 0,
+          "gap_bins": 6
+        },
+        "hard": {
+          "filled_bins": 6,
+          "held_edge_bins": 0,
+          "gap_bins": 6
+        }
+      },
+      "window_start_s": 318192633.88417673,
+      "noise_soft": 387862.7176305783,
+      "noise_hard": 89658.79527716631
+    },
+    {
+      "obsid": "0511580301",
+      "expo": "PNU002",
+      "gap_bins": 2,
+      "gap_fill": {
+        "soft": {
+          "filled_bins": 2,
+          "held_edge_bins": 0,
+          "gap_bins": 2
+        },
+        "hard": {
+          "filled_bins": 2,
+          "held_edge_bins": 0,
+          "gap_bins": 2
+        }
+      },
+      "window_start_s": 318370819.6369411,
+      "noise_soft": 350394.0788157632,
+      "noise_hard": 71584.31686337267
+    },
+    {
+      "obsid": "0511580401",
+      "expo": "PNU002",
+      "gap_bins": 3,
+      "gap_fill": {
+        "soft": {
+          "filled_bins": 3,
+          "held_edge_bins": 0,
+          "gap_bins": 3
+        },
+        "hard": {
+          "filled_bins": 3,
+          "held_edge_bins": 0,
+          "gap_bins": 3
+        }
+      },
+      "window_start_s": 318550621.02297854,
+      "noise_soft": 292299.6899069721,
+      "noise_hard": 55988.7966389917
+    }
+  ],
+  "label": "FRACEXP < 1 treated as a gap; not the phase-1 result"
+}

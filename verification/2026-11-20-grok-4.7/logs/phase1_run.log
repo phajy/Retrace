@@ -1,0 +1,13 @@
+Matplotlib is building the font cache; this may take a moment.
+self-test median lag 29.966511 s, passed=True
+reading /Users/phajy/GitHub/Retrace-check/reduction/raw/0511580101/P0511580101PNS001PIEVLI0000.FTZ
+0511580101 PNS001: offset 0.770 arcsec, RAW (37.03, 190.64), BACKRAT 1.000000, rms (0.291, 0.311) px, net 110.327 ks, window +4.100 ks, outside 0.800 ks, gap bins 6
+reading /Users/phajy/GitHub/Retrace-check/reduction/raw/0511580201/P0511580201PNS001PIEVLI0000.FTZ
+0511580201 PNS001: offset 0.711 arcsec, RAW (36.97, 190.81), BACKRAT 1.000000, rms (0.289, 0.325) px, net 76.284 ks, window +0.000 ks, outside 23.700 ks, gap bins 1
+skip 0511580201 PNU027 (include: false, A-01)
+reading /Users/phajy/GitHub/Retrace-check/reduction/raw/0511580301/P0511580301PNU002PIEVLI0000.FTZ
+0511580301 PNU002: offset 1.862 arcsec, RAW (37.16, 189.84), BACKRAT 1.000000, rms (0.289, 0.298) px, net 68.593 ks, window +0.000 ks, outside 31.400 ks, gap bins 0
+reading /Users/phajy/GitHub/Retrace-check/reduction/raw/0511580401/P0511580401PNU002PIEVLI0000.FTZ
+0511580401 PNU002: offset 1.847 arcsec, RAW (36.79, 190.43), BACKRAT 1.000000, rms (0.289, 0.303) px, net 73.390 ks, window +0.000 ks, outside 26.600 ks, gap bins 0
+R3 = 328.593805 ks (intersection), 328.700000 ks (good bins only); R1 bins 24, reliable 9; high-frequency mean -16.43855918507931 ± 3.3504081667494505 s (n=5)
+wrote /Users/phajy/GitHub/Retrace-check/verification/2026-11-20-grok-4.7/outputs

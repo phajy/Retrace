@@ -1,0 +1,17 @@
+# Assumptions made in the re-derivation
+
+The written method leaves these choices open. They were fixed before any
+comparison with the explainer's outputs. IDs are mine (V-nn), so they are not
+confused with the register in `docs/assumptions.md`.
+
+| ID | Choice |
+|---|---|
+| V-01 | Flare rate = counts in the bin / 100 s, with no live-time correction. A bin is kept only when that rate is strictly below 0.4 counts/s, so a bin with exactly 40 counts is rejected. |
+| V-02 | Flare energies are the closed interval 10000 ≤ PI ≤ 12000 eV. The centroid uses the closed interval 300 ≤ PI ≤ 10000 eV. Light-curve bands use the half-open intervals written in the light-curve method, PI in [lo, hi) eV. |
+| V-03 | The clock zero for flare bins and light-curve bins is the first START of `STDGTI04`. Only bins that lie wholly inside that GTI span are used. A segment is exactly 10000 consecutive 10 s bins. The window is the one that minimises time outside the flare-good intervals; if two windows agree to 1 ms, the earlier one is used. |
+| V-04 | Sky positions come from the TAN WCS on the EVENTS `X` and `Y` columns (`REFX*` / `REFY*` keywords). Separations are great-circle distances. The centroid is the mean of the events' unit vectors inside 20 arcsec, iterated until the shift is under 0.001 arcsec, starting at `RA_OBJ`, `DEC_OBJ`. |
+| V-05 | The sky-to-RAW map is an unweighted least-squares affine fit of `RAWX` and `RAWY` to tangent-plane offsets in arcsec, using CCD-4 events with `FLAG == 0`. The background centre is that prediction for the centroid, shifted by `bkg_drawx` RAW pixels. Membership of an event is a 35 arcsec great-circle cut. A RAW pixel is good if any CCD-4 `FLAG == 0` event landed on it. Effective area is a 0.5 arcsec grid of the circle, counted when the nearest RAW pixel is good. `BACKRAT` is the ratio of the two areas. |
+| V-06 | A light-curve bin is a gap when less than 10⁻⁶ of it lies in the CCD-4 standard GTIs. The Fourier series is net counts in the bin, source minus `BACKRAT` times background, not a count rate. Partial bins keep the counts they recorded. Gaps of at most 200 s with a good bin on both sides are filled by linear interpolation. A short gap at a segment edge is held at the nearest good value. The Poisson level is the sum over the segment's bins of (source counts + `BACKRAT`² × background counts) in that band, which is the expected value of \|`numpy.fft.rfft`\|² for those counts. |
+| V-07 | Each segment has its mean subtracted, then `numpy.fft.rfft`, with a rectangular window. The cross spectrum is conj(hard) × soft. The DC and Nyquist bins are dropped. The four segments are averaged with equal weight. Geometric edges start at 1/100000 Hz and step by the factor 1.4, and a bin is kept only when its upper edge is at most the Nyquist frequency. Empty bins are skipped. The lag divides the phase by 2π times the arithmetic mean of the Fourier frequencies in the bin. Raw coherence is \|mean C\|² / (mean \|S\|² mean \|H\|²), with no noise-bias subtraction. Intrinsic coherence is `stingray.fourier.intrinsic_coherence` with `adjust_bias=False` (the library default). A bin is reliable when that value is finite and K ≥ 30. The high-frequency mean uses bins with `f_mean` in [7×10⁻⁴, 5×10⁻³) Hz. |
+| V-08 | `0511580201` `PNU027` is not read. R3 and R1 use the four exposures with `include: true`. |
+| V-09 | Libraries: Python 3.15.2, numpy 2.5.5, astropy 8.0.3, stingray 2.3.2, PyYAML 6.0.4. SciPy 1.18.1 is installed and not called. |
